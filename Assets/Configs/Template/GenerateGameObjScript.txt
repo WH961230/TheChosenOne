@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-
-public class PlayerGameObj : GameObj {
-    private PlayerData playerData;
+public class #ClassName#GameObj : GameObj {
+    private #ClassName#Data #ClassParamName#Data;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
-        playerData = (PlayerData)data;
-        obj = GameObject.CreatePrimitive(playerData.primitiveType);
+        #ClassParamName#Data = (#ClassName#Data)data;
     }
 
     public override void Clear() {

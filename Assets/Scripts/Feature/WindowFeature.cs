@@ -3,6 +3,7 @@
     private Game game;
     public void Init(Game game) {
         this.game = game;
+        Register<PlayerWindow>();
     }
 
     public void Update() {

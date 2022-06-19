@@ -1,3 +1,5 @@
-﻿class PlayerData : Data {
-    
+﻿using UnityEngine;
+
+class PlayerData : Data {
+    public PrimitiveType primitiveType;
 }
