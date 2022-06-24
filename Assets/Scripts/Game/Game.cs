@@ -2,10 +2,15 @@
 
 public class Game : MonoBehaviour {
     private GameManager gameManager = new GameManager();
+    private GameLogic gameLogic = new GameLogic();
     void Start() {
+        // 数据模块模块注册
         Register<WindowFeature>();
         Register<GameObjFeature>();
         Register<EntityFeature>();
+        
+        // 逻辑初始化
+        gameLogic.Init(this);
     }
 
     void Clear() {

@@ -4,23 +4,19 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// 自动生成脚本工具
+/// 弹出窗口
+/// 根据输入的实体名称分别创建：
+/// 【Data】【Entity】【Window】【Data】脚本
+/// </summary>
 public class GenerateScriptEditor : EditorWindow {
-    private const string DataPath = "Assets/Scripts/Data/";
-    private const string EntityPath = "Assets/Scripts/Entity/";
-    private const string GameObjPath = "Assets/Scripts/GameObj/";
-    private const string WindowPath = "Assets/Scripts/Window/";
-
-    private static string TemplateDataPath = "Assets/Configs/Template/GenerateDataScript.txt";
-    private static string TemplateEntityPath = "Assets/Configs/Template/GenerateEntityScript.txt";
-    private static string TemplateGameObjPath = "Assets/Configs/Template/GenerateGameObjScript.txt";
-    private static string TemplateWindowPath = "Assets/Configs/Template/GenerateWindowScript.txt";
-
     private string text;
     [MenuItem("Assets/自动生成模板类")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命
         Rect _rect = new Rect(1000, 1000, 500, 100);
-        GenerateScriptEditor window = (GenerateScriptEditor)EditorWindow.GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "Window2 name");
+        GenerateScriptEditor window = (GenerateScriptEditor)GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "Window2 name");
         window.Show();
     }
 
@@ -30,58 +26,29 @@ public class GenerateScriptEditor : EditorWindow {
             return;
         }
 
-        if (TemplateDataPath.EndsWith(".txt")) {
-            var streamReader = new StreamReader(TemplateDataPath);
-            var log = streamReader.ReadToEnd();
-            streamReader.Close();
+        CreateStript(PathData.DataTemplatePath, PathData.DataPath, className, "Data");
+        CreateStript(PathData.EntityTemplatePath, PathData.EntityPath, className, "Entity");
+        CreateStript(PathData.GameObjTemplatePath, PathData.GameObjPath, className, "GameObj");
+        CreateStript(PathData.WindowTemplatePath, PathData.WindowPath, className, "Window");
+    }
 
-            log = Regex.Replace(log, "#ClassName#", className);
-
-            var createPath = $"{DataPath}{className}Data.cs";
-            var streamWriter = new StreamWriter(createPath, false, new UTF8Encoding(true, false));
-            streamWriter.Write(log);
-            streamWriter.Close();
-            AssetDatabase.ImportAsset(createPath);
-        }
-
-        if (TemplateEntityPath.EndsWith(".txt")) {
-            var streamReader = new StreamReader(TemplateEntityPath);
-            var log = streamReader.ReadToEnd();
-            streamReader.Close();
-
-            log = Regex.Replace(log, "#ClassName#", className);
-            log = Regex.Replace(log, "#ClassParamName#", className.ToLower());
-
-            var createPath = $"{EntityPath}{className}Entity.cs";
-            var streamWriter = new StreamWriter(createPath, false, new UTF8Encoding(true, false));
-            streamWriter.Write(log);
-            streamWriter.Close();
-            AssetDatabase.ImportAsset(createPath);
-        }
-
-        if (TemplateGameObjPath.EndsWith(".txt")) {
-            var streamReader = new StreamReader(TemplateGameObjPath);
+    /// <summary>
+    /// 创建脚本
+    /// </summary>
+    /// <param name="inputPath">输入模板路径</param>
+    /// <param name="outputPath">输出模板路径</param>
+    /// <param name="className">类名</param>
+    /// <param name="striptType">脚本类型</param>
+    private static void CreateStript(string inputPath, string outputPath, string className, string striptType) {
+        if (inputPath.EndsWith(".txt")) {
+            var streamReader = new StreamReader(inputPath);
             var log = streamReader.ReadToEnd();
             streamReader.Close();
 
             log = Regex.Replace(log, "#ClassName#", className);
             log = Regex.Replace(log, "#ClassParamName#", className.ToLower());
 
-            var createPath = $"{GameObjPath}/{className}GameObj.cs";
-            var streamWriter = new StreamWriter(createPath, false, new UTF8Encoding(true, false));
-            streamWriter.Write(log);
-            streamWriter.Close();
-            AssetDatabase.ImportAsset(createPath);
-        }
-
-        if (TemplateWindowPath.EndsWith(".txt")) {
-            var streamReader = new StreamReader(TemplateWindowPath);
-            var log = streamReader.ReadToEnd();
-            streamReader.Close();
-
-            log = Regex.Replace(log, "#ClassName#", className);
-
-            var createPath = $"{WindowPath}/{className}Window.cs";
+            var createPath = $"{outputPath}{className}{striptType}.cs";
             var streamWriter = new StreamWriter(createPath, false, new UTF8Encoding(true, false));
             streamWriter.Write(log);
             streamWriter.Close();

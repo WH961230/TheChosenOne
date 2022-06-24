@@ -3,7 +3,6 @@
     private Game game;
     public void Init(Game game) {
         this.game = game;
-        Register<PlayerWindow>();
     }
 
     public void Update() {
@@ -14,6 +13,7 @@
         windowManager.RemoveAll();
     }
 
+    // 窗口注册 自动注入 物体注册
     public void Register<T>() where T : IWindow, new() {
         windowManager.Register<T>(game);
     }

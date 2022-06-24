@@ -1,4 +1,6 @@
-﻿public class GameObjFeature : IFeature {
+﻿using UnityEngine;
+
+public class GameObjFeature : IFeature {
     private GameObjManager gameObjManager = new GameObjManager();
     private Game game;
     public void Init(Game game) {
@@ -13,7 +15,9 @@
         gameObjManager.RemoveAll();
     }
 
+    // 物体注册 自动注入 实体注册
     public void Register<T>(Data data) where T : GameObj, new() {
+        Debug.Log($"注册 GameObj => data.Name: {data.Name}");
         gameObjManager.Register<T>(game, data);
     }
 

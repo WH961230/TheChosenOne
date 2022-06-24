@@ -1,4 +1,6 @@
-﻿public class EntityFeature : IFeature {
+﻿using UnityEngine;
+
+public class EntityFeature : IFeature {
     private EntityManager entityManager = new EntityManager();
     private Game game;
 
@@ -14,7 +16,9 @@
         entityManager.Update();
     }
 
+    // 实体注册
     public void Register<T>(Data data) where T : Entity, new() {
+        Debug.Log($"注册 Entity => data.Name: {data.Name}");
         entityManager.Register<T>(game, data);
     }
 
