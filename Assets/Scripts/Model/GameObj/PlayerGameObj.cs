@@ -5,7 +5,6 @@ public class PlayerGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         playerData = (PlayerData)data;
-        obj = GameObject.CreatePrimitive(playerData.primitiveType);
     }
 
     public override void Clear() {

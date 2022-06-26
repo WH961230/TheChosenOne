@@ -24,7 +24,7 @@ public class GameObjManager : IManager {
     public void Remove(GameObj entity) {
         int index = Find(entity);
         if (index != -1) {
-            gameObjDict.Remove(entity.Data.InstanceID);
+            gameObjDict.Remove(entity.MyData.InstanceID);
             gameObjs.RemoveAt(index);
             entity.Clear();
         }

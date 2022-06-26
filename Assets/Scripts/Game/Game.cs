@@ -2,7 +2,7 @@
 
 public class Game : MonoBehaviour {
     private GameManager gameManager = new GameManager();
-    private GameLogic gameLogic = new GameLogic();
+    private GameSystem gameSystem = new GameSystem();
     void Start() {
         // 数据模块模块注册
         Register<WindowFeature>();
@@ -10,7 +10,7 @@ public class Game : MonoBehaviour {
         Register<EntityFeature>();
         
         // 逻辑初始化
-        gameLogic.Init(this);
+        gameSystem.Init(this);
     }
 
     void Clear() {

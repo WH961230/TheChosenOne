@@ -1,3 +1,2 @@
 ﻿class CubeData : Data {
-    
 }
