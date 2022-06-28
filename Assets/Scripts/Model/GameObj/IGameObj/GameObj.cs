@@ -14,8 +14,9 @@ public class GameObj : IGameObj {
     }
 
     public virtual void BundleBaseComponent() {
-        MyObj.transform.position = MyData.MyTranInfo.MyPos;
-        MyObj.transform.rotation = MyData.MyTranInfo.MyRot;
+        MyObj.transform.SetParent(MyData.MyTranInfo.MyRootTran);
+        MyObj.transform.localPosition = MyData.MyTranInfo.MyPos;
+        MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
     }
 
     public virtual void BundleCustomComponent() {

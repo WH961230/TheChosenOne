@@ -3,9 +3,14 @@
     public const string EntityPath = "Assets/Scripts/Model/Entity/";
     public const string GameObjPath = "Assets/Scripts/Model/GameObj/";
     public const string WindowPath = "Assets/Scripts/Model/Window/";
+    public const string ComponentPath = "Assets/Scripts/Component/Common/UI/";
 
-    public const string DataTemplatePath = "Assets/Configs/Txt/Template/GenerateDataScript.txt";
-    public const string EntityTemplatePath = "Assets/Configs/Txt/Template/GenerateEntityScript.txt";
-    public const string GameObjTemplatePath = "Assets/Configs/Txt/Template/GenerateGameObjScript.txt";
-    public const string WindowTemplatePath = "Assets/Configs/Txt/Template/GenerateWindowScript.txt";
+    public const string DataTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateDataScript.txt";
+    public const string EntityTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateEntityScript.txt";
+    public const string GameObjTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateGameObjScript.txt";
+    public const string WindowTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateWindowScript.txt";
+    public const string ComponentTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateComponentScript.txt";
+
+    public const string SOGameSettingPath = "Configs/SO/SOGameSetting";
+    public const string SOCharacterSettingPath = "Configs/SO/SOCharacterSetting";
 }

@@ -1,68 +1,71 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameSystem {
-    private GameObjPool GOP = new GameObjPool();
+public class GameSystem : GameSys {
+    public SOGameSetting soGameSetting;
     private Game game;
+
+    private CharacterSystem characterSystem = new CharacterSystem();
+    private EnvironmentSystem environmentSystem = new EnvironmentSystem();
+    private UISystem uISystem = new UISystem();
+
     public void Init(Game game) {
         this.game = game;
+        this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
 
-        // 具体实例
-        Instance<CubeGameObj, CubeEntity>(new CubeData() {
-            Name = "cubeTest",
-            MyObj = GOP.Add(GameObject.CreatePrimitive(PrimitiveType.Cube)),
-            MyTranInfo = new TranInfo() {
-                MyPos = new Vector3(0,2,0),
-                MyRot = new Quaternion(0, 0, 0, 0)
-            }
-        });
+        InstanceRoot();
 
-        Instance<CubeGameObj, CubeEntity>(new CubeData() {
-            Name = "cubeTest2",
-            MyObj = GOP.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere)),
-            MyTranInfo = new TranInfo() {
-                MyPos = new Vector3(2,0,0),
-                MyRot = new Quaternion(0, 0, 0, 0)
-            }
-        });
+        uISystem.Init(this);
+        environmentSystem.Init(this);
+        characterSystem.Init(this);
+    }
+
+    public override void Update() {
+        base.Update();
+        uISystem.Update();
+        environmentSystem.Update();
+        characterSystem.Update();
+    }
+
+    public override void Clear() {
+        uISystem.Clear();
+        environmentSystem.Clear();
+        characterSystem.Clear();
+        base.Clear();
+    }
+
+    private void InstanceRoot() {
+        var gameRoot = new GameObject("GameRoot").transform;
+
+        GameData.UIRoot = Object.Instantiate(soGameSetting.UIRoot).transform;
+        GameData.UIRoot.name = "UIRoot";
+        GameData.UIRoot.SetParent(gameRoot);
+
+        GameData.ItemRoot = new GameObject("ItemRoot").transform;
+        GameData.ItemRoot.SetParent(gameRoot);
+
+        GameData.AudioRoot = new GameObject("AudioRoot").transform;
+        GameData.AudioRoot.SetParent(gameRoot);
+    }
+
+    public void InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()
+        where T2 : GameObj, new()
+        where T3 : Entity, new() {
+        data.InstanceID = data.MyObj.GetInstanceID();
+        game.Get<GameObjFeature>().Register<T2>(data);
+        game.Get<WindowFeature>().Register<T1>(data);
+        game.Get<EntityFeature>().Register<T3>(data);
     }
 
     /// <summary>
     /// 实例物体
     /// </summary>
-    private void Instance<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
+    public void InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
         game.Get<GameObjFeature>().Register<T1>(data);
         game.Get<EntityFeature>().Register<T2>(data);
     }
 
-    class GameObjPool {
-        private Dictionary<int, GameObject> AllGameObject = new Dictionary<int, GameObject>();
-        public GameObject Add(GameObject myGameObj) {
-            AllGameObject.Add(myGameObj.GetInstanceID(), myGameObj);
-            myGameObj.SetActive(true);
-            return myGameObj;
-        }
-
-        public GameObject Get(int id) {
-            if (AllGameObject.TryGetValue(id, out var obj)) {
-                return obj;
-            }
-
-            return null;
-        }
-
-        public void Clear(int id) {
-            if (AllGameObject.TryGetValue(id, out var obj)) {
-                obj.SetActive(false);
-            }
-        }
-
-        public void Destory(int id) {
-            if (AllGameObject.TryGetValue(id, out var obj)) {
-                Object.Destroy(obj);
-                AllGameObject.Remove(id);
-            }
-        }
+    public void InstanceEntity<T>(Data data) where T : Entity, new() {
+        game.Get<EntityFeature>().Register<T>(data);
     }
 }

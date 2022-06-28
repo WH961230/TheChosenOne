@@ -18,7 +18,7 @@ public class EntityFeature : IFeature {
 
     // 实体注册
     public void Register<T>(Data data) where T : Entity, new() {
-        Debug.Log($"注册 Entity => data.Name: {data.Name}");
+        Debug.Log($"注册 Entity => data.Name: {data.MyName}");
         entityManager.Register<T>(game, data);
     }
 

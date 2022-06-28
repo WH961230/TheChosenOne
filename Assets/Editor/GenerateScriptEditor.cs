@@ -8,7 +8,7 @@ using UnityEngine;
 /// 自动生成脚本工具
 /// 弹出窗口
 /// 根据输入的实体名称分别创建：
-/// 【Data】【Entity】【Window】【Data】脚本
+/// 【Data】【Entity】【Window】【Data】【Component】脚本
 /// </summary>
 public class GenerateScriptEditor : EditorWindow {
     private string text;
@@ -30,6 +30,7 @@ public class GenerateScriptEditor : EditorWindow {
         CreateStript(PathData.EntityTemplatePath, PathData.EntityPath, className, "Entity");
         CreateStript(PathData.GameObjTemplatePath, PathData.GameObjPath, className, "GameObj");
         CreateStript(PathData.WindowTemplatePath, PathData.WindowPath, className, "Window");
+        CreateStript(PathData.ComponentTemplatePath, PathData.ComponentPath, className, "Component");
     }
 
     /// <summary>

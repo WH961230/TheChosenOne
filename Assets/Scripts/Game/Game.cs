@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 
 public class Game : MonoBehaviour {
-    private GameManager gameManager = new GameManager();
+    private GameManager gameManager;
     private GameSystem gameSystem = new GameSystem();
     void Start() {
+        gameManager = new GameManager();
+
         // 数据模块模块注册
         Register<WindowFeature>();
         Register<GameObjFeature>();
         Register<EntityFeature>();
-        
+
         // 逻辑初始化
         gameSystem.Init(this);
     }
@@ -17,9 +19,11 @@ public class Game : MonoBehaviour {
         Remove<WindowFeature>();
         Remove<GameObjFeature>();
         Remove<EntityFeature>();
+        gameSystem.Clear();
     }
 
     void Update() {
+        gameSystem.Update();
         gameManager.Update();
     }
 

@@ -2,13 +2,19 @@
 
 public class Data : IData{
     // 基本参数
-    public string Name;
+    public string MyName;
+    public DataType MyType;
     public GameObject MyObj;// 使用资源池的方式加载
     public TranInfo MyTranInfo;
     public int InstanceID = -1;// 从0开始算第一个
 }
 
 public struct TranInfo {
-    public Vector3 MyPos;
-    public Quaternion MyRot;
+    public Vector3 MyPos; // 位置
+    public Quaternion MyRot; // 方向
+    public Transform MyRootTran; // 父物体
+}
+
+public struct DataType {
+    public bool IsWindowPrefab; // 是否是界面物体
 }

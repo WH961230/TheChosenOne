@@ -14,8 +14,8 @@
     }
 
     // 窗口注册 自动注入 物体注册
-    public void Register<T>() where T : IWindow, new() {
-        windowManager.Register<T>(game);
+    public void Register<T>(Data data) where T : IWindow, new() {
+        windowManager.Register<T>(game, data);
     }
 
     public void Remove<T>() where T : IWindow {

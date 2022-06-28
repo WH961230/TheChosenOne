@@ -1,5 +1,5 @@
 ﻿public interface IWindow {
-    void Init(Game game);
+    void Init(Game game, Data data);
     void Open();
     void Update();
     void Close();

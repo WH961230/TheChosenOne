@@ -17,7 +17,7 @@ public class GameObjFeature : IFeature {
 
     // 物体注册 自动注入 实体注册
     public void Register<T>(Data data) where T : GameObj, new() {
-        Debug.Log($"注册 GameObj => data.Name: {data.Name}");
+        Debug.Log($"注册 GameObj => data.Name: {data.MyName}");
         gameObjManager.Register<T>(game, data);
     }
 
@@ -27,5 +27,9 @@ public class GameObjFeature : IFeature {
 
     public void Remove(GameObj gameObj) {
         gameObjManager.Remove(gameObj);
+    }
+
+    public GameObj Get(int id) {
+        return gameObjManager.Get(id);
     }
 }
