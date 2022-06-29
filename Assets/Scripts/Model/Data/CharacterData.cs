@@ -1,3 +1,3 @@
-﻿class CharacterData : Data {
+﻿public class CharacterData : Data {
     
 }

@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 
 public class Game : MonoBehaviour {
-    private GameManager gameManager;
+    private GameManager gameManager = new GameManager();
     private GameSystem gameSystem = new GameSystem();
-    void Start() {
-        gameManager = new GameManager();
 
+    public GameSystem MyGameSystem {
+        get {
+            return gameSystem;
+        }
+    }
+    
+    void Start() {
         // 数据模块模块注册
         Register<WindowFeature>();
         Register<GameObjFeature>();

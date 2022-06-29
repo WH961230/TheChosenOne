@@ -19,6 +19,14 @@ public class GameObj : IGameObj {
         MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
     }
 
+    public virtual void Display() {
+        MyObj.SetActive(true);
+    }
+
+    public virtual void Hide() {
+        MyObj.SetActive(false);
+    }
+
     public virtual void BundleCustomComponent() {
         
     }

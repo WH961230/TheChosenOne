@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class UISystem : GameSystem {
+public class UISystem : GameSys {
     private GameSystem gameSystem;
     public override void Init(GameSystem gameSystem) {
         this.gameSystem = gameSystem;

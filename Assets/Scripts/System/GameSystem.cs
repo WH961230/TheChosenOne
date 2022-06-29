@@ -1,12 +1,29 @@
 ﻿using UnityEngine;
 
-public class GameSystem : GameSys {
+public class GameSystem {
     public SOGameSetting soGameSetting;
     private Game game;
 
     private CharacterSystem characterSystem = new CharacterSystem();
+    public CharacterSystem MyCharacterSystem {
+        get {
+            return characterSystem;
+        }
+    }
+
     private EnvironmentSystem environmentSystem = new EnvironmentSystem();
+    public EnvironmentSystem MyEnvironmentSystem {
+        get {
+            return environmentSystem;
+        }
+    }
+
     private UISystem uISystem = new UISystem();
+    public UISystem MyUISystem {
+        get {
+            return uISystem;
+        }
+    }
 
     public void Init(Game game) {
         this.game = game;
@@ -19,18 +36,16 @@ public class GameSystem : GameSys {
         characterSystem.Init(this);
     }
 
-    public override void Update() {
-        base.Update();
+    public void Update() {
         uISystem.Update();
         environmentSystem.Update();
         characterSystem.Update();
     }
 
-    public override void Clear() {
+    public void Clear() {
         uISystem.Clear();
         environmentSystem.Clear();
         characterSystem.Clear();
-        base.Clear();
     }
 
     private void InstanceRoot() {
