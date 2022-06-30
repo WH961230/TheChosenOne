@@ -29,7 +29,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5045448925876760682}
-  - {fileID: 5045448925792118374}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Head: {fileID: 5045448925792118375}
   Body: {fileID: 5045448925876760683}
+  CC: {fileID: 8372308864687807498}
 --- !u!1 &5045448925792118375
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,13 +73,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5045448925792118375}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.78, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7876043652935941223}
-  m_Father: {fileID: 5045448924459881341}
-  m_RootOrder: 1
+  m_Father: {fileID: 5045448925876760682}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5045448925792118395
 MeshFilter:
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 5045448925876760682}
   - component: {fileID: 5045448925876760687}
   - component: {fileID: 5045448925876760684}
-  - component: {fileID: 5045448925876760685}
+  - component: {fileID: 8372308864687807498}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -170,7 +170,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.53999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5045448925792118374}
   m_Father: {fileID: 5045448924459881341}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,8 +222,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5045448925876760685
-BoxCollider:
+--- !u!143 &8372308864687807498
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,7 +233,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7783569136123759694
 GameObject:

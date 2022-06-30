@@ -16,4 +16,5 @@
     public const string SOGameSettingPath = "Configs/SO/SOGameSetting";
     public const string SOCharacterSettingPath = "Configs/SO/SOCharacterSetting";
     public const string SOSceneItemSettingPath = "Configs/SO/SOSceneItemSetting";
+    public const string SOEnvironmentSettingPath = "Configs/SO/SOEnvironmentSetting";
 }

@@ -3,12 +3,15 @@
 public class CharacterGameObj : GameObj {
     private CharacterData characterData;
     private CharacterComponent characterComponent;
+    private GravityComponent gravityComponent;
     private Game game;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.game = game;
         this.characterComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterData = (CharacterData)data;
+        // gravityComponent = new GravityComponent();
+        // gravityComponent.Start(MyObj.transform);
     }
 
     public override void Clear() {
@@ -17,6 +20,9 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
+        // gravityComponent.Update();
+        var speed = Resources.Load<SOEnvironmentSetting>(PathData.SOEnvironmentSettingPath).GravitySpeed;
+        characterComponent.CC.Move(Vector3.down * speed * Time.deltaTime);
         // 视角旋转
         EyeBehaviour();
         // 移动行为
