@@ -22,6 +22,18 @@ public class CharacterSystem : GameSys {
         base.Clear();
     }
 
+    public void InstanceCharacter() {
+        InstanceCharacter(new CharacterData() {
+            MyName = "cubeTest",
+            MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
+            MyTranInfo = new TranInfo() {
+                MyPos = new Vector3(0,2,0),
+                MyRot = new Quaternion(0, 0, 0, 0),
+                MyRootTran = GameData.ItemRoot,
+            }
+        });
+    }
+
     public void InstanceCharacter(CharacterData characterData) {
         gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }

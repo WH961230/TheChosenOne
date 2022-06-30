@@ -11,11 +11,17 @@ using UnityEngine;
 /// 【Data】【Entity】【Window】【Data】【Component】脚本
 /// </summary>
 public class GenerateScriptEditor : EditorWindow {
-    private string text;
+    private string className;
+    private bool isHaveData; // 是否有数据
+    private bool isHaveEntity; // 是否有实体
+    private bool isHaveGameObj; // 是否有游戏物体
+    private bool isHaveWindow; // 是否有窗口
+    private bool isHaveComponent; // 是否有组件
+    private bool isHaveSOSetting; // 是否有配置
     [MenuItem("Assets/自动生成模板类")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命
-        Rect _rect = new Rect(1000, 1000, 500, 100);
+        Rect _rect = new Rect(1000, 1000, 500, 200);
         GenerateScriptEditor window = (GenerateScriptEditor)GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "Window2 name");
         window.Show();
     }
@@ -26,11 +32,29 @@ public class GenerateScriptEditor : EditorWindow {
             return;
         }
 
-        CreateStript(PathData.DataTemplatePath, PathData.DataPath, className, "Data");
-        CreateStript(PathData.EntityTemplatePath, PathData.EntityPath, className, "Entity");
-        CreateStript(PathData.GameObjTemplatePath, PathData.GameObjPath, className, "GameObj");
-        CreateStript(PathData.WindowTemplatePath, PathData.WindowPath, className, "Window");
-        CreateStript(PathData.ComponentTemplatePath, PathData.ComponentPath, className, "Component");
+        if (isHaveData) {
+            CreateStript(PathData.DataTemplatePath, PathData.DataPath, className, "", "Data");
+        }
+
+        if (isHaveEntity) {
+            CreateStript(PathData.EntityTemplatePath, PathData.EntityPath, className, "", "Entity");
+        }
+
+        if (isHaveGameObj) {
+            CreateStript(PathData.GameObjTemplatePath, PathData.GameObjPath, className, "", "GameObj");
+        }
+
+        if (isHaveWindow) {
+            CreateStript(PathData.WindowTemplatePath, PathData.WindowPath, className, "", "Window");
+        }
+
+        if (isHaveComponent) {
+            CreateStript(PathData.ComponentTemplatePath, PathData.ComponentPath, className, "", "Component");
+        }
+
+        if (isHaveSOSetting) {
+            CreateStript(PathData.SOSettingTemplatePath, PathData.SOSettingPath, className, "SO", "Setting");
+        }
     }
 
     /// <summary>
@@ -40,7 +64,7 @@ public class GenerateScriptEditor : EditorWindow {
     /// <param name="outputPath">输出模板路径</param>
     /// <param name="className">类名</param>
     /// <param name="striptType">脚本类型</param>
-    private static void CreateStript(string inputPath, string outputPath, string className, string striptType) {
+    private static void CreateStript(string inputPath, string outputPath, string className, string front, string end) {
         if (inputPath.EndsWith(".txt")) {
             var streamReader = new StreamReader(inputPath);
             var log = streamReader.ReadToEnd();
@@ -49,7 +73,7 @@ public class GenerateScriptEditor : EditorWindow {
             log = Regex.Replace(log, "#ClassName#", className);
             log = Regex.Replace(log, "#ClassParamName#", className.ToLower());
 
-            var createPath = $"{outputPath}{className}{striptType}.cs";
+            var createPath = $"{outputPath}{front}{className}{end}.cs";
             var streamWriter = new StreamWriter(createPath, false, new UTF8Encoding(true, false));
             streamWriter.Write(log);
             streamWriter.Close();
@@ -58,9 +82,15 @@ public class GenerateScriptEditor : EditorWindow {
     }
 
     private void OnGUI() {
-        text = EditorGUILayout.TextField("输入文字:", text, GUILayout.Width(300));
+        className = EditorGUILayout.TextField("输入文字:", className, GUILayout.Width(300));
+        isHaveWindow = EditorGUILayout.Toggle("是否创建窗口类", isHaveWindow);
+        isHaveSOSetting = EditorGUILayout.Toggle("是否创建配置类", isHaveSOSetting);
+        isHaveData = EditorGUILayout.Toggle("是否创建数据类", isHaveData);
+        isHaveComponent = EditorGUILayout.Toggle("是否创建组件类", isHaveComponent);
+        isHaveGameObj = EditorGUILayout.Toggle("是否创建游戏物体类", isHaveGameObj);
+        isHaveEntity = EditorGUILayout.Toggle("是否创建实体类", isHaveEntity);
         if (GUILayout.Button("生成脚本", GUILayout.Width(100))) {
-            this.GenerateScript(text);
+            this.GenerateScript(className);
         }
     }
 }

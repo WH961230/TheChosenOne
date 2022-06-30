@@ -1,3 +1,3 @@
-﻿class UIMainData : Data {
+﻿public class UIMainData : Data {
     
 }

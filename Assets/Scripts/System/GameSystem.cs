@@ -60,6 +60,9 @@ public class GameSystem {
 
         GameData.AudioRoot = new GameObject("AudioRoot").transform;
         GameData.AudioRoot.SetParent(gameRoot);
+
+        GameData.EnvironmentRoot = new GameObject("EnvironmentRoot").transform;
+        GameData.EnvironmentRoot.SetParent(gameRoot);
     }
 
     public void InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()
@@ -71,9 +74,6 @@ public class GameSystem {
         game.Get<EntityFeature>().Register<T3>(data);
     }
 
-    /// <summary>
-    /// 实例物体
-    /// </summary>
     public void InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
         game.Get<GameObjFeature>().Register<T1>(data);

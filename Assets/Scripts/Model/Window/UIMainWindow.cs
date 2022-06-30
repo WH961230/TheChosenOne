@@ -18,16 +18,11 @@ public class UIMainWindow : Window {
             // 日志
             Debug.Log("创建角色");
 
+            // 创建场景
+            game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
+
             // 创建玩家
-            game.MyGameSystem.MyCharacterSystem.InstanceCharacter(new CharacterData() {
-                MyName = "cubeTest",
-                MyObj = Object.Instantiate(game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.CharacterPrefab),
-                MyTranInfo = new TranInfo() {
-                    MyPos = new Vector3(0,2,0),
-                    MyRot = new Quaternion(0, 0, 0, 0),
-                    MyRootTran = GameData.ItemRoot,
-                }
-            });
+            game.MyGameSystem.MyCharacterSystem.InstanceCharacter();
 
             // 关闭界面
             Close();

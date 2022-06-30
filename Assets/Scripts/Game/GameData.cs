@@ -5,7 +5,5 @@ public static class GameData {
     public static Transform UIRoot;
     public static Transform ItemRoot;
     public static Transform AudioRoot;
-    
-    // 
-    
+    public static Transform EnvironmentRoot;
 }
