@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 10
   JumpSpeed: 2
+  CharacterCamera: {fileID: 570146280814098186, guid: 12de0a24b01794644873bdce56f1bbcb,
+    type: 3}
   CharacterPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
     type: 3}

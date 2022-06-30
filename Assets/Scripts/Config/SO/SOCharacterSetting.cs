@@ -4,5 +4,6 @@
 public class SOCharacterSetting : ScriptableObject {
     public float MoveSpeed;
     public float JumpSpeed;
+    public GameObject CharacterCamera;
     public GameObject CharacterPrefab;
 }

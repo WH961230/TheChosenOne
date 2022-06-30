@@ -63,6 +63,12 @@ public class GameSystem {
 
         GameData.EnvironmentRoot = new GameObject("EnvironmentRoot").transform;
         GameData.EnvironmentRoot.SetParent(gameRoot);
+
+        GameData.CameraRoot = new GameObject("CameraRoot").transform;
+        GameData.CameraRoot.SetParent(gameRoot);
+
+        GameData.CharacterCamera = Object.Instantiate(soGameSetting.MainCamera).transform.GetComponent<Camera>();
+        GameData.CharacterCamera.transform.SetParent(GameData.CameraRoot);
     }
 
     public void InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()

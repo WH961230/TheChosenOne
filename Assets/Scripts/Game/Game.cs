@@ -3,13 +3,19 @@
 public class Game : MonoBehaviour {
     private GameManager gameManager = new GameManager();
     private GameSystem gameSystem = new GameSystem();
-
+    private GameComponent gameComponent = new GameComponent();
     public GameSystem MyGameSystem {
         get {
             return gameSystem;
         }
     }
-    
+
+    public GameComponent MyGameComponent {
+        get {
+            return gameComponent;
+        }
+    }
+
     void Start() {
         // 数据模块模块注册
         Register<WindowFeature>();
@@ -18,6 +24,7 @@ public class Game : MonoBehaviour {
 
         // 逻辑初始化
         gameSystem.Init(this);
+        gameComponent.Init(this);
     }
 
     void Clear() {
@@ -25,11 +32,13 @@ public class Game : MonoBehaviour {
         Remove<GameObjFeature>();
         Remove<EntityFeature>();
         gameSystem.Clear();
+        gameComponent.Clear();
     }
 
     void Update() {
         gameSystem.Update();
         gameManager.Update();
+        gameComponent.Update();
     }
 
     private void Register<T>() where T : IFeature, new() {
