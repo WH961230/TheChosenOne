@@ -30,11 +30,12 @@ public class CharacterSystem : GameSys {
                 MyPos = new Vector3(0,2,0),
                 MyRot = new Quaternion(0, 0, 0, 0),
                 MyRootTran = GameData.ItemRoot,
-            }
+            },
+            IsLocalCharacter = true,
         });
     }
 
-    public void InstanceCharacter(CharacterData characterData) {
+    private void InstanceCharacter(CharacterData characterData) {
         gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }
 }

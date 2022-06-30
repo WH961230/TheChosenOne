@@ -8,4 +8,8 @@ public static class InputSystem {
     public static bool GetKeyDown(KeyCode keyCode) {
         return Input.GetKeyDown(keyCode);
     }
+
+    public static float GetAxis(string name) {
+        return Input.GetAxis(name);
+    }
 }
