@@ -24,7 +24,9 @@ public class GravityComponent : GameComp {
         }
 
         if (MyCC) {
-            MyCC.Move(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
+            if (!MyCC.isGrounded) {
+                MyCC.Move(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
+            }
         }
     }
 

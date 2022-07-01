@@ -22,12 +22,15 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
+        var moveVec = Vector3.zero;
         // 视角旋转
         EyeBehaviour();
         // 移动行为
-        MoveBehaviour();
+        moveVec = MoveBehaviour(moveVec);
         // 跳跃行为
-        JumpBehaviour();
+        moveVec = JumpBehaviour(moveVec);
+
+        CCMove(moveVec);
     }
 
     private void EyeBehaviour() {
@@ -36,30 +39,45 @@ public class CharacterGameObj : GameObj {
         characterComponent.Head.transform.rotation = Quaternion.Euler(xRotate, yRotate, 0);
     }
 
-    private void MoveBehaviour() {
+    private Vector3 MoveBehaviour(Vector3 moveVec) {
         if (InputSystem.GetKey(KeyCode.W)) {
-            MyObj.transform.Translate(MyObj.transform.forward *
-                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed * Time.deltaTime);
+            moveVec += MyObj.transform.forward *
+                                       game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed *
+                                       Time.deltaTime;
         } else if (InputSystem.GetKey(KeyCode.S)) {
-            MyObj.transform.Translate(-MyObj.transform.forward *
-                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed * Time.deltaTime);
+            moveVec += -MyObj.transform.forward *
+                       game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed * Time.deltaTime;
         } else if (InputSystem.GetKey(KeyCode.A)) {
-            MyObj.transform.Translate(-MyObj.transform.right *
-                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed * Time.deltaTime);
+            moveVec += -MyObj.transform.right *
+                                       game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed *
+                                       Time.deltaTime;
         } else if (InputSystem.GetKey(KeyCode.D)) {
-            MyObj.transform.Translate(MyObj.transform.right *
-                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed * Time.deltaTime);
+            moveVec += MyObj.transform.right *
+                       game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed *
+                       Time.deltaTime;
         }
+
+        return moveVec;
     }
 
-    private void JumpBehaviour() {
-        if (InputSystem.GetKeyDown(KeyCode.Space)) {
-            MyObj.transform.Translate(MyObj.transform.up *
-                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.JumpSpeed * Time.deltaTime);
+    private Vector3 JumpBehaviour(Vector3 moveVec) {
+        if (InputSystem.GetKey(KeyCode.Space)) {
+            moveVec += MyObj.transform.up *
+                                      game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.JumpSpeed * Time.deltaTime;
         }
 
         if (InputSystem.GetKeyDown(KeyCode.R)) {
             game.MyGameComponent.MyGravityComponent.Clear();
         }
+
+        if (InputSystem.GetKeyDown(KeyCode.T)) {
+            game.MyGameComponent.MyGravityComponent.Register(characterComponent.CC);
+        }
+
+        return moveVec;
+    }
+
+    private void CCMove(Vector3 moveVec) {
+        characterComponent.CC.Move(moveVec);
     }
 }
