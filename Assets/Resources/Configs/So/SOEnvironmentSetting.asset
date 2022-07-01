@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d0be94113347f09db00f3f860e34c1, type: 3}
   m_Name: SOEnvironmentSetting
   m_EditorClassIdentifier: 
-  GravitySpeed: 2
+  GravitySpeed: 9
