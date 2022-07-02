@@ -22,16 +22,18 @@ public class CharacterSystem : GameSys {
         base.Clear();
     }
 
-    public void InstanceCharacter() {
+    public void InstanceCharacter(bool isMainCharacter) {
+        var instanceId = gameSystem.MyCameraSystem.InstanceCamera(CameraType.CharacterCamera);
         InstanceCharacter(new CharacterData() {
-            MyName = "cubeTest",
+            MyName = "Character",
             MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
             MyTranInfo = new TranInfo() {
                 MyPos = new Vector3(0,2,0),
                 MyRot = new Quaternion(0, 0, 0, 0),
-                MyRootTran = GameData.ItemRoot,
+                MyRootTran = GameData.CharacterRoot,
             },
-            IsLocalCharacter = true,
+            IsMainCharacter = isMainCharacter,
+            CharacterCamereInstanceId = instanceId,
         });
     }
 

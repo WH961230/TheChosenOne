@@ -32,6 +32,13 @@ public class GameSystem {
         }
     }
 
+    private CameraSystem cameraSystem = new CameraSystem();
+    public CameraSystem MyCameraSystem {
+        get {
+            return cameraSystem;
+        }
+    }
+
     public void Init(Game game) {
         this.game = game;
         this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
@@ -40,6 +47,7 @@ public class GameSystem {
 
         uISystem.Init(this);
         environmentSystem.Init(this);
+        cameraSystem.Init(this);
         characterSystem.Init(this);
         debugToolSystem.Init(this);
     }
@@ -47,6 +55,7 @@ public class GameSystem {
     public void Update() {
         uISystem.Update();
         environmentSystem.Update();
+        cameraSystem.Update();
         characterSystem.Update();
         debugToolSystem.Update();
     }
@@ -54,6 +63,7 @@ public class GameSystem {
     public void Clear() {
         uISystem.Clear();
         environmentSystem.Clear();
+        cameraSystem.Clear();
         characterSystem.Clear();
         debugToolSystem.Clear();
     }
@@ -65,8 +75,8 @@ public class GameSystem {
         GameData.UIRoot.name = "UIRoot";
         GameData.UIRoot.SetParent(gameRoot);
 
-        GameData.ItemRoot = new GameObject("ItemRoot").transform;
-        GameData.ItemRoot.SetParent(gameRoot);
+        GameData.CharacterRoot = new GameObject("CharacterRoot").transform;
+        GameData.CharacterRoot.SetParent(gameRoot);
 
         GameData.AudioRoot = new GameObject("AudioRoot").transform;
         GameData.AudioRoot.SetParent(gameRoot);
@@ -77,29 +87,25 @@ public class GameSystem {
         GameData.CameraRoot = new GameObject("CameraRoot").transform;
         GameData.CameraRoot.SetParent(gameRoot);
 
-        GameData.MainCamera = Object.Instantiate(soGameSetting.MainCamera).transform.GetComponent<Camera>();
-        GameData.MainCamera.transform.SetParent(GameData.CameraRoot);
-
         GameData.LightRoot = new GameObject("LightRoot").transform;
         GameData.LightRoot.SetParent(gameRoot);
-
-        GameData.MainLight = Object.Instantiate(soGameSetting.MainLight).transform.GetComponent<Light>();
-        GameData.MainLight.transform.SetParent(GameData.LightRoot);
     }
 
-    public void InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()
+    public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()
         where T2 : GameObj, new()
         where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
         game.Get<GameObjFeature>().Register<T2>(data);
         game.Get<WindowFeature>().Register<T1>(data);
         game.Get<EntityFeature>().Register<T3>(data);
+        return data.InstanceID;
     }
 
-    public void InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
+    public int InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
         game.Get<GameObjFeature>().Register<T1>(data);
         game.Get<EntityFeature>().Register<T2>(data);
+        return data.InstanceID;
     }
 
     public void InstanceEntity<T>(Data data) where T : Entity, new() {

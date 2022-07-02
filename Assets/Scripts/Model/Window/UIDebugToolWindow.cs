@@ -14,7 +14,7 @@
         });
 
         uidebugtoolComponent.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
-            game.MyGameSystem.MyCharacterSystem.InstanceCharacter();
+            game.MyGameSystem.MyCharacterSystem.InstanceCharacter(false);
         });
     }
 

@@ -16,10 +16,11 @@
     public const string ComponentTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateComponentScript.txt";
     public const string SOSettingTemplatePath = "Assets/Resources/Configs/Txt/Template/GenerateSOSettingScript.txt";
 
-    // 
+    // 配置使用
     public const string SOGameSettingPath = "Configs/SO/SOGameSetting";
     public const string SOCharacterSettingPath = "Configs/SO/SOCharacterSetting";
     public const string SOSceneItemSettingPath = "Configs/SO/SOSceneItemSetting";
     public const string SOEnvironmentSettingPath = "Configs/SO/SOEnvironmentSetting";
     public const string SOUIDebugToolSettingPath = "Configs/SO/SOUIDebugToolSetting";
+    public const string SOCameraSettingPath = "Configs/SO/SOCameraSetting";
 }

@@ -21,8 +21,8 @@ public class UIMainWindow : Window {
             // 创建场景
             game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
 
-            // 创建玩家
-            game.MyGameSystem.MyCharacterSystem.InstanceCharacter();
+            // 创建主玩家
+            game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
 
             // 关闭界面
             Close();
