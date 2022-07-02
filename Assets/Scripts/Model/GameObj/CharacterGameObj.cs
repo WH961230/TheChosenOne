@@ -61,7 +61,6 @@ public class CharacterGameObj : GameObj {
     }
 
     private Vector3 JumpBehaviour(Vector3 moveVec) {
-        Debug.Log($"g:{characterComponent.CC.isGrounded} | j:{characterData.IsJumping} | l:{characterData.IsLanding}");
         var config = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting;
 
         // 计时中

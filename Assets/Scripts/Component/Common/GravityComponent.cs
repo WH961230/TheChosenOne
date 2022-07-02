@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GravityComponent : GameComp {
-    private Transform MyTarget;
-    private CharacterController MyCC;
+    private List<Transform> MyTarget = new List<Transform>();
+    private List<CharacterController> MyCC = new List<CharacterController>();
     private SOEnvironmentSetting soEnvironmentSetting;
     public override void Init(Game game) {
         base.Init(game);
@@ -10,22 +11,31 @@ public class GravityComponent : GameComp {
     }
 
     public void Register(Transform target) {
-        MyTarget = target;
+        MyTarget.Add(target);
     }
 
     public void Register(CharacterController cc) {
-        MyCC = cc;
+        MyCC.Add(cc);
+    }
+
+    public void Unregister(Transform target) {
+        MyTarget.Remove(target);
+    }
+
+    public void Unregister(CharacterController cc) {
+        MyCC.Remove(cc);
     }
 
     public override void Update() {
         base.Update();
-        if (MyTarget) {
-            MyTarget.transform.Translate(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
+        for (var i = 0; i < MyTarget.Count; i++) {
+            MyTarget[i].transform.Translate(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
         }
 
-        if (MyCC) {
-            if (!MyCC.isGrounded) {
-                MyCC.Move(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
+        for (var i = 0; i < MyCC.Count; i++) {
+            var tempCC = MyCC[i];
+            if (!tempCC.isGrounded) {
+                tempCC.Move(Vector3.down * soEnvironmentSetting.GravitySpeed * Time.deltaTime);
             }
         }
     }
