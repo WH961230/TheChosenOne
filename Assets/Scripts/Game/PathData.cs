@@ -5,7 +5,7 @@
     public const string EntityPath = "Assets/Scripts/Model/Entity/";
     public const string GameObjPath = "Assets/Scripts/Model/GameObj/";
     public const string WindowPath = "Assets/Scripts/Model/Window/";
-    public const string ComponentPath = "Assets/Scripts/Component/Common/";
+    public const string ComponentPath = "Assets/Scripts/Component/Generate/";
     public const string SOSettingPath = "Assets/Scripts/Config/SO/";
 
     // 自动生成脚本使用
@@ -21,4 +21,5 @@
     public const string SOCharacterSettingPath = "Configs/SO/SOCharacterSetting";
     public const string SOSceneItemSettingPath = "Configs/SO/SOSceneItemSetting";
     public const string SOEnvironmentSettingPath = "Configs/SO/SOEnvironmentSetting";
+    public const string SOUIDebugToolSettingPath = "Configs/SO/SOUIDebugToolSetting";
 }

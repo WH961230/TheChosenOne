@@ -25,6 +25,13 @@ public class GameSystem {
         }
     }
 
+    private DebugToolSystem debugToolSystem = new DebugToolSystem();
+    public DebugToolSystem MyDebugToolSystem {
+        get {
+            return debugToolSystem;
+        }
+    }
+
     public void Init(Game game) {
         this.game = game;
         this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
@@ -34,18 +41,21 @@ public class GameSystem {
         uISystem.Init(this);
         environmentSystem.Init(this);
         characterSystem.Init(this);
+        debugToolSystem.Init(this);
     }
 
     public void Update() {
         uISystem.Update();
         environmentSystem.Update();
         characterSystem.Update();
+        debugToolSystem.Update();
     }
 
     public void Clear() {
         uISystem.Clear();
         environmentSystem.Clear();
         characterSystem.Clear();
+        debugToolSystem.Clear();
     }
 
     private void InstanceRoot() {

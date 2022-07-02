@@ -18,7 +18,7 @@ public class CharacterGameObj : GameObj {
         this.characterComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterData = (CharacterData)data;
         // 注册重力组件
-        // game.MyGameComponent.MyGravityComponent.Register(characterComponent.CC);
+        game.MyGameComponent.MyGravityComponent.Register(characterComponent.CC);
     }
 
     public override void Clear() {
