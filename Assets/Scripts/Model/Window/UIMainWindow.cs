@@ -18,10 +18,10 @@ public class UIMainWindow : Window {
             // 日志
             Debug.Log("创建角色");
 
-            // 创建场景
+            // 读取场景配置 创建场景实例
             game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
 
-            // 创建主玩家
+            // 读取玩家生成点 创建主玩家
             game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
 
             // 关闭界面

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 57229295734186961}
   - component: {fileID: 57229295734186962}
   - component: {fileID: 57229295734186963}
+  - component: {fileID: 6831116731946871178}
   m_Layer: 0
   m_Name: SceneItemFloor
   m_TagString: Untagged
@@ -94,3 +95,16 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6831116731946871178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57229295734186972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914906634d8740d4eb71601fda0af25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneItemSign: SceneItemFloor

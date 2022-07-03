@@ -16,3 +16,11 @@ MonoBehaviour:
     type: 3}
   SceneItemHouse: {fileID: 8198302197486460903, guid: 75a0589ab6c3c0449a2e9c05c90547ae,
     type: 3}
+  SceneItemFloorInfoList:
+  - MySceneItemFloorVector3: {x: 0, y: 0, z: 0}
+    MySceneItemFloorQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  - MySceneItemFloorVector3: {x: 0, y: 0, z: 0}
+    MySceneItemFloorQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  - MySceneItemFloorVector3: {x: 0, y: 0, z: 0}
+    MySceneItemFloorQuaternion: {x: 0, y: 0, z: 0, w: 0}
+  SceneItemHouseInfoList: []
