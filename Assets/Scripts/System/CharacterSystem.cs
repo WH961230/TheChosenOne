@@ -28,8 +28,8 @@ public class CharacterSystem : GameSys {
             MyName = "Character",
             MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
             MyTranInfo = new TranInfo() {
-                MyPos = new Vector3(0,2,0),
-                MyRot = new Quaternion(0, 0, 0, 0),
+                MyPos = MySoCharacterSetting.CharacterInfo.MyCharacterPoint,
+                MyRot = MySoCharacterSetting.CharacterInfo.MyCharacterQuaternion,
                 MyRootTran = GameData.CharacterRoot,
             },
             IsMainCharacter = isMainCharacter,

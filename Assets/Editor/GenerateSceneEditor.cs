@@ -21,6 +21,11 @@ public class GenerateSceneEditor : MonoBehaviour {
                 }
             }
         }
+
+        var character = FindObjectOfType<CharacterEditorComponent>();
+        var soCharacter = Resources.Load<SOCharacterSetting>(PathData.SOCharacterSettingPath);
+        soCharacter.CharacterInfo.MyCharacterPoint = character.transform.position;
+        soCharacter.CharacterInfo.MyCharacterQuaternion = character.transform.rotation;
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

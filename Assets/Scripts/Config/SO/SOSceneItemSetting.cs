@@ -32,4 +32,3 @@ public struct SceneItemPrefabInfo {
     public string MyItemSign;
     public GameObject MySceneItemPrefab;
 }
-
