@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8198302197486460900}
   - component: {fileID: 5239403036315880356}
   m_Layer: 0
-  m_Name: SceneItemHouse
+  m_Name: SceneItemHouse_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914906634d8740d4eb71601fda0af25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneItemSign: SceneItemHouse
+  SceneItemSign: SceneItemHouse_1
 --- !u!1 &8198302197928119988
 GameObject:
   m_ObjectHideFlags: 0

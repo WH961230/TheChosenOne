@@ -24,21 +24,19 @@ public class EnvironmentSystem : GameSys {
     }
 
     public void InstanceEnvironment() {
-        InstanceSceneItem(new SceneItemData() {
-            MyName = "SceneFloor",
-            MyObj = Object.Instantiate(soSceneItemSetting.SceneItemFloor),
-            MyTranInfo = new TranInfo() {
-                MyRootTran = GameData.EnvironmentRoot,
-            },
-        });
-
-        InstanceSceneItem(new SceneItemData() {
-           MyName = "SceneHouse",
-           MyObj = Object.Instantiate(soSceneItemSetting.SceneItemHouse),
-           MyTranInfo = new TranInfo() {
-               MyRootTran = GameData.EnvironmentRoot,
-           }
-        });
+        foreach (var item in soSceneItemSetting.SceneItemInfoList) {
+            if (soSceneItemSetting.TryGetSceneItemPrefabBySign(item.MyItemSign, out var prefab)) {
+                InstanceSceneItem(new SceneItemData() {
+                    MyName = item.MyItemSign,
+                    MyObj = Object.Instantiate(prefab),
+                    MyTranInfo = new TranInfo() {
+                        MyPos = item.MySceneItemVector3,
+                        MyRot = item.MySceneItemQuaternion,
+                        MyRootTran = GameData.EnvironmentRoot,
+                    },
+                });
+            }
+        }
     }
 
     private void InstanceSceneItem(SceneItemData sceneItemData) {
