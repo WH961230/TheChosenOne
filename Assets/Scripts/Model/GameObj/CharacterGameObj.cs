@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class CharacterGameObj : GameObj {
     private CharacterData characterData;
@@ -13,16 +14,17 @@ public class CharacterGameObj : GameObj {
     
     // 跳跃参数
     private float jumpTimer = -1;
+    
+    // 其他参数
+    private bool isInitPos;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.game = game;
         this.characterComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterData = (CharacterData)data;
-        characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
-        characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;
-        EditorApplication.isPaused = true;
-        // 注册重力组件
-        game.MyGameComponent.MyGravityComponent.Register(characterComponent.CC);
+
+        characterComponent.Body.transform.position = MyData.MyTranInfo.MyPos;
+        characterComponent.Body.transform.rotation = MyData.MyTranInfo.MyRot;
     }
 
     public override void Clear() {
@@ -68,7 +70,7 @@ public class CharacterGameObj : GameObj {
 
     private Vector3 JumpBehaviour(Vector3 moveVec) {
         var config = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting;
-
+        var environmentConfig = game.MyGameSystem.MyEnvironmentSystem.mySoEnvironmentSetting;
         // 计时中
         if (jumpTimer > 0) {
             jumpTimer -= Time.deltaTime;
@@ -77,13 +79,16 @@ public class CharacterGameObj : GameObj {
             return moveVec;
         }
 
-        jumpTimer = 0;
-        characterData.IsJumping = false;
-        characterData.IsLanding = true;
-
-        if (characterComponent.CC.isGrounded) {
-            characterData.IsLanding = false;
-            jumpTimer = -1;
+        if (characterData.IsLanding) {
+            moveVec -= MyObj.transform.up * environmentConfig.GravitySpeed * Time.deltaTime;
+            if (characterComponent.CC.isGrounded) {
+                characterData.IsLanding = false;
+                jumpTimer = -1;
+            }
+        } else {
+            jumpTimer = 0;
+            characterData.IsJumping = false;
+            characterData.IsLanding = true;
         }
 
         // 按下跳跃键

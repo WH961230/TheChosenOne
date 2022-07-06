@@ -4,12 +4,6 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-/// <summary>
-/// 自动生成脚本工具
-/// 弹出窗口
-/// 根据输入的实体名称分别创建：
-/// 【Data】【Entity】【Window】【Data】【Component】脚本
-/// </summary>
 public class GenerateScriptEditor : EditorWindow {
     private string className;
     private bool isHaveData; // 是否有数据
@@ -18,7 +12,10 @@ public class GenerateScriptEditor : EditorWindow {
     private bool isHaveWindow; // 是否有窗口
     private bool isHaveComponent; // 是否有组件
     private bool isHaveSOSetting; // 是否有配置
-    [MenuItem("Assets/自动生成模板类")]
+
+    #region 生成
+
+    [MenuItem("Assets/生成/自动生成模板类")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命
         Rect _rect = new Rect(1000, 1000, 500, 200);
@@ -57,13 +54,6 @@ public class GenerateScriptEditor : EditorWindow {
         }
     }
 
-    /// <summary>
-    /// 创建脚本
-    /// </summary>
-    /// <param name="inputPath">输入模板路径</param>
-    /// <param name="outputPath">输出模板路径</param>
-    /// <param name="className">类名</param>
-    /// <param name="striptType">脚本类型</param>
     private static void CreateStript(string inputPath, string outputPath, string className, string front, string end) {
         if (inputPath.EndsWith(".txt")) {
             var streamReader = new StreamReader(inputPath);
@@ -80,6 +70,8 @@ public class GenerateScriptEditor : EditorWindow {
             AssetDatabase.ImportAsset(createPath);
         }
     }
+
+    #endregion
 
     private void OnGUI() {
         className = EditorGUILayout.TextField("输入文字:", className, GUILayout.Width(300));

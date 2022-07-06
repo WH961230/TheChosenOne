@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public class SceneItemData : Data {
+﻿public class SceneItemData : Data {
+    
 }

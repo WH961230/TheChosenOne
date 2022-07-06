@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 
 public class EnvironmentSystem : GameSys {
-    private SOSceneItemSetting soSceneItemSetting;
-    public SOSceneItemSetting MySoSceneItemSetting {
+    private SOSceneBuildingSetting soSceneBuildingSetting;
+    public SOSceneBuildingSetting MySoSceneBuildingSetting {
         get {
-            return soSceneItemSetting;
+            return soSceneBuildingSetting;
+        }
+    }
+
+    private SOEnvironmentSetting soEnvironmentSetting;
+    public SOEnvironmentSetting mySoEnvironmentSetting {
+        get {
+            return soEnvironmentSetting;
         }
     }
 
@@ -12,7 +19,8 @@ public class EnvironmentSystem : GameSys {
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
         this.gameSystem = gameSystem;
-        soSceneItemSetting = Resources.Load<SOSceneItemSetting>(PathData.SOSceneItemSettingPath);
+        soSceneBuildingSetting = Resources.Load<SOSceneBuildingSetting>(PathData.SOSceneBuildingSettingPath);
+        soEnvironmentSetting = Resources.Load<SOEnvironmentSetting>(PathData.SOEnvironmentSettingPath);
     }
 
     public override void Update() {
@@ -23,23 +31,31 @@ public class EnvironmentSystem : GameSys {
         base.Clear();
     }
 
-    public void InstanceEnvironment() {
-        foreach (var item in soSceneItemSetting.SceneItemInfoList) {
-            if (soSceneItemSetting.TryGetSceneItemPrefabBySign(item.MyItemSign, out var prefab)) {
-                InstanceSceneItem(new SceneItemData() {
-                    MyName = item.MyItemSign,
-                    MyObj = Object.Instantiate(prefab),
-                    MyRootTran = GameData.EnvironmentRoot,
-                    MyTranInfo = new TranInfo() {
-                        MyPos = item.MySceneItemVector3,
-                        MyRot = item.MySceneItemQuaternion,
-                    },
-                });
+    private GameObject GetSceneBuildingBySign(string sign) {
+        foreach (var building in soSceneBuildingSetting.MySceneBuildingPrefabInfoList) {
+            if (sign.Contains(building.name)) {
+                return building;
             }
+        }
+
+        return null;
+    }
+
+    public void InstanceEnvironment() {
+        foreach (var item in soSceneBuildingSetting.MySceneBuildingInfoList) {
+            InstanceSceneBuilding(new SceneBuildingData() {
+                MyName = item.Sign,
+                MyObj = Object.Instantiate(GetSceneBuildingBySign(item.Sign)),
+                MyRootTran = GameData.EnvironmentRoot,
+                MyTranInfo = new TranInfo() {
+                    MyPos = item.Point,
+                    MyRot = item.Quaternion,
+                },
+            });
         }
     }
 
-    private void InstanceSceneItem(SceneItemData sceneItemData) {
-        gameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
+    private void InstanceSceneBuilding(SceneBuildingData sceneBuildingData) {
+        gameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
     }
 }

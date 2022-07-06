@@ -7,6 +7,7 @@ public static class GameData {
     public static Transform CharacterRoot;
     public static Transform AudioRoot;
     public static Transform EnvironmentRoot;
+    public static Transform ItemRoot;
     public static Transform CameraRoot;
     public static Transform LightRoot;
     

@@ -3,29 +3,12 @@
 public class GameObj : IGameObj {
     public Data MyData;
     private GameObject myObj;
-    private Transform myTransform;
 
     protected GameObject MyObj {
         get { return myObj; }
         set { myObj = value; }
     }
 
-    protected Transform MyTransform {
-        get {
-            if (null != MyObj) {
-                return MyObj.transform;
-            }
-
-            return null;
-        }
-        set {
-            if (null != MyObj) {
-                LogSystem.PrintE($"SetTransform name:{MyData.MyName} pos:{value.position} rot:{value.rotation}");
-                MyTransform = value;
-            }
-        }
-    }
-    
     public virtual void Init(Game game, Data data) {
         this.MyData = data;
         this.MyData.InstanceID = MyData.MyObj.GetInstanceID();

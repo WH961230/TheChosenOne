@@ -39,6 +39,13 @@ public class GameSystem {
         }
     }
 
+    private ItemSystem itemSystem = new ItemSystem();
+    public ItemSystem MyItemSystem {
+        get {
+            return itemSystem;
+        }
+    }
+
     public void Init(Game game) {
         this.game = game;
         this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
@@ -48,6 +55,7 @@ public class GameSystem {
 
         uISystem.Init(this);
         environmentSystem.Init(this);
+        itemSystem.Init(this);
         cameraSystem.Init(this);
         characterSystem.Init(this);
         debugToolSystem.Init(this);
@@ -56,6 +64,7 @@ public class GameSystem {
     public void Update() {
         uISystem.Update();
         environmentSystem.Update();
+        itemSystem.Update();
         cameraSystem.Update();
         characterSystem.Update();
         debugToolSystem.Update();
@@ -64,13 +73,14 @@ public class GameSystem {
     public void Clear() {
         uISystem.Clear();
         environmentSystem.Clear();
+        itemSystem.Clear();
         cameraSystem.Clear();
         characterSystem.Clear();
         debugToolSystem.Clear();
     }
 
     private void InstanceSwitch() {
-        GameData.IfShowLog = true;
+        GameData.IfShowLog = false;
     }
 
     private void InstanceRoot() {
@@ -88,6 +98,9 @@ public class GameSystem {
 
         GameData.EnvironmentRoot = new GameObject("EnvironmentRoot").transform;
         GameData.EnvironmentRoot.SetParent(gameRoot);
+
+        GameData.ItemRoot = new GameObject("ItemRoot").transform;
+        GameData.ItemRoot.SetParent(gameRoot);
 
         GameData.CameraRoot = new GameObject("CameraRoot").transform;
         GameData.CameraRoot.SetParent(gameRoot);
