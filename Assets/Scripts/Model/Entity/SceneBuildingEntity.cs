@@ -1,8 +1,8 @@
-﻿public class SceneItemEntity : Entity {
-    private SceneItemData sceneitemData;
+﻿public class SceneBuildingEntity : Entity {
+    private SceneBuildingData sceneBuildingData;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
-        this.sceneitemData = (SceneItemData)data;
+        this.sceneBuildingData = (SceneBuildingData)data;
     }
 
     public override void Update() {

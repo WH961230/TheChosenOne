@@ -15,8 +15,6 @@ public class UIMainWindow : Window {
         Open();
         
         uiMainComponent.MyButton.onClick.AddListener(() => {
-            // 日志
-            Debug.Log("创建角色");
 
             // 读取场景配置 创建场景实例
             game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();

@@ -13,10 +13,31 @@ MonoBehaviour:
   m_Name: SOSceneBuildingSetting
   m_EditorClassIdentifier: 
   MySceneBuildingPrefabInfoList:
-  - MySign: 
-    MyPrefab: {fileID: 0}
-  - MySign: 
-    MyPrefab: {fileID: 0}
-  - MySign: 
-    MyPrefab: {fileID: 0}
-  MySceneBuildingInfoList: []
+  - {fileID: 57229295734186972, guid: 529ef7d5b663d04449ca021492b89fe6, type: 3}
+  - {fileID: 8198302197486460903, guid: 75a0589ab6c3c0449a2e9c05c90547ae, type: 3}
+  - {fileID: 8198302197486460903, guid: afe539796d9dd2145a8d7e0a199e2718, type: 3}
+  MySceneBuildingInfoList:
+  - Sign: SceneBuildingFloor
+    Point: {x: 0, y: 0, z: 0}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingFloor
+    Point: {x: -100, y: 0, z: 0}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingHouse_1
+    Point: {x: -120.06213, y: 0, z: -2.191706}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingHouse_2
+    Point: {x: -102.67027, y: 0, z: 17.78798}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingHouse_2
+    Point: {x: -128.25551, y: 0, z: 9.458073}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingFloor
+    Point: {x: 100, y: 0, z: 0}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingHouse_1
+    Point: {x: -70.21669, y: 0, z: -30.74031}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SceneBuildingHouse_1
+    Point: {x: -116.29373, y: 0, z: 23.22572}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
