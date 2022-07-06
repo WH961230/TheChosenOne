@@ -27,11 +27,14 @@ public class CharacterSystem : GameSys {
         InstanceCharacter(new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
+            MyRootTran = GameData.CharacterRoot,
+
+            IfInitMyObj = false,
             MyTranInfo = new TranInfo() {
                 MyPos = MySoCharacterSetting.CharacterInfo.MyCharacterPoint,
                 MyRot = MySoCharacterSetting.CharacterInfo.MyCharacterQuaternion,
-                MyRootTran = GameData.CharacterRoot,
             },
+
             IsMainCharacter = isMainCharacter,
             CharacterCamereInstanceId = instanceId,
         });

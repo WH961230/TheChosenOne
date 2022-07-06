@@ -17,7 +17,7 @@ public class GameObjFeature : IFeature {
 
     // 物体注册 自动注入 实体注册
     public void Register<T>(Data data) where T : GameObj, new() {
-        Debug.Log($"注册 GameObj => data.Name: {data.MyName}");
+        LogSystem.Print($"注册 GameObj => data.Name: {data.MyName}");
         gameObjManager.Register<T>(game, data);
     }
 

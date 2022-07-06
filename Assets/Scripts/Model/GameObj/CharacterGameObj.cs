@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterGameObj : GameObj {
@@ -17,6 +18,9 @@ public class CharacterGameObj : GameObj {
         this.game = game;
         this.characterComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterData = (CharacterData)data;
+        characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
+        characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;
+        EditorApplication.isPaused = true;
         // 注册重力组件
         game.MyGameComponent.MyGravityComponent.Register(characterComponent.CC);
     }
@@ -35,7 +39,9 @@ public class CharacterGameObj : GameObj {
         // 跳跃行为
         moveVec = JumpBehaviour(moveVec);
 
-        CCMove(moveVec);
+        if (moveVec != Vector3.zero) {
+            CCMove(moveVec);
+        }
     }
 
     private void EyeBehaviour() {

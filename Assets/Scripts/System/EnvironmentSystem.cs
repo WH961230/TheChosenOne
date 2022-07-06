@@ -29,10 +29,10 @@ public class EnvironmentSystem : GameSys {
                 InstanceSceneItem(new SceneItemData() {
                     MyName = item.MyItemSign,
                     MyObj = Object.Instantiate(prefab),
+                    MyRootTran = GameData.EnvironmentRoot,
                     MyTranInfo = new TranInfo() {
                         MyPos = item.MySceneItemVector3,
                         MyRot = item.MySceneItemQuaternion,
-                        MyRootTran = GameData.EnvironmentRoot,
                     },
                 });
             }

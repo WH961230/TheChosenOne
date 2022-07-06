@@ -22,4 +22,94 @@ MonoBehaviour:
   - MyItemSign: SceneItemHouse_2
     MySceneItemPrefab: {fileID: 8198302197486460903, guid: afe539796d9dd2145a8d7e0a199e2718,
       type: 3}
-  SceneItemInfoList: []
+  SceneItemInfoList:
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 18.2, y: 0, z: -129.3}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 0, y: 0, z: 100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -89.45291, y: 0, z: -114.689896}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: -80.324905, y: 0, z: 18.370853}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: 53.634968, y: 0, z: 27.535385}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 0, y: 0, z: 0}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -5.7, y: 0, z: 114.9}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -132, y: 0, z: 117.6}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: -100, y: 0, z: -100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 0, y: 0, z: -100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 100, y: 0, z: 0}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 49.6, y: 0, z: -83.7}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 46.2, y: 0, z: 71.4}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 108.4, y: 0, z: -132.8}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 131, y: 0, z: 116.2}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -80.8, y: 0, z: -25.8}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -29.5, y: 0, z: -70.2}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: -100, y: 0, z: 0}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 6, y: 0, z: -23.3}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: -100, y: 0, z: 100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -47.6, y: 0, z: 41.5}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: -1.9308302, y: 0, z: 42.942432}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: 85.7, y: 0, z: -2}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 100, y: 0, z: 100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: 109.309845, y: 0, z: -57.928925}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemFloor
+    MySceneItemVector3: {x: 100, y: 0, z: -100}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: 89.94632, y: 0, z: 78.25771}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_1
+    MySceneItemVector3: {x: -107.889336, y: 0, z: -80.967224}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: -28.738222, y: 0, z: -107.129684}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  - MyItemSign: SceneItemHouse_2
+    MySceneItemVector3: {x: -45.89886, y: 0, z: -39.186996}
+    MySceneItemQuaternion: {x: -0, y: -0, z: -0, w: 1}

@@ -17,4 +17,7 @@ public static class GameData {
     
     // Light
     public static Light MainLight;
+    
+    // Log Open or not
+    public static bool IfShowLog;
 }

@@ -43,6 +43,7 @@ public class GameSystem {
         this.game = game;
         this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
 
+        InstanceSwitch();
         InstanceRoot();
 
         uISystem.Init(this);
@@ -66,6 +67,10 @@ public class GameSystem {
         cameraSystem.Clear();
         characterSystem.Clear();
         debugToolSystem.Clear();
+    }
+
+    private void InstanceSwitch() {
+        GameData.IfShowLog = true;
     }
 
     private void InstanceRoot() {

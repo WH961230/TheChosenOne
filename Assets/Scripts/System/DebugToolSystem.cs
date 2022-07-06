@@ -23,9 +23,7 @@ public class DebugToolSystem : GameSys {
         InstanceUIDebugTool(new UIDebugToolData() {
             MyObj = Object.Instantiate(souiDebugToolSetting.MyUIDebugToolWin),
             MyName = "DebugTool",
-            MyTranInfo = {
-                MyRootTran = GameData.UIRoot
-            }
+            MyRootTran = GameData.UIRoot,
         });
     }
 

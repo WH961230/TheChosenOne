@@ -27,9 +27,7 @@ public class CameraSystem : GameSys {
             var instanceId = InstanceCamera(new CameraData() {
                 MyName = "Camera",
                 MyObj = Object.Instantiate(camera.gameObject),
-                MyTranInfo = new TranInfo() {
-                    MyRootTran = GameData.CameraRoot,
-                },
+                MyRootTran = GameData.CameraRoot,
             });
 
             // 赋值全局相机参数

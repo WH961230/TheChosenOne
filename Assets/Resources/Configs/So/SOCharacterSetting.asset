@@ -15,7 +15,8 @@ MonoBehaviour:
   MoveSpeed: 10
   JumpSpeed: 15
   JumpContinueTime: 0.5
-  CharacterCamera: {fileID: 570146280814098186, guid: 12de0a24b01794644873bdce56f1bbcb,
-    type: 3}
   CharacterPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
     type: 3}
+  CharacterInfo:
+    MyCharacterPoint: {x: -123.3, y: 0.54, z: -52}
+    MyCharacterQuaternion: {x: -0, y: -0, z: 0, w: 1}

@@ -8,10 +8,10 @@ public class UISystem : GameSys {
             MyName = "mainScreen",
             MyType = new DataType() {IsWindowPrefab = true,},
             MyObj = Object.Instantiate(gameSystem.soGameSetting.UIMainPrefab),
+            MyRootTran = GameData.UIRoot,
             MyTranInfo = new TranInfo() {
                 MyPos = Vector3.zero,
                 MyRot = new Quaternion(0, 0, 0, 0),
-                MyRootTran = GameData.UIRoot,
             }
         });
     }
