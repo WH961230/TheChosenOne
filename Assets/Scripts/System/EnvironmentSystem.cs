@@ -56,6 +56,6 @@ public class EnvironmentSystem : GameSys {
     }
 
     private void InstanceSceneBuilding(SceneBuildingData sceneBuildingData) {
-        gameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
+        // gameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
     }
 }

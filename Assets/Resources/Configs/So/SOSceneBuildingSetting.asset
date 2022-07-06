@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b9d14cf1b5b7c4eaad7eddf4d696a6, type: 3}
   m_Name: SOSceneBuildingSetting
   m_EditorClassIdentifier: 
-  MySceneBuildingPrefabInfoList: []
+  MySceneBuildingPrefabInfoList:
+  - MySign: 
+    MyPrefab: {fileID: 0}
+  - MySign: 
+    MyPrefab: {fileID: 0}
+  - MySign: 
+    MyPrefab: {fileID: 0}
   MySceneBuildingInfoList: []
