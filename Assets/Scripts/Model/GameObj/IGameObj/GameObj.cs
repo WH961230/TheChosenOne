@@ -32,6 +32,10 @@ public class GameObj : IGameObj {
     public virtual void Clear() {
     }
 
+    public T GetData<T>() where T : Data {
+        return (T)MyData;
+    }
+
     public virtual void Update() {
     }
 }

@@ -1,8 +1,38 @@
 ﻿using UnityEngine;
 
 public class GameSystem {
+
+    #region 配置
+
     public SOGameSetting soGameSetting;
+
+    #endregion
+
+    #region 上级
+
     private Game game;
+
+    public GameObjFeature MyGameObjFeature {
+        get {
+            return game.MyGameObjFeature;
+        }
+    }
+
+    public WindowFeature MyWindowFeature {
+        get {
+            return game.MyWindowFeature;
+        }
+    }
+
+    public EntityFeature MyEntityFeature {
+        get {
+            return game.MyEntityFeature;
+        }
+    }
+
+    #endregion
+
+    #region 子系统
 
     private CharacterSystem characterSystem = new CharacterSystem();
     public CharacterSystem MyCharacterSystem {
@@ -46,6 +76,25 @@ public class GameSystem {
         }
     }
 
+    private InputSystem inputSystem = new InputSystem();
+    public InputSystem MyInputSystem {
+        get {
+            return inputSystem;
+        }
+    }
+
+    #endregion
+
+    #region 消息
+
+    public GameMessageCenter MyGameMessageCenter {
+        get {
+            return game.MyGameMessageCenter;
+        }
+    }
+
+    #endregion
+
     public void Init(Game game) {
         this.game = game;
         this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
@@ -59,6 +108,7 @@ public class GameSystem {
         cameraSystem.Init(this);
         characterSystem.Init(this);
         debugToolSystem.Init(this);
+        inputSystem.Init(this);
     }
 
     public void Update() {
@@ -68,6 +118,7 @@ public class GameSystem {
         cameraSystem.Update();
         characterSystem.Update();
         debugToolSystem.Update();
+        inputSystem.Update();
     }
 
     public void Clear() {
@@ -77,6 +128,7 @@ public class GameSystem {
         cameraSystem.Clear();
         characterSystem.Clear();
         debugToolSystem.Clear();
+        inputSystem.Clear();
     }
 
     private void InstanceSwitch() {
@@ -113,9 +165,9 @@ public class GameSystem {
         where T2 : GameObj, new()
         where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        game.Get<GameObjFeature>().Register<T2>(data);
-        game.Get<WindowFeature>().Register<T1>(data);
-        game.Get<EntityFeature>().Register<T3>(data);
+        game.MyGameObjFeature.Register<T2>(data);
+        game.MyWindowFeature.Register<T1>(data);
+        game.MyEntityFeature.Register<T3>(data);
         return data.InstanceID;
     }
 

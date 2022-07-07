@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 
 public class CharacterSystem : GameSys {
     private SOCharacterSetting soCharacterSetting;
+
     public SOCharacterSetting MySoCharacterSetting {
-        get {
-            return soCharacterSetting;
-        }
+        get { return soCharacterSetting; }
     }
 
     private GameSystem gameSystem;
+
     public override void Init(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
         soCharacterSetting = Resources.Load<SOCharacterSetting>(PathData.SOCharacterSettingPath);
+        gameSystem.MyCameraSystem.InstanceCamera(CameraType.CharacterCamera);
     }
 
     public override void Update() {
@@ -23,8 +25,7 @@ public class CharacterSystem : GameSys {
     }
 
     public void InstanceCharacter(bool isMainCharacter) {
-        var instanceId = gameSystem.MyCameraSystem.InstanceCamera(CameraType.CharacterCamera);
-        InstanceCharacter(new CharacterData() {
+        var instanceId = InstanceCharacter(new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
             MyRootTran = GameData.CharacterRoot,
@@ -36,11 +37,17 @@ public class CharacterSystem : GameSys {
             },
 
             IsMainCharacter = isMainCharacter,
-            CharacterCamereInstanceId = instanceId,
         });
+        if (isMainCharacter) {
+            if (GameData.MainCharacater == -1) {
+                GameData.MainCharacater = instanceId;
+                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId)
+                    .GetData<CharacterData>().GetComponent<CharacterComponent>();
+            }
+        }
     }
 
-    private void InstanceCharacter(CharacterData characterData) {
-        gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
+    private int InstanceCharacter(CharacterData characterData) {
+        return gameSystem.InstanceWindow<CharacterWindow, CharacterGameObj, CharacterEntity>(characterData);
     }
 }

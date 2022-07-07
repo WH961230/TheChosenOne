@@ -1,30 +1,43 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.XR;
+﻿using UnityEngine;
 
 public class CharacterGameObj : GameObj {
-    private CharacterData characterData;
+    private float moveSpeed = 0.0f; // 移动速度
+    private float xRotate = 0.0f; // 视角参数
+    private float yRotate = 0.0f; // 视角参数
+    private float jumpTimer = -1; // 跳跃参数
+    private Vector3 moveVector = Vector3.zero; // 
+
+    private SOCharacterSetting soCharacterSetting;
+
     private CharacterComponent characterComponent;
+    public CharacterComponent MyCharacterComponent {
+        get { return characterComponent; }
+    }
+
+    private CharacterData characterData;
+
     private Game game;
 
-    // 视角参数
-    private float xRotate = 0.0f;
-    private float yRotate = 0.0f;
-    
-    // 跳跃参数
-    private float jumpTimer = -1;
-    
-    // 其他参数
-    private bool isInitPos;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.game = game;
-        this.characterComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterData = (CharacterData)data;
+        characterData.MyComponent = MyObj.transform.GetComponent<CharacterComponent>();
+        characterComponent = (CharacterComponent)characterData.MyComponent;
 
         characterComponent.Body.transform.position = MyData.MyTranInfo.MyPos;
         characterComponent.Body.transform.rotation = MyData.MyTranInfo.MyRot;
+
+        InitConfigParam();
+        RegisterMessage();
+    }
+
+    private void RegisterMessage() {
+        game.MyGameMessageCenter.Register<KeyCode>(GameMessageConstants.INPUT_KEY, MoveBehaviour);
+    }
+
+    private void InitConfigParam() {
+        soCharacterSetting = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting;
     }
 
     public override void Clear() {
@@ -33,73 +46,100 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
-        var moveVec = Vector3.zero;
+        Debug.Log($"jump:{characterData.IsJumping} land:{characterData.IsLanding}");
+        BehaviourCenter();
+        characterComponent.CC.Move(moveVector);
+    }
+
+    private void BehaviourCenter() {
         // 视角旋转
         EyeBehaviour();
-        // 移动行为
-        moveVec = MoveBehaviour(moveVec);
         // 跳跃行为
-        moveVec = JumpBehaviour(moveVec);
-
-        if (moveVec != Vector3.zero) {
-            CCMove(moveVec);
-        }
+        JumpBehaviour();
     }
 
     private void EyeBehaviour() {
-        yRotate += InputSystem.GetAxis("Mouse X");
-        xRotate -= InputSystem.GetAxis("Mouse Y");
-        characterComponent.Head.transform.rotation = Quaternion.Euler(xRotate, yRotate, 0);
+        // var pressAlt = InputSystem.GetKey(KeyCode.LeftAlt) || InputSystem.GetKey(KeyCode.RightAlt);
+        // yRotate += InputSystem.GetAxis("Mouse X");
+        // xRotate -= InputSystem.GetAxis("Mouse Y");
+        //
+        // Transform rotTran = null;
+        // if (pressAlt) {
+        //     rotTran = characterComponent.Head.transform;
+        // } else {
+        //     rotTran = characterComponent.Body.transform;
+        // }
+        //
+        // rotTran.rotation = Quaternion.Euler(xRotate, yRotate, 0);
     }
 
-    private Vector3 MoveBehaviour(Vector3 moveVec) {
-        var moveSpeed = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting.MoveSpeed;
-        var tran = MyObj.transform;
-        if (InputSystem.GetKey(KeyCode.W)) {
-            moveVec += tran.forward * moveSpeed * Time.deltaTime;
-        } else if (InputSystem.GetKey(KeyCode.S)) {
-            moveVec += -tran.forward * moveSpeed * Time.deltaTime;
-        } else if (InputSystem.GetKey(KeyCode.A)) {
-            moveVec += -tran.right * moveSpeed * Time.deltaTime;
-        } else if (InputSystem.GetKey(KeyCode.D)) {
-            moveVec += tran.right * moveSpeed * Time.deltaTime;
+    private bool CheckCanMove() {
+        return true;
+    }
+
+    private void MoveBehaviour(KeyCode keyCode) {
+        if (!CheckCanMove()) {
+            return;
         }
 
-        return moveVec;
+        // 获取不同的移动方向
+        Vector3 dir;
+        switch (keyCode) {
+            case KeyCode.W:
+                dir = characterComponent.Body.transform.forward;
+                break;
+            case KeyCode.S:
+                dir = -characterComponent.Body.transform.forward;
+                break;
+            case KeyCode.A:
+                dir = -characterComponent.Body.transform.right;
+                break;
+            case KeyCode.D:
+                dir = characterComponent.Body.transform.right;
+                break;
+            default:
+                return;
+        }
+
+        // 跳跃和降落获取空中移动速度
+        var moveSpeed = 0f;
+        if (characterData.IsJumping || characterData.IsLanding) {
+            moveSpeed = soCharacterSetting.AirMoveSpeed;
+        } else {
+            moveSpeed = soCharacterSetting.GroundMoveSpeed;
+        }
+
+        moveVector += dir * moveSpeed * Time.deltaTime;
     }
 
-    private Vector3 JumpBehaviour(Vector3 moveVec) {
+    private void JumpBehaviour() {
         var config = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting;
         var environmentConfig = game.MyGameSystem.MyEnvironmentSystem.mySoEnvironmentSetting;
         // 计时中
         if (jumpTimer > 0) {
             jumpTimer -= Time.deltaTime;
             characterData.IsJumping = true;
-            moveVec += MyObj.transform.up * config.JumpSpeed * Time.deltaTime;
-            return moveVec;
+            moveVector += MyObj.transform.up * config.JumpSpeed * Time.deltaTime;
+            return;
         }
 
+        // 降落中
         if (characterData.IsLanding) {
-            moveVec -= MyObj.transform.up * environmentConfig.GravitySpeed * Time.deltaTime;
+            moveVector -= MyObj.transform.up * environmentConfig.GravitySpeed * Time.deltaTime;
+            // 落地降落停止
             if (characterComponent.CC.isGrounded) {
                 characterData.IsLanding = false;
                 jumpTimer = -1;
             }
-        } else {
+        } else if (characterData.IsJumping || (!characterData.IsJumping && !characterComponent.CC.isGrounded)) {
             jumpTimer = 0;
             characterData.IsJumping = false;
             characterData.IsLanding = true;
         }
 
-        // 按下跳跃键
-        if (InputSystem.GetKeyDown(KeyCode.Space)) {
-            jumpTimer = config.JumpContinueTime;
-        }
-
-        return moveVec;
-    }
-
-    private void CCMove(Vector3 moveVec) {
-        characterComponent.CC.Move(moveVec);
+        // // 按下跳跃键
+        // if (InputSystem.GetKeyDown(KeyCode.Space)) {
+        //     jumpTimer = config.JumpContinueTime;
+        // }
     }
 }

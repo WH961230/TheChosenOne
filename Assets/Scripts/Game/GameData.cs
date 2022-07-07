@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class GameData {
     // Root
@@ -10,15 +9,21 @@ public static class GameData {
     public static Transform ItemRoot;
     public static Transform CameraRoot;
     public static Transform LightRoot;
-    
+
     // Camera
     public static int MainCamera = -1;
-    public static Camera MainCharacterCamera;
-    public static List<int> CharacterCamera = new List<int>();
-    
+    public static CameraComponent MainCameraComponent;
+
+    public static int CharacterCamera = -1;
+    public static CameraComponent CharacterCameraComponent;
+
     // Light
     public static Light MainLight;
-    
+
     // Log Open or not
     public static bool IfShowLog;
+
+    // MainCharacter
+    public static int MainCharacater = -1;
+    public static CharacterComponent MainCharacterComponent;
 }

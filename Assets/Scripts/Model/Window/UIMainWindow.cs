@@ -6,7 +6,7 @@ public class UIMainWindow : Window {
     private UIMainGameObj uiMainGameObj;
     public override void Init(Game game, Data data) {
         // 初始化界面
-        uiMainGameObj = (UIMainGameObj) game.Get<GameObjFeature>().Get(data.InstanceID);
+        uiMainGameObj = game.MyGameObjFeature.Get<UIMainGameObj>(data.InstanceID);
         uiMainComponent = uiMainGameObj.MyData.MyObj.transform.GetComponent<UIMainComponent>();
 
         this.game = game;

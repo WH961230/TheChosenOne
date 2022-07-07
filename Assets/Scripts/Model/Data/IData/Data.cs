@@ -3,14 +3,19 @@
 public class Data : IData{
     // 基本参数
     public string MyName;
-    public Transform MyRootTran; // 父物体
-    public DataType MyType;
-    public GameObject MyObj; // 使用资源池的方式加载
-
     public bool IfInitMyObj = true; // 是否加载期间使用初始化位置信息 默认使用
+    public int InstanceID = -1; // 从0开始算第一个
+
+    public GameObject MyObj; // 使用资源池的方式加载
+    public MonoBehaviour MyComponent; // 组件
+    public Transform MyRootTran; // 父物体
+
+    public DataType MyType;
     public TranInfo MyTranInfo;
 
-    public int InstanceID = -1; // 从0开始算第一个
+    public T GetComponent<T>() where T : MonoBehaviour {
+        return (T)MyComponent;
+    }
 }
 
 public struct TranInfo {

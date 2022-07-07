@@ -3,6 +3,7 @@
 public class GameObjFeature : IFeature {
     private GameObjManager gameObjManager = new GameObjManager();
     private Game game;
+
     public void Init(Game game) {
         this.game = game;
     }
@@ -29,7 +30,7 @@ public class GameObjFeature : IFeature {
         gameObjManager.Remove(gameObj);
     }
 
-    public GameObj Get(int id) {
-        return gameObjManager.Get(id);
+    public T Get<T>(int id) where T : GameObj, new() {
+        return (T)gameObjManager.Get(id);
     }
 }

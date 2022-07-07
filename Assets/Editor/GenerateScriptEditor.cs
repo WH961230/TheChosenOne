@@ -15,6 +15,20 @@ public class GenerateScriptEditor : EditorWindow {
 
     #region 生成
 
+    [MenuItem("Assets/生成/测试获取指定路径下的物体")]
+    public static void AA() {
+        string t = "Assets/Resources/Prefabs/Building";
+        var s = AssetDatabase.FindAssets("t:prefab", new string[] {
+            t
+        });
+        foreach (var id in s) {
+            var guidToAssetPath = AssetDatabase.GUIDToAssetPath(id);
+            var o = AssetDatabase.LoadAssetAtPath<GameObject>(guidToAssetPath);
+            GameObject.Instantiate(o);
+            Debug.Log(guidToAssetPath);
+        }
+    }
+
     [MenuItem("Assets/生成/自动生成模板类")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命

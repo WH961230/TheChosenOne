@@ -18,9 +18,13 @@ public class CameraSystem : GameSys {
         base.Clear();
     }
 
-    public int InstanceCamera(CameraType cameraType) {
+    public void InstanceCamera(CameraType cameraType) {
         if (GameData.MainCamera != -1 && cameraType == CameraType.MainCamera) {
-            Debug.LogError("【ERROR:主相机重复创建】");
+            LogSystem.Print("【ERROR:主相机重复创建】");
+        }
+
+        if (GameData.CharacterCamera != -1 && cameraType == CameraType.CharacterCamera) {
+            LogSystem.PrintE("玩家相机重复创建");
         }
 
         if (TryGetCamera(cameraType, out Camera camera)) {
@@ -28,19 +32,16 @@ public class CameraSystem : GameSys {
                 MyName = "Camera",
                 MyObj = Object.Instantiate(camera.gameObject),
                 MyRootTran = GameData.CameraRoot,
+                MyCameraType = cameraType,
             });
 
             // 赋值全局相机参数
             if (cameraType == CameraType.MainCamera) {
                 GameData.MainCamera = instanceId;
             } else if (cameraType == CameraType.CharacterCamera) {
-                GameData.CharacterCamera.Add(instanceId);
+                GameData.CharacterCamera = instanceId;
             }
-
-            return instanceId;
         }
-
-        return -1;
     }
 
     private bool TryGetCamera(CameraType cameraType, out Camera camera) {

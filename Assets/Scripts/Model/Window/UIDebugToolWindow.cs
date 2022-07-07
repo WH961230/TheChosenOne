@@ -1,9 +1,10 @@
 ﻿public class UIDebugToolWindow : Window {
     private UIDebugToolComponent uidebugtoolComponent;
+
     public override void Init(Game game, Data data) {
-        var obj = game.Get<GameObjFeature>().Get(data.InstanceID).MyData.MyObj;
+        var obj = game.MyGameObjFeature.Get<UIDebugToolGameObj>(data.InstanceID).MyData.MyObj;
         uidebugtoolComponent = obj.transform.GetComponent<UIDebugToolComponent>();
-        
+
         uidebugtoolComponent.MyDebugToolWin.SetActive(false);
         uidebugtoolComponent.MyDebugToolBtn.onClick.AddListener(() => {
             uidebugtoolComponent.MyDebugToolWin.SetActive(true);

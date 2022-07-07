@@ -3,7 +3,8 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/SOCharacterSetting")]
 public class SOCharacterSetting : ScriptableObject {
-    public float MoveSpeed;
+    public float GroundMoveSpeed; // 地面移动速度
+    public float AirMoveSpeed; // 空中移动速度
     public float JumpSpeed;
     public float JumpContinueTime;
     public GameObject CharacterPrefab;
