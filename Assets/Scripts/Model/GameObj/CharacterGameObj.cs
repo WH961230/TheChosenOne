@@ -29,11 +29,6 @@ public class CharacterGameObj : GameObj {
         characterComponent.Body.transform.rotation = MyData.MyTranInfo.MyRot;
 
         InitConfigParam();
-        RegisterMessage();
-    }
-
-    private void RegisterMessage() {
-        game.MyGameMessageCenter.Register<KeyCode>(GameMessageConstants.INPUT_KEY, MoveBehaviour);
     }
 
     private void InitConfigParam() {
@@ -46,59 +41,60 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
-        Debug.Log($"jump:{characterData.IsJumping} land:{characterData.IsLanding}");
+        // Debug.Log($"jump:{characterData.IsJumping} land:{characterData.IsLanding}");
         BehaviourCenter();
         characterComponent.CC.Move(moveVector);
+        moveVector = Vector3.zero;
     }
 
     private void BehaviourCenter() {
         // 视角旋转
         EyeBehaviour();
+        // 移动
+        MoveBehaviour();
         // 跳跃行为
         JumpBehaviour();
     }
 
     private void EyeBehaviour() {
-        // var pressAlt = InputSystem.GetKey(KeyCode.LeftAlt) || InputSystem.GetKey(KeyCode.RightAlt);
-        // yRotate += InputSystem.GetAxis("Mouse X");
-        // xRotate -= InputSystem.GetAxis("Mouse Y");
-        //
-        // Transform rotTran = null;
-        // if (pressAlt) {
-        //     rotTran = characterComponent.Head.transform;
-        // } else {
-        //     rotTran = characterComponent.Body.transform;
-        // }
-        //
-        // rotTran.rotation = Quaternion.Euler(xRotate, yRotate, 0);
+        var inputSystem = game.MyGameSystem.MyInputSystem;
+        var pressAlt = inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt);
+        yRotate += inputSystem.GetAxis("Mouse X");
+        xRotate -= inputSystem.GetAxis("Mouse Y");
+        
+        Transform rotTran = null;
+        if (pressAlt) {
+            rotTran = characterComponent.Head.transform;
+        } else {
+            rotTran = characterComponent.Body.transform;
+        }
+        
+        rotTran.rotation = Quaternion.Euler(xRotate, yRotate, 0);
     }
 
     private bool CheckCanMove() {
         return true;
     }
 
-    private void MoveBehaviour(KeyCode keyCode) {
+    private void MoveBehaviour() {
         if (!CheckCanMove()) {
             return;
         }
-
+        var inputSystem = game.MyGameSystem.MyInputSystem;
         // 获取不同的移动方向
-        Vector3 dir;
-        switch (keyCode) {
-            case KeyCode.W:
-                dir = characterComponent.Body.transform.forward;
-                break;
-            case KeyCode.S:
-                dir = -characterComponent.Body.transform.forward;
-                break;
-            case KeyCode.A:
-                dir = -characterComponent.Body.transform.right;
-                break;
-            case KeyCode.D:
-                dir = characterComponent.Body.transform.right;
-                break;
-            default:
-                return;
+        Vector3 dir = Vector3.zero;
+        if (inputSystem.GetKey(KeyCode.W)) {
+            dir = characterComponent.Body.transform.forward;
+        } else if (inputSystem.GetKey(KeyCode.S)) {
+            dir = -characterComponent.Body.transform.forward;
+        } else if (inputSystem.GetKey(KeyCode.A)) {
+            dir = -characterComponent.Body.transform.right;
+        } else if (inputSystem.GetKey(KeyCode.D)) {
+            dir = characterComponent.Body.transform.right;
+        }
+
+        if (dir == Vector3.zero) {
+            return;
         }
 
         // 跳跃和降落获取空中移动速度
@@ -137,9 +133,9 @@ public class CharacterGameObj : GameObj {
             characterData.IsLanding = true;
         }
 
-        // // 按下跳跃键
-        // if (InputSystem.GetKeyDown(KeyCode.Space)) {
-        //     jumpTimer = config.JumpContinueTime;
-        // }
+        // 按下跳跃键
+        if (game.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Space)) {
+            jumpTimer = config.JumpContinueTime;
+        }
     }
 }
