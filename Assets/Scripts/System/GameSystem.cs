@@ -55,13 +55,6 @@ public class GameSystem {
         }
     }
 
-    private DebugToolSystem debugToolSystem = new DebugToolSystem();
-    public DebugToolSystem MyDebugToolSystem {
-        get {
-            return debugToolSystem;
-        }
-    }
-
     private CameraSystem cameraSystem = new CameraSystem();
     public CameraSystem MyCameraSystem {
         get {
@@ -107,7 +100,6 @@ public class GameSystem {
         itemSystem.Init(this);
         cameraSystem.Init(this);
         characterSystem.Init(this);
-        debugToolSystem.Init(this);
         inputSystem.Init(this);
     }
 
@@ -117,7 +109,6 @@ public class GameSystem {
         itemSystem.Update();
         cameraSystem.Update();
         characterSystem.Update();
-        debugToolSystem.Update();
         inputSystem.Update();
     }
 
@@ -127,7 +118,6 @@ public class GameSystem {
         itemSystem.Clear();
         cameraSystem.Clear();
         characterSystem.Clear();
-        debugToolSystem.Clear();
         inputSystem.Clear();
     }
 

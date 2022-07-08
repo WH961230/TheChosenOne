@@ -38,6 +38,8 @@ public class CharacterSystem : GameSys {
             IsMainCharacter = isMainCharacter,
         });
         if (isMainCharacter) {
+            gameSystem.MyUISystem.InstanceUICharacterWindow();
+            gameSystem.MyUISystem.InstanceUIMapWindow();
             if (GameData.MainCharacater == -1) {
                 GameData.MainCharacater = instanceId;
                 GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId)

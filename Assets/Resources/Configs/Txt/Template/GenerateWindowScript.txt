@@ -1,7 +1,7 @@
 public class #ClassName#Window : Window {
     private #ClassName#Component #ClassParamName#Component;
     public override void Init(Game game, Data data) {
-        var obj = game.Get<GameObjFeature>().Get(data.InstanceID).MyData.MyObj;
+        var obj = game.Get<GameObjFeature>().Get<#ClassName#GameObj>(data.InstanceID).MyData.MyObj;
         #ClassParamName#Component = obj.transform.GetComponent<#ClassName#Component>();
     }
 

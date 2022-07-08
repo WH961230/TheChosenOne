@@ -10,6 +10,7 @@ public class SOCharacterSetting : ScriptableObject {
     public float JumpContinueTime;
     public GameObject CharacterPrefab;
     public CharacterInfo CharacterInfo;
+    public GameObject UICharacterPrefab;
 }
 
 [Serializable]

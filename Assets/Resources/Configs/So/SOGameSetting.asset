@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SOGameSetting
   m_EditorClassIdentifier: 
   UIRoot: {fileID: 3673120982881405315, guid: 13924aa26b39184448c6c48e162f9981, type: 3}
-  UIMainPrefab: {fileID: 5254782296119278451, guid: ac2b45270d9ac4048a64750c897e3de3,
+  UIMainPrefab: {fileID: 8344241130497481123, guid: ac2b45270d9ac4048a64750c897e3de3,
     type: 3}
-  MainCamera: {fileID: 1886768741109512614, guid: ca0ec590384652e41bb657df4df61826,
+  UIDebugToolPrefab: {fileID: 7351911305217655940, guid: a990f77dbe96fb543a38eb98b4e43047,
     type: 3}
-  MainLight: {fileID: 3972762694456857260, guid: a7c6a01197c88e64cb9009c540d95435,
+  UIMapPrefab: {fileID: 2435746718625182467, guid: dfdd860e77005eb4a8c7f55e6dcdc393,
     type: 3}

@@ -15,10 +15,12 @@ MonoBehaviour:
   GroundMoveSpeed: 5
   AirMoveSpeed: 2
   RunMoveSpeed: 8
-  JumpSpeed: 15
+  JumpSpeed: 5
   JumpContinueTime: 0.5
   CharacterPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
     type: 3}
   CharacterInfo:
     MyCharacterPoint: {x: -95.9, y: 6.6, z: 6.9}
     MyCharacterQuaternion: {x: -0, y: -0, z: -0, w: 1}
+  UICharacterPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
+    type: 3}
