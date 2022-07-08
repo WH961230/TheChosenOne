@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.XR.WSA.Input;
 
 public class CharacterSystem : GameSys {
     private SOCharacterSetting soCharacterSetting;
@@ -48,6 +47,6 @@ public class CharacterSystem : GameSys {
     }
 
     private int InstanceCharacter(CharacterData characterData) {
-        return gameSystem.InstanceWindow<CharacterWindow, CharacterGameObj, CharacterEntity>(characterData);
+        return gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }
 }

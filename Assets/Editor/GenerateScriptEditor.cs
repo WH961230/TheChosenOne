@@ -15,7 +15,7 @@ public class GenerateScriptEditor : EditorWindow {
 
     #region 生成
 
-    [MenuItem("Assets/生成/测试获取指定路径下的物体")]
+    [MenuItem("点这里/创建/测试获取指定路径下的物体")]
     public static void AA() {
         string t = "Assets/Resources/Prefabs/Building";
         var s = AssetDatabase.FindAssets("t:prefab", new string[] {
@@ -29,7 +29,7 @@ public class GenerateScriptEditor : EditorWindow {
         }
     }
 
-    [MenuItem("Assets/生成/自动生成模板类")]
+    [MenuItem("点这里/创建/自动生成模板类")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命
         Rect _rect = new Rect(1000, 1000, 500, 200);

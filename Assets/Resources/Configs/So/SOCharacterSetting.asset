@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroundMoveSpeed: 5
   AirMoveSpeed: 2
+  RunMoveSpeed: 8
   JumpSpeed: 15
   JumpContinueTime: 0.5
   CharacterPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,

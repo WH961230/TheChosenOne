@@ -8,7 +8,7 @@ public class SceneResourceEditor : EditorWindow {
     
     #region 收集
 
-    [MenuItem("Assets/收集/收集场景建筑信息到配置")]
+    [MenuItem("点这里/收集/收集场景建筑信息到配置")]
     public static void GatherSceneBuildingInfoToConfig() {
         var sceneBuildingList = FindObjectsOfType<SceneBuildingComponent>();
         var soSceneBuilding = Resources.Load<SOSceneBuildingSetting>(PathData.SOSceneBuildingSettingPath);
@@ -32,7 +32,7 @@ public class SceneResourceEditor : EditorWindow {
         AssetDatabase.Refresh();
     }
 
-    [MenuItem("Assets/收集/收集玩家信息到配置")]
+    [MenuItem("点这里/收集/收集玩家信息到配置")]
     public static void GatherCharacterInfoToConfig() {
         // 角色生成点信息
         var character = FindObjectOfType<CharacterComponent>();
@@ -44,7 +44,7 @@ public class SceneResourceEditor : EditorWindow {
         AssetDatabase.Refresh();
     }
 
-    [MenuItem("Assets/收集/收集场景物资信息到配置")]
+    [MenuItem("点这里/收集/收集场景物资信息到配置")]
     public static void GatherSceneItemInfoToConfig() {
         var sceneItemList = FindObjectsOfType<SceneItemComponent>();
         var soSceneItem = Resources.Load<SOSceneItemSetting>(PathData.SOSceneItemSettingPath);
@@ -64,7 +64,7 @@ public class SceneResourceEditor : EditorWindow {
 
     #region 创建
 
-    [MenuItem("Assets/创建/创建场景物品信息到配置")]
+    [MenuItem("点这里/创建/创建场景物品信息到配置")]
     public static void CreateSceneItemToConfig() {
         Rect _rect = new Rect(1000, 1000, 500, 200);
         SceneResourceEditor window = (SceneResourceEditor)GetWindowWithRect(typeof(SceneResourceEditor), _rect, true, "Window2 name");

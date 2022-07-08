@@ -67,6 +67,7 @@ public class CharacterGameObj : GameObj {
             rotTran = characterComponent.Head.transform;
         } else {
             rotTran = characterComponent.Body.transform;
+            xRotate = 0;
         }
         
         rotTran.rotation = Quaternion.Euler(xRotate, yRotate, 0);
@@ -102,7 +103,11 @@ public class CharacterGameObj : GameObj {
         if (characterData.IsJumping || characterData.IsLanding) {
             moveSpeed = soCharacterSetting.AirMoveSpeed;
         } else {
-            moveSpeed = soCharacterSetting.GroundMoveSpeed;
+            if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
+                moveSpeed = soCharacterSetting.RunMoveSpeed;
+            } else {
+                moveSpeed = soCharacterSetting.GroundMoveSpeed;
+            }
         }
 
         moveVector += dir * moveSpeed * Time.deltaTime;
