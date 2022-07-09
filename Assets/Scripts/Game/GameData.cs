@@ -26,4 +26,7 @@ public static class GameData {
     // MainCharacter
     public static int MainCharacater = -1;
     public static CharacterComponent MainCharacterComponent;
+
+    // switch official
+    public static bool IsOfficial;
 }

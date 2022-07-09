@@ -6,6 +6,21 @@ using UnityEngine;
 public class SOSceneItemSetting : ScriptableObject {
     public List<GameObject> MySceneItemPrefabList;
     public List<SceneItemInfo> MySceneItemInfoList;
+
+    public List<GameObject> MySceneItemPrefabOfficialList;
+
+    public List<GameObject> GetSceneItemPrefabList() {
+        if (GameData.IsOfficial) {
+            return MySceneItemPrefabOfficialList;
+        } else {
+            return MySceneItemPrefabList;
+        }
+    }
+
+    public List<SceneItemInfo> GetSceneItemInfoList() {
+        // 物资生成点相同
+        return MySceneItemInfoList;
+    }
 }
 
 [Serializable]

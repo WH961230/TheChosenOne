@@ -26,7 +26,7 @@ public class CharacterSystem : GameSys {
     public void InstanceCharacter(bool isMainCharacter) {
         var instanceId = InstanceCharacter(new CharacterData() {
             MyName = "Character",
-            MyObj = Object.Instantiate(MySoCharacterSetting.CharacterPrefab),
+            MyObj = Object.Instantiate(MySoCharacterSetting.GetCharacterPrefab()),
             MyRootTran = GameData.CharacterRoot,
 
             IfInitMyObj = false,

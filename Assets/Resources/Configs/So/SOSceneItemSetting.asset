@@ -16,33 +16,24 @@ MonoBehaviour:
   - {fileID: 6969426649003477898, guid: 1224b709b48b368488319761347e5be7, type: 3}
   - {fileID: 1339087864856239256, guid: 86409090ed5ce944fb36cced20905c2c, type: 3}
   MySceneItemInfoList:
-  - Point: {x: -45.597095, y: 0, z: 3.7423275}
+  - Point: {x: -3.7394779, y: 0.41818818, z: -26.159737}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -42.53885, y: 0, z: -18.921728}
+  - Point: {x: -19.504171, y: 0.5257908, z: -19.618496}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -17.58198, y: 0, z: -31.027658}
+  - Point: {x: 16.160976, y: 0.27709636, z: 8.262629}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -65.74821, y: 0, z: -5.075889}
+  - Point: {x: -18.80716, y: 0.48804584, z: 12.987016}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -61.821514, y: 0, z: -8.180132}
+  - Point: {x: -10.28101, y: 0.08124622, z: 13.593435}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -65.34465, y: 0, z: -9.856417}
+  - Point: {x: 9.189108, y: 0.054173037, z: -9.751125}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -17.64305, y: 0, z: -36.02533}
+  - Point: {x: -16.141802, y: 0.5842047, z: 18.985062}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -44.08916, y: 0, z: 8.136533}
+  - Point: {x: 9.128134, y: 0.1552694, z: 20.622787}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -37.438667, y: 0, z: -39.59763}
+  - Point: {x: -18.173275, y: 0.33039844, z: 4.2141705}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -39.977165, y: 0, z: -20.495293}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -39.719418, y: 0, z: -35.611187}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -34.462532, y: 0, z: -37.098595}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -48.361473, y: 0, z: 7.7907805}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -43.885117, y: 0, z: -22.430122}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -12.710188, y: 0, z: -33.808266}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  MySceneItemPrefabOfficialList:
+  - {fileID: 255447986775038416, guid: 8acfdd95657c4c54b8744b7cb465f612, type: 3}
+  - {fileID: 3260825020533608679, guid: 3dc73b94dd1a07a4eac2a57d9e50ea5e, type: 3}

@@ -17,6 +17,9 @@ public class UIMainWindow : Window {
             // 加载 DebugUI
             game.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
 
+            // 加载灯光
+            game.MyGameSystem.MyEnvironmentSystem.InstanceLight();
+
             // 读取场景配置 创建场景实例
             game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
 

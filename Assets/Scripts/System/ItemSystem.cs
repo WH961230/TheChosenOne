@@ -25,10 +25,12 @@ public class ItemSystem : GameSys {
 
     public void InstanceSceneItem() {
         var config = soSceneItemSetting;
+        var tempInfoList = config.GetSceneItemInfoList();
+        var tempPrefabList = config.GetSceneItemPrefabList();
         // 遍历生成点
-        foreach (var item in config.MySceneItemInfoList) {
-            var index = Random.Range(0, config.MySceneItemPrefabList.Count);
-            var obj = config.MySceneItemPrefabList[index];
+        foreach (var item in tempInfoList) {
+            var index = Random.Range(0, tempPrefabList.Count);
+            var obj = tempPrefabList[index];
             InstanceSceneItem(new SceneItemData() {
                 MyName = obj.name,
                 MyObj = Object.Instantiate(obj),

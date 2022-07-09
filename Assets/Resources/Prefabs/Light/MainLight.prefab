@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3972762694456857258}
   - component: {fileID: 3972762694456857259}
+  - component: {fileID: 5206381051276190056}
   m_Layer: 0
   m_Name: MainLight
   m_TagString: Untagged
@@ -43,7 +44,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -92,3 +93,15 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5206381051276190056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3972762694456857260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229ef99098758364abe0af8d0f8fb9e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

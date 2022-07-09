@@ -9,8 +9,17 @@ public class SOCharacterSetting : ScriptableObject {
     public float JumpSpeed;
     public float JumpContinueTime;
     public GameObject CharacterPrefab;
+    public GameObject CharacterOfficicalPrefab;
     public CharacterInfo CharacterInfo;
     public GameObject UICharacterPrefab;
+
+    public GameObject GetCharacterPrefab (){
+        if (GameData.IsOfficial) {
+            return CharacterOfficicalPrefab;
+        } else {
+            return CharacterPrefab;
+        }
+    }
 }
 
 [Serializable]

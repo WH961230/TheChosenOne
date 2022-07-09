@@ -123,6 +123,7 @@ public class GameSystem {
 
     private void InstanceSwitch() {
         GameData.IfShowLog = false;
+        GameData.IsOfficial = game.IsOfficial;
     }
 
     private void InstanceRoot() {

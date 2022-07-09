@@ -24,4 +24,5 @@
     public const string SOEnvironmentSettingPath = "Configs/SO/SOEnvironmentSetting";
     public const string SOUIDebugToolSettingPath = "Configs/SO/SOUIDebugToolSetting";
     public const string SOCameraSettingPath = "Configs/SO/SOCameraSetting";
+    public const string SOLightSettingPath = "Configs/SO/SOLightSetting";
 }

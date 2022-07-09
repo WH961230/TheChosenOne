@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 
 public class Game : MonoBehaviour {
+    #region 序列化公共参数
+
+    public bool IsOfficial;
+
+    #endregion
+    
     #region 数据
 
     private GameManager gameManager = new GameManager();
