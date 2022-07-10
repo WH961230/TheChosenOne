@@ -9,6 +9,14 @@
         windowManager.Update();
     }
 
+    public void FixedUpdate() {
+        windowManager.FixedUpdate();
+    }
+    
+    public void LateUpdate() {
+        windowManager.LateUpdate();
+    }
+
     public void Clear() {
         windowManager.RemoveAll();
     }

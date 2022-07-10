@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7806e59311c6c41bfd519a01888904, type: 3}
   m_Name: SOCameraSetting
   m_EditorClassIdentifier: 
+  CameraOffsetPosition: {x: 0, y: 1.5, z: 5}
+  CameraOffsetRotation: {x: 8.587, y: 0, z: 0, w: 0}
   CameraInfos:
   - MyCamera: {fileID: 1886768741109512612, guid: ca0ec590384652e41bb657df4df61826,
       type: 3}

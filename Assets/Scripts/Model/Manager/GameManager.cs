@@ -75,4 +75,16 @@ public class GameManager : IManager {
             features[i].Update();
         }
     }
+    
+    public void FixedUpdate() {
+        for (int i = 0; i < features.Count; i++) {
+            features[i].FixedUpdate();
+        }
+    }
+
+    public void LateUpdate() {
+        for (int i = 0; i < features.Count; i++) {
+            features[i].LateUpdate();
+        }
+    }
 }

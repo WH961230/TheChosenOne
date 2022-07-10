@@ -10,6 +10,14 @@ public class UISystem : GameSys {
     public override void Update() {
         base.Update();
     }
+    
+    public override void FixedUpdate() {
+        base.Update();
+    }
+
+    public override void LateUpdate() {
+        base.LateUpdate();
+    }
 
     public override void Clear() {
         base.Clear();
@@ -32,7 +40,7 @@ public class UISystem : GameSys {
         gameSystem.InstanceWindow<UICharacterWindow, UICharacterGameObj, UICharacterEntity>(new UICharacterData() {
             MyName = "CharacterWindow",
             MyType = new DataType() {IsWindowPrefab = true,},
-            MyObj = Object.Instantiate(gameSystem.MyCharacterSystem.MySoCharacterSetting.UICharacterPrefab),
+            MyObj = Object.Instantiate(gameSystem.MyCharacterSystem.MySoCharacterSetting.UIPrefab),
             MyRootTran = GameData.UIRoot,
             MyTranInfo = new TranInfo() {
                 MyPos = Vector3.zero,

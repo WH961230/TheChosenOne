@@ -7,4 +7,10 @@
 
     public virtual void Clear() {
     }
+
+    public virtual void FixedUpdate() {
+    }
+
+    public virtual void LateUpdate() {
+    }
 }

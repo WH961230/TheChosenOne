@@ -12,7 +12,7 @@ public class CharacterSystem : GameSys {
     public override void Init(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
         soCharacterSetting = Resources.Load<SOCharacterSetting>(PathData.SOCharacterSettingPath);
-        gameSystem.MyCameraSystem.InstanceCamera(CameraType.CharacterCamera);
+        gameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera);
     }
 
     public override void Update() {
@@ -31,17 +31,22 @@ public class CharacterSystem : GameSys {
 
             IfInitMyObj = false,
             MyTranInfo = new TranInfo() {
-                MyPos = MySoCharacterSetting.CharacterInfo.MyCharacterPoint,
-                MyRot = MySoCharacterSetting.CharacterInfo.MyCharacterQuaternion,
+                MyPos = MySoCharacterSetting.MyCharacterInfo.MyCharacterPoint,
+                MyRot = MySoCharacterSetting.MyCharacterInfo.MyCharacterQuaternion,
             },
 
             IsMainCharacter = isMainCharacter,
         });
+        // 如果是主角色
         if (isMainCharacter) {
+            // 加载角色 UI
             gameSystem.MyUISystem.InstanceUICharacterWindow();
+            // 加载地图 UI
             gameSystem.MyUISystem.InstanceUIMapWindow();
             if (GameData.MainCharacater == -1) {
+                // 赋值全局 主角色
                 GameData.MainCharacater = instanceId;
+                // 赋值全局主角色组件
                 GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId)
                     .GetData<CharacterData>().GetComponent<CharacterComponent>();
             }

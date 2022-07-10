@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Game : MonoBehaviour {
     #region 序列化公共参数
@@ -82,6 +83,18 @@ public class Game : MonoBehaviour {
         gameSystem.Update();
         gameManager.Update();
         gameComponent.Update();
+    }
+
+    private void FixedUpdate() {
+        gameSystem.FixedUpdate();
+        gameManager.FixedUpdate();
+        gameComponent.FixedUpdate();
+    }
+
+    private void LateUpdate() {
+        gameSystem.LateUpdate();
+        gameManager.LateUpdate();
+        gameComponent.LateUpdate();
     }
 
     private void Register<T>() where T : IFeature, new() {

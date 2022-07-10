@@ -12,6 +12,14 @@ public class GameObjFeature : IFeature {
         gameObjManager.Update();
     }
 
+    public void FixedUpdate() {
+        gameObjManager.FixedUpdate();
+    }
+
+    public virtual void LateUpdate() {
+        gameObjManager.LateUpdate();
+    }
+
     public void Clear() {
         gameObjManager.RemoveAll();
     }
@@ -31,6 +39,6 @@ public class GameObjFeature : IFeature {
     }
 
     public T Get<T>(int id) where T : GameObj, new() {
-        return (T)gameObjManager.Get(id);
+        return (T) gameObjManager.Get(id);
     }
 }

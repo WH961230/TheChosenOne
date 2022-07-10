@@ -86,4 +86,16 @@ public class WindowManager {
             windows[i].Update();
         }
     }
+
+    public void FixedUpdate() {
+        for (int i = 0; i < windows.Count; i++) {
+            windows[i].FixedUpdate();
+        }
+    }
+
+    public void LateUpdate() {
+        for (int i = 0; i < windows.Count; i++) {
+            windows[i].LateUpdate();
+        }
+    }
 }

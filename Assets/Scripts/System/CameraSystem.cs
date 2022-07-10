@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
 
 public class CameraSystem : GameSys {
+
     private SOCameraSetting soCameraSetting;
+    public SOCameraSetting MySoCameraSetting {
+        get { return soCameraSetting; }
+    }
+
     private GameSystem gameSystem;
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
@@ -23,7 +28,7 @@ public class CameraSystem : GameSys {
             LogSystem.Print("【ERROR:主相机重复创建】");
         }
 
-        if (GameData.CharacterCamera != -1 && cameraType == CameraType.CharacterCamera) {
+        if (GameData.CharacterCamera != -1 && cameraType == CameraType.MainCharacterCamera) {
             LogSystem.PrintE("玩家相机重复创建");
         }
 
@@ -38,7 +43,7 @@ public class CameraSystem : GameSys {
             // 赋值全局相机参数
             if (cameraType == CameraType.MainCamera) {
                 GameData.MainCamera = instanceId;
-            } else if (cameraType == CameraType.CharacterCamera) {
+            } else if (cameraType == CameraType.MainCharacterCamera) {
                 GameData.CharacterCamera = instanceId;
             }
         }

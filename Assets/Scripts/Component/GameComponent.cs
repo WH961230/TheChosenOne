@@ -10,4 +10,12 @@
     public override void Clear() {
         base.Clear();
     }
+
+    public override void FixedUpdate() {
+        base.FixedUpdate();
+    }
+
+    public override void LateUpdate() {
+        base.LateUpdate();
+    }
 }

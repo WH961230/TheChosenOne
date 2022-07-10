@@ -22,7 +22,7 @@
     public const string SOSceneBuildingSettingPath = "Configs/SO/SOSceneBuildingSetting";
     public const string SOSceneItemSettingPath = "Configs/SO/SOSceneItemSetting";
     public const string SOEnvironmentSettingPath = "Configs/SO/SOEnvironmentSetting";
-    public const string SOUIDebugToolSettingPath = "Configs/SO/SOUIDebugToolSetting";
     public const string SOCameraSettingPath = "Configs/SO/SOCameraSetting";
     public const string SOLightSettingPath = "Configs/SO/SOLightSetting";
+    public const string SOAudioMainSettingPath = "Configs/SO/SOAudioMainSetting";
 }

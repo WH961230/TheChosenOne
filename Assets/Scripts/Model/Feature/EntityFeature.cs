@@ -8,6 +8,14 @@ public class EntityFeature : IFeature {
         this.game = game;
     }
 
+    public void FixedUpdate() {
+        entityManager.FixedUpdate();
+    }
+
+    public void LateUpdate() {
+        entityManager.LateUpdate();
+    }
+
     public void Clear() {
         entityManager.RemoveAll();
     }

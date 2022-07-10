@@ -1,33 +1,35 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class CharacterGameObj : GameObj {
     private float moveSpeed = 0.0f; // 移动速度
-    private float xRotate = 0.0f; // 视角参数
     private float yRotate = 0.0f; // 视角参数
     private float jumpTimer = -1; // 跳跃参数
-    private Vector3 moveVector = Vector3.zero; // 
-
+    private bool isStartGravity = false; // 延迟一帧执行重力，否则初始化位置有问题 会被拉回到原点坐标
+    private Vector3 moveVector = Vector3.zero; // 移动向量
+    private Vector3 gravityVector = Vector3.zero; // 重力向量
     private SOCharacterSetting soCharacterSetting;
-
     private CharacterComponent characterComponent;
-    public CharacterComponent MyCharacterComponent {
-        get { return characterComponent; }
+
+    private InputSystem inputSystem {
+        get { return game.MyGameSystem.MyInputSystem; }
+    }
+
+    private EnvironmentSystem environmentSystem {
+        get { return game.MyGameSystem.MyEnvironmentSystem; }
     }
 
     private CharacterData characterData;
-
     private Game game;
 
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.game = game;
-        characterData = (CharacterData)data;
+        characterData = (CharacterData) data;
         characterData.MyComponent = MyObj.transform.GetComponent<CharacterComponent>();
-        characterComponent = (CharacterComponent)characterData.MyComponent;
-
-        characterComponent.Body.transform.position = MyData.MyTranInfo.MyPos;
-        characterComponent.Body.transform.rotation = MyData.MyTranInfo.MyRot;
-
+        characterComponent = (CharacterComponent) characterData.MyComponent;
+        characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
+        characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;
         InitConfigParam();
     }
 
@@ -41,36 +43,74 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
-        // Debug.Log($"jump:{characterData.IsJumping} land:{characterData.IsLanding}");
-        BehaviourCenter();
-        characterComponent.CC.Move(moveVector);
-        moveVector = Vector3.zero;
-    }
+        Vector3 vec = Vector3.zero;
 
-    private void BehaviourCenter() {
-        // 视角旋转
-        EyeBehaviour();
-        // 移动
-        MoveBehaviour();
-        // 跳跃行为
-        JumpBehaviour();
-    }
+        if (characterData.IsMainCharacter) {
+            // 视角 当玩家未按下 alt 视角移动角色 Body
+            var pressAltDown = inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt);
+            // var pressAltUp = inputSystem.GetKeyUp(KeyCode.LeftAlt) || inputSystem.GetKeyUp(KeyCode.RightAlt);
+            yRotate += inputSystem.GetAxis("Mouse X");
+            if (!pressAltDown) {
+                characterComponent.Body.transform.rotation = Quaternion.Euler(0, yRotate, 0);
+            } 
 
-    private void EyeBehaviour() {
-        var inputSystem = game.MyGameSystem.MyInputSystem;
-        var pressAlt = inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt);
-        yRotate += inputSystem.GetAxis("Mouse X");
-        xRotate -= inputSystem.GetAxis("Mouse Y");
-        
-        Transform rotTran = null;
-        if (pressAlt) {
-            rotTran = characterComponent.Head.transform;
-        } else {
-            rotTran = characterComponent.Body.transform;
-            xRotate = 0;
+            // 获取不同的移动方向
+            Vector3 dir = Vector3.zero;
+
+            if (inputSystem.GetKey(KeyCode.W)) {
+                dir = characterComponent.Body.transform.forward;
+                if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
+                    vec = dir * soCharacterSetting.MyMoveInfo.RunSpeed;
+                    characterComponent.AnimatorController.SetFloat("Move", 2);
+                } else {
+                    // 移动速度
+                    vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                    characterComponent.AnimatorController.SetFloat("Move", 1);
+                }
+                characterComponent.AnimatorController.SetBool("IsMove", true);
+            } else if (inputSystem.GetKey(KeyCode.S)) {
+                dir = -characterComponent.Body.transform.forward;
+                vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                characterComponent.AnimatorController.SetFloat("Move", -1);
+                characterComponent.AnimatorController.SetBool("IsMove", true);
+            } else if (inputSystem.GetKey(KeyCode.A)) {
+                dir = -characterComponent.Body.transform.right;
+                vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                characterComponent.AnimatorController.SetBool("IsMove", true);
+            } else if (inputSystem.GetKey(KeyCode.D)) {
+                dir = characterComponent.Body.transform.right;
+                vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                characterComponent.AnimatorController.SetBool("IsMove", true);
+            } else {
+                characterComponent.AnimatorController.SetFloat("Move", 0);
+                characterComponent.AnimatorController.SetBool("IsMove", false);
+            }
         }
-        
-        rotTran.rotation = Quaternion.Euler(xRotate, yRotate, 0);
+
+        // 重力
+        if (isStartGravity) {
+            Debug.Log($"{characterData.MyName} isGround {characterComponent.CC.isGrounded}");
+            if (!characterComponent.CC.isGrounded) {
+                vec.y = -environmentSystem.mySoEnvironmentSetting.GravitySpeed;
+            } else {
+                vec.y = 0;
+            }
+        }
+
+        // 控制器移动
+        if (vec != Vector3.zero) {
+            characterComponent.CC.Move(vec * Time.deltaTime);
+        }
+
+        isStartGravity = true;
+    }
+
+    public override void FixedUpdate() {
+        base.FixedUpdate();
+    }
+
+    public override void LateUpdate() {
+        base.LateUpdate();
     }
 
     private bool CheckCanMove() {
@@ -78,9 +118,10 @@ public class CharacterGameObj : GameObj {
     }
 
     private void MoveBehaviour() {
-        if (!CheckCanMove()) {
+        if (!characterData.IsMainCharacter) {
             return;
         }
+
         var inputSystem = game.MyGameSystem.MyInputSystem;
         // 获取不同的移动方向
         Vector3 dir = Vector3.zero;
@@ -92,8 +133,11 @@ public class CharacterGameObj : GameObj {
             dir = -characterComponent.Body.transform.right;
         } else if (inputSystem.GetKey(KeyCode.D)) {
             dir = characterComponent.Body.transform.right;
+        } else {
+            characterComponent.AnimatorController.SetFloat("Move", 0);
         }
 
+        // 未按下移动键
         if (dir == Vector3.zero) {
             return;
         }
@@ -101,27 +145,29 @@ public class CharacterGameObj : GameObj {
         // 跳跃和降落获取空中移动速度
         var moveSpeed = 0f;
         if (characterData.IsJumping || characterData.IsLanding) {
-            moveSpeed = soCharacterSetting.AirMoveSpeed;
+            moveSpeed = soCharacterSetting.MyMoveInfo.AirWalkSpeed;
         } else {
             if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
-                moveSpeed = soCharacterSetting.RunMoveSpeed;
+                moveSpeed = soCharacterSetting.MyMoveInfo.RunSpeed;
+                characterComponent.AnimatorController.SetFloat("Move", 2);
             } else {
-                moveSpeed = soCharacterSetting.GroundMoveSpeed;
+                moveSpeed = soCharacterSetting.MyMoveInfo.WalkSpeed;
+                characterComponent.AnimatorController.SetFloat("Move", 1);
             }
         }
 
         moveVector += dir * moveSpeed * Time.deltaTime;
     }
 
-    private void JumpBehaviour() {
+    private Vector3 JumpBehaviour(Vector3 moveVector) {
         var config = game.MyGameSystem.MyCharacterSystem.MySoCharacterSetting;
         var environmentConfig = game.MyGameSystem.MyEnvironmentSystem.mySoEnvironmentSetting;
         // 计时中
         if (jumpTimer > 0) {
             jumpTimer -= Time.deltaTime;
             characterData.IsJumping = true;
-            moveVector += MyObj.transform.up * config.JumpSpeed * Time.deltaTime;
-            return;
+            moveVector += MyObj.transform.up * config.MyMoveInfo.JumpSpeed * Time.deltaTime;
+            return moveVector;
         }
 
         // 降落中
@@ -132,6 +178,8 @@ public class CharacterGameObj : GameObj {
                 characterData.IsLanding = false;
                 jumpTimer = -1;
             }
+
+            return moveVector;
         } else if (characterData.IsJumping || (!characterData.IsJumping && !characterComponent.CC.isGrounded)) {
             jumpTimer = 0;
             characterData.IsJumping = false;
@@ -140,7 +188,11 @@ public class CharacterGameObj : GameObj {
 
         // 按下跳跃键
         if (game.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Space)) {
-            jumpTimer = config.JumpContinueTime;
+            if (characterData.IsMainCharacter) {
+                jumpTimer = config.MyMoveInfo.JumpContinueTime;
+            }
         }
+
+        return moveVector;
     }
 }

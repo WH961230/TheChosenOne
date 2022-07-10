@@ -75,4 +75,16 @@ public class EntityManager : IManager {
             entitys[i].Update();
         }
     }
+
+    public void FixedUpdate() {
+        for (int i = 0; i < entitys.Count; i++) {
+            entitys[i].FixedUpdate();
+        }
+    }
+
+    public void LateUpdate() {
+        for (int i = 0; i < entitys.Count; i++) {
+            entitys[i].LateUpdate();
+        }
+    }
 }

@@ -3,23 +3,37 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/SOCharacterSetting")]
 public class SOCharacterSetting : ScriptableObject {
-    public float GroundMoveSpeed; // 地面移动速度
-    public float AirMoveSpeed; // 空中移动速度
-    public float RunMoveSpeed; // 跑步移动速度
-    public float JumpSpeed;
-    public float JumpContinueTime;
-    public GameObject CharacterPrefab;
-    public GameObject CharacterOfficicalPrefab;
-    public CharacterInfo CharacterInfo;
-    public GameObject UICharacterPrefab;
+    public MoveInfo MyMoveInfo;
+    public MoveSwitch MyMoveSwitch;
+    public GameObject MyPrefab;
+    public GameObject MyOfficicalPrefab;
+    public CharacterInfo MyCharacterInfo;
+    public GameObject UIPrefab;
 
     public GameObject GetCharacterPrefab (){
         if (GameData.IsOfficial) {
-            return CharacterOfficicalPrefab;
+            return MyOfficicalPrefab;
         } else {
-            return CharacterPrefab;
+            return MyPrefab;
         }
     }
+}
+
+[Serializable]
+public struct MoveSwitch {
+    public bool IsOpenWalk;
+    public bool IsOpenJump;
+    public bool IsOpenRun;
+    public bool IsOpenAirWalk;
+}
+
+[Serializable]
+public struct MoveInfo {
+    public float WalkSpeed; // 地面移动速度
+    public float AirWalkSpeed; // 空中移动速度
+    public float RunSpeed; // 跑步移动速度
+    public float JumpSpeed;
+    public float JumpContinueTime;
 }
 
 [Serializable]

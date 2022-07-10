@@ -12,17 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b43e692f804f1a8c41ac3a83dbc984, type: 3}
   m_Name: SOCharacterSetting
   m_EditorClassIdentifier: 
-  GroundMoveSpeed: 5
-  AirMoveSpeed: 2
-  RunMoveSpeed: 8
-  JumpSpeed: 5
-  JumpContinueTime: 0.5
-  CharacterPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
+  MyMoveInfo:
+    WalkSpeed: 3
+    AirWalkSpeed: 2
+    RunSpeed: 5
+    JumpSpeed: 9
+    JumpContinueTime: 0.5
+  MyMoveSwitch:
+    IsOpenWalk: 0
+    IsOpenJump: 0
+    IsOpenRun: 0
+    IsOpenAirWalk: 0
+  MyPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
     type: 3}
-  CharacterOfficicalPrefab: {fileID: 5988454832137893343, guid: bb6215a941a28114c93f7df4c3e5767d,
+  MyOfficicalPrefab: {fileID: 5988454832137893343, guid: bb6215a941a28114c93f7df4c3e5767d,
     type: 3}
-  CharacterInfo:
-    MyCharacterPoint: {x: -95.9, y: 6.6, z: 6.9}
+  MyCharacterInfo:
+    MyCharacterPoint: {x: -17.83, y: 7.39, z: -8.96}
     MyCharacterQuaternion: {x: -0, y: -0, z: -0, w: 1}
-  UICharacterPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
+  UIPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
     type: 3}

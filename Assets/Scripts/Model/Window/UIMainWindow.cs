@@ -29,6 +29,9 @@ public class UIMainWindow : Window {
             // 读取玩家生成点 创建主玩家
             game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
 
+            // 播放背景音效（替代资源）
+            game.MyGameSystem.MyAudioSystem.InstanceAudioMain();
+
             // 关闭界面
             Close();
         });

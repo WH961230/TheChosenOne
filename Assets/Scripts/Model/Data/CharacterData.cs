@@ -1,5 +1,7 @@
-﻿public class CharacterData : Data {
+﻿using UnityEngine;
+
+public class CharacterData : Data {
     public bool IsMainCharacter;
     public bool IsJumping;
-    public bool IsLanding;
+    public bool IsLanding = true;
 }

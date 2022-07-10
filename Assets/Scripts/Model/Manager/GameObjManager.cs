@@ -75,4 +75,16 @@ public class GameObjManager : IManager {
             gameObjs[i].Update();
         }
     }
+
+    public void FixedUpdate() {
+        for (int i = 0; i < gameObjs.Count; i++) {
+            gameObjs[i].FixedUpdate();
+        }
+    }
+
+    public void LateUpdate() {
+        for (int i = 0; i < gameObjs.Count; i++) {
+            gameObjs[i].LateUpdate();
+        }
+    }
 }

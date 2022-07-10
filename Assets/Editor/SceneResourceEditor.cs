@@ -41,8 +41,8 @@ public class SceneResourceEditor : EditorWindow {
         // 角色生成点信息
         var character = FindObjectOfType<CharacterComponent>();
         var soCharacter = Resources.Load<SOCharacterSetting>(PathData.SOCharacterSettingPath);
-        soCharacter.CharacterInfo.MyCharacterPoint = character.transform.position;
-        soCharacter.CharacterInfo.MyCharacterQuaternion = character.transform.rotation;
+        soCharacter.MyCharacterInfo.MyCharacterPoint = character.transform.position;
+        soCharacter.MyCharacterInfo.MyCharacterQuaternion = character.transform.rotation;
         EditorUtility.SetDirty(soCharacter);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();

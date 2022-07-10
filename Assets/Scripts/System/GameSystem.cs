@@ -75,6 +75,13 @@ public class GameSystem {
             return inputSystem;
         }
     }
+    
+    private AudioSystem audioSystem = new AudioSystem();
+    public AudioSystem MyAudioSystem {
+        get {
+            return audioSystem;
+        }
+    }
 
     #endregion
 
@@ -101,6 +108,7 @@ public class GameSystem {
         cameraSystem.Init(this);
         characterSystem.Init(this);
         inputSystem.Init(this);
+        audioSystem.Init(this);
     }
 
     public void Update() {
@@ -110,6 +118,27 @@ public class GameSystem {
         cameraSystem.Update();
         characterSystem.Update();
         inputSystem.Update();
+        audioSystem.Update();
+    }
+
+    public void FixedUpdate() {
+        uISystem.FixedUpdate();
+        environmentSystem.FixedUpdate();
+        itemSystem.FixedUpdate();
+        cameraSystem.FixedUpdate();
+        characterSystem.FixedUpdate();
+        inputSystem.FixedUpdate();
+        audioSystem.FixedUpdate();
+    }
+
+    public void LateUpdate() {
+        uISystem.LateUpdate();
+        environmentSystem.LateUpdate();
+        itemSystem.LateUpdate();
+        cameraSystem.LateUpdate();
+        characterSystem.LateUpdate();
+        inputSystem.LateUpdate();
+        audioSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -119,6 +148,7 @@ public class GameSystem {
         cameraSystem.Clear();
         characterSystem.Clear();
         inputSystem.Clear();
+        audioSystem.Clear();
     }
 
     private void InstanceSwitch() {
@@ -150,6 +180,9 @@ public class GameSystem {
 
         GameData.LightRoot = new GameObject("LightRoot").transform;
         GameData.LightRoot.SetParent(gameRoot);
+        
+        GameData.AudioRoot = new GameObject("AudioRoot").transform;
+        GameData.AudioRoot.SetParent(gameRoot);
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()

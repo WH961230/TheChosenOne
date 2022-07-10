@@ -25,6 +25,10 @@ public class InputSystem : GameSys {
         return Input.GetKeyDown(keyCode);
     }
 
+    public bool GetKeyUp(KeyCode keyCode) {
+        return Input.GetKeyUp(keyCode);
+    }
+
     public float GetAxis(string name) {
         return Input.GetAxis(name);
     }
