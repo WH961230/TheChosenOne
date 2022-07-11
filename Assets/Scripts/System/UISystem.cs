@@ -26,7 +26,6 @@ public class UISystem : GameSys {
     private void InstanceUIMainWindow() {
         gameSystem.InstanceWindow<UIMainWindow, UIMainGameObj, UIMainEntity>(new UIMainData() {
             MyName = "MainWindow",
-            MyType = new DataType() {IsWindowPrefab = true,},
             MyObj = Object.Instantiate(gameSystem.soGameSetting.UIMainPrefab),
             MyRootTran = GameData.UIRoot,
             MyTranInfo = new TranInfo() {
@@ -36,11 +35,18 @@ public class UISystem : GameSys {
         });
     }
 
+    public void InstanceUIBackpackWindow() {
+        gameSystem.InstanceWindow<UIBackpackWindow, UIBackpackGameObj, UIBackpackEntity>(new UIBackpackData() {
+            MyName = "BackpackWindow",
+            MyObj = Object.Instantiate(gameSystem.soGameSetting.UIBackpackPrefab),
+            MyRootTran = GameData.UIRoot,
+        });
+    }
+
     public void InstanceUICharacterWindow() {
         gameSystem.InstanceWindow<UICharacterWindow, UICharacterGameObj, UICharacterEntity>(new UICharacterData() {
             MyName = "CharacterWindow",
-            MyType = new DataType() {IsWindowPrefab = true,},
-            MyObj = Object.Instantiate(gameSystem.MyCharacterSystem.MySoCharacterSetting.UIPrefab),
+            MyObj = Object.Instantiate(gameSystem.soGameSetting.UICharacterPrefab),
             MyRootTran = GameData.UIRoot,
             MyTranInfo = new TranInfo() {
                 MyPos = Vector3.zero,

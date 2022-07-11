@@ -152,7 +152,7 @@ public class GameSystem {
     }
 
     private void InstanceSwitch() {
-        GameData.IfShowLog = false;
+        GameData.IsShowLog = game.IsShowLog;
         GameData.IsOfficial = game.IsOfficial;
     }
 
@@ -189,6 +189,7 @@ public class GameSystem {
         where T2 : GameObj, new()
         where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
+        data.MyType.IsWindowPrefab = true;
         game.MyGameObjFeature.Register<T2>(data);
         game.MyWindowFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T3>(data);

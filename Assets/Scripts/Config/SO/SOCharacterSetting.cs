@@ -8,7 +8,6 @@ public class SOCharacterSetting : ScriptableObject {
     public GameObject MyPrefab;
     public GameObject MyOfficicalPrefab;
     public CharacterInfo MyCharacterInfo;
-    public GameObject UIPrefab;
 
     public GameObject GetCharacterPrefab (){
         if (GameData.IsOfficial) {

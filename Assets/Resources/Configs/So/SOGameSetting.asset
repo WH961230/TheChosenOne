@@ -19,3 +19,5 @@ MonoBehaviour:
     type: 3}
   UIMapPrefab: {fileID: 2435746718625182467, guid: dfdd860e77005eb4a8c7f55e6dcdc393,
     type: 3}
+  UICharacterPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
+    type: 3}

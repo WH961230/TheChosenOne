@@ -20,8 +20,8 @@ public static class GameData {
     // Light
     public static Light MainLight;
 
-    // Log Open or not
-    public static bool IfShowLog;
+    // Log
+    public static int IsShowLog;
 
     // MainCharacter
     public static int MainCharacater = -1;

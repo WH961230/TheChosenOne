@@ -12,6 +12,8 @@ public class GenerateScriptEditor : EditorWindow {
     private bool isHaveWindow; // 是否有窗口
     private bool isHaveComponent; // 是否有组件
     private bool isHaveSOSetting; // 是否有配置
+    private static int currentProccess;
+    private static int totalCount;
 
     #region 生成
 
@@ -29,11 +31,11 @@ public class GenerateScriptEditor : EditorWindow {
         }
     }
 
-    [MenuItem("点这里/创建/自动生成模板类")]
+    [MenuItem("点这里/创建/自动生成模板类 _F1")]
     public static void GenerateScriptWindow() {
         // 弹出创建类命
         Rect _rect = new Rect(1000, 1000, 500, 200);
-        GenerateScriptEditor window = (GenerateScriptEditor)GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "Window2 name");
+        GenerateScriptEditor window = (GenerateScriptEditor)GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "万物皆可一键创建");
         window.Show();
     }
 
@@ -42,6 +44,13 @@ public class GenerateScriptEditor : EditorWindow {
             Debug.LogError("class Name is Null");
             return;
         }
+
+        totalCount += isHaveData ? 1 : 0;
+        totalCount += isHaveEntity ? 1 : 0;
+        totalCount += isHaveGameObj ? 1 : 0;
+        totalCount += isHaveWindow ? 1 : 0;
+        totalCount += isHaveComponent ? 1 : 0;
+        totalCount += isHaveSOSetting ? 1 : 0;
 
         if (isHaveData) {
             CreateStript(PathData.DataTemplatePath, PathData.DataPath, className, "", "Data");
@@ -66,6 +75,9 @@ public class GenerateScriptEditor : EditorWindow {
         if (isHaveSOSetting) {
             CreateStript(PathData.SOSettingTemplatePath, PathData.SOSettingPath, className, "SO", "Setting");
         }
+
+        EditorUtility.ClearProgressBar();
+        EditorUtility.DisplayDialog("创建成功", $"创建标志：【{className}】", "确定");
     }
 
     private static void CreateStript(string inputPath, string outputPath, string className, string front, string end) {
@@ -82,6 +94,8 @@ public class GenerateScriptEditor : EditorWindow {
             streamWriter.Write(log);
             streamWriter.Close();
             AssetDatabase.ImportAsset(createPath);
+            ++currentProccess;
+            EditorUtility.DisplayProgressBar("创建中 ...", "", (float)currentProccess / totalCount);
         }
     }
 

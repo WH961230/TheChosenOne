@@ -6,4 +6,6 @@ public class SOGameSetting : ScriptableObject {
     public GameObject UIMainPrefab;
     public GameObject UIDebugToolPrefab;
     public GameObject UIMapPrefab;
+    public GameObject UICharacterPrefab;
+    public GameObject UIBackpackPrefab;
 }
