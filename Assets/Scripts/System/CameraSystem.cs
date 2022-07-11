@@ -32,10 +32,10 @@ public class CameraSystem : GameSys {
             LogSystem.PrintE("玩家相机重复创建");
         }
 
-        if (TryGetCamera(cameraType, out Camera camera)) {
+        if (TryGetCamera(cameraType, out GameObject cameraObj)) {
             var instanceId = InstanceCamera(new CameraData() {
                 MyName = "Camera",
-                MyObj = Object.Instantiate(camera.gameObject),
+                MyObj = Object.Instantiate(cameraObj),
                 MyRootTran = GameData.CameraRoot,
                 MyCameraType = cameraType,
             });
@@ -49,10 +49,10 @@ public class CameraSystem : GameSys {
         }
     }
 
-    private bool TryGetCamera(CameraType cameraType, out Camera camera) {
+    private bool TryGetCamera(CameraType cameraType, out GameObject camera) {
         foreach (var info in soCameraSetting.CameraInfos) {
             if (info.MyCameraType == cameraType) {
-                camera = info.MyCamera;
+                camera = info.MyCameraObj;
                 return true;
             }
         }

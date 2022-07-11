@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7806e59311c6c41bfd519a01888904, type: 3}
   m_Name: SOCameraSetting
   m_EditorClassIdentifier: 
-  CameraOffsetPosition: {x: 0, y: 1.5, z: 5}
-  CameraOffsetRotation: {x: 8.587, y: 0, z: 0, w: 0}
+  CameraOffsetPosition: {x: 0, y: 0, z: -5}
   CameraInfos:
-  - MyCamera: {fileID: 1886768741109512612, guid: ca0ec590384652e41bb657df4df61826,
+  - MyCameraObj: {fileID: 1886768741109512614, guid: ca0ec590384652e41bb657df4df61826,
       type: 3}
     MyCameraType: 0
-  - MyCamera: {fileID: 570146280814098184, guid: 12de0a24b01794644873bdce56f1bbcb,
+  - MyCameraObj: {fileID: 7883465774961350612, guid: 133bc48295abe084bae6b2dfad4694d0,
       type: 3}
     MyCameraType: 1
+  CameraTraceSpeed: 100

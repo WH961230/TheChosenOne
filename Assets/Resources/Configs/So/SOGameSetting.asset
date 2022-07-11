@@ -21,3 +21,5 @@ MonoBehaviour:
     type: 3}
   UICharacterPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
     type: 3}
+  UIBackpackPrefab: {fileID: 4565445763987219000, guid: ea17769fd76362345878a3ffe973d6ec,
+    type: 3}

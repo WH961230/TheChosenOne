@@ -6,6 +6,7 @@ using UnityEngine;
 public class SOCameraSetting : ScriptableObject {
     public Vector3 CameraOffsetPosition;
     public List<CameraInfo> CameraInfos;
+    public float CameraTraceSpeed;
 }
 
 public enum CameraType {
@@ -15,6 +16,6 @@ public enum CameraType {
 
 [Serializable]
 public struct CameraInfo {
-    public Camera MyCamera;
+    public GameObject MyCameraObj;
     public CameraType MyCameraType;
 }
