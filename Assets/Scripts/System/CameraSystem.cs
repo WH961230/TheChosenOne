@@ -28,7 +28,7 @@ public class CameraSystem : GameSys {
             LogSystem.Print("【ERROR:主相机重复创建】");
         }
 
-        if (GameData.CharacterCamera != -1 && cameraType == CameraType.MainCharacterCamera) {
+        if (GameData.MainCharacterCamera != -1 && cameraType == CameraType.MainCharacterCamera) {
             LogSystem.PrintE("玩家相机重复创建");
         }
 
@@ -44,7 +44,7 @@ public class CameraSystem : GameSys {
             if (cameraType == CameraType.MainCamera) {
                 GameData.MainCamera = instanceId;
             } else if (cameraType == CameraType.MainCharacterCamera) {
-                GameData.CharacterCamera = instanceId;
+                GameData.MainCharacterCamera = instanceId;
             }
         }
     }

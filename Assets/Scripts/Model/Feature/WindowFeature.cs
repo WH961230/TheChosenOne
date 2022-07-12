@@ -30,4 +30,8 @@
     public void Remove<T>() where T : IWindow {
         windowManager.Remove<T>();
     }
+
+    public T Get<T>() where T : IWindow, new() {
+        return windowManager.Get<T>();
+    }
 }

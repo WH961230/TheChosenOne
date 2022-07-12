@@ -45,6 +45,8 @@ public class CharacterSystem : GameSys {
             gameSystem.MyUISystem.InstanceUIMapWindow();
             // 加载背包 UI
             gameSystem.MyUISystem.InstanceUIBackpackWindow();
+            // 加载贴士 UI
+            gameSystem.MyUISystem.InstanceUITipWindow();
             if (GameData.MainCharacater == -1) {
                 // 赋值全局 主角色
                 GameData.MainCharacater = instanceId;

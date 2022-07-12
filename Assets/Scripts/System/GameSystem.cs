@@ -198,12 +198,12 @@ public class GameSystem {
 
     public int InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        game.Get<GameObjFeature>().Register<T1>(data);
-        game.Get<EntityFeature>().Register<T2>(data);
+        game.MyGameObjFeature.Register<T1>(data);
+        game.MyEntityFeature.Register<T2>(data);
         return data.InstanceID;
     }
 
     public void InstanceEntity<T>(Data data) where T : Entity, new() {
-        game.Get<EntityFeature>().Register<T>(data);
+        game.MyEntityFeature.Register<T>(data);
     }
 }

@@ -1,7 +1,7 @@
 ﻿public class UIMapWindow : Window {
     private UIMapComponent uimapComponent;
     public override void Init(Game game, Data data) {
-        var obj = game.Get<GameObjFeature>().Get<UIMapGameObj>(data.InstanceID).MyData.MyObj;
+        var obj = game.MyGameObjFeature.Get<UIMapGameObj>(data.InstanceID).MyData.MyObj;
         uimapComponent = obj.transform.GetComponent<UIMapComponent>();
         uimapComponent.UIMapMaxClose.onClick.AddListener(() => {
             uimapComponent.UIMapMax.SetActive(false);

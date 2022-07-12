@@ -23,3 +23,5 @@ MonoBehaviour:
     type: 3}
   UIBackpackPrefab: {fileID: 4565445763987219000, guid: ea17769fd76362345878a3ffe973d6ec,
     type: 3}
+  UITipPrefab: {fileID: 1938493328068573975, guid: d26d1f0de99c8844e8b371e742932f8d,
+    type: 3}

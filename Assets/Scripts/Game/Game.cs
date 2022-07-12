@@ -37,16 +37,37 @@ public class Game : MonoBehaviour {
 
     #region 模块
 
+    private GameObjFeature myGameObjFeature;
     public GameObjFeature MyGameObjFeature {
-        get { return Get<GameObjFeature>(); }
+        get {
+            if (null == myGameObjFeature) {
+                myGameObjFeature = Get<GameObjFeature>();
+            }
+
+            return myGameObjFeature;
+        }
     }
 
+    private WindowFeature myWindowFeature;
     public WindowFeature MyWindowFeature {
-        get { return Get<WindowFeature>(); }
+        get {
+            if (null == myWindowFeature) {
+                myWindowFeature = Get<WindowFeature>();
+            }
+
+            return myWindowFeature;
+        }
     }
 
+    private EntityFeature myEntityFeature;
     public EntityFeature MyEntityFeature {
-        get { return Get<EntityFeature>(); }
+        get {
+            if (null == myEntityFeature) {
+                myEntityFeature = Get<EntityFeature>();
+            }
+
+            return myEntityFeature;
+        }
     }
 
     #endregion
@@ -106,7 +127,7 @@ public class Game : MonoBehaviour {
         gameManager.Remove<T>();
     }
 
-    public T Get<T>() where T : IFeature {
+    private T Get<T>() where T : IFeature {
         return gameManager.Get<T>();
     }
 }

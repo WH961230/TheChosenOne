@@ -14,7 +14,7 @@ public static class GameData {
     public static int MainCamera = -1;
     public static CameraComponent MainCameraComponent;
 
-    public static int CharacterCamera = -1;
+    public static int MainCharacterCamera = -1;
     public static CameraComponent CharacterCameraComponent;
 
     // Light

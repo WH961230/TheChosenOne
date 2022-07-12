@@ -1,7 +1,7 @@
 ﻿public class UICharacterWindow : Window {
     private UICharacterComponent uicharacterComponent;
     public override void Init(Game game, Data data) {
-        var obj = game.Get<GameObjFeature>().Get<UICharacterGameObj>(data.InstanceID).MyData.MyObj;
+        var obj = game.MyGameObjFeature.Get<UICharacterGameObj>(data.InstanceID).MyData.MyObj;
         uicharacterComponent = obj.transform.GetComponent<UICharacterComponent>();
     }
 

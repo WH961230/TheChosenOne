@@ -8,4 +8,5 @@ public class SOGameSetting : ScriptableObject {
     public GameObject UIMapPrefab;
     public GameObject UICharacterPrefab;
     public GameObject UIBackpackPrefab;
+    public GameObject UITipPrefab;
 }

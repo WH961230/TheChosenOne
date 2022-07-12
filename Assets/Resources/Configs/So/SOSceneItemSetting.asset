@@ -16,24 +16,16 @@ MonoBehaviour:
   - {fileID: 6969426649003477898, guid: 1224b709b48b368488319761347e5be7, type: 3}
   - {fileID: 1339087864856239256, guid: 86409090ed5ce944fb36cced20905c2c, type: 3}
   MySceneItemInfoList:
-  - Point: {x: -3.7394779, y: 0.41818818, z: -26.159737}
+  - Point: {x: -10.139815, y: 0.051399913, z: -4.0853534}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -19.504171, y: 0.5257908, z: -19.618496}
+  - Point: {x: -16.43938, y: 4.008327, z: -7.856031}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 16.160976, y: 0.27709636, z: 8.262629}
+  - Point: {x: -15.568351, y: 4.705992, z: -11.370773}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -18.80716, y: 0.48804584, z: 12.987016}
+  - Point: {x: -19.320795, y: 4.240742, z: -10.159517}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -10.28101, y: 0.08124622, z: 13.593435}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 9.189108, y: 0.054173037, z: -9.751125}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -16.141802, y: 0.5842047, z: 18.985062}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 9.128134, y: 0.1552694, z: 20.622787}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -18.173275, y: 0.33039844, z: 4.2141705}
+  - Point: {x: -16.033089, y: 0.62529933, z: -2.143947}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MySceneItemPrefabOfficialList:
-  - {fileID: 255447986775038416, guid: 8acfdd95657c4c54b8744b7cb465f612, type: 3}
-  - {fileID: 3260825020533608679, guid: 3dc73b94dd1a07a4eac2a57d9e50ea5e, type: 3}
+  - {fileID: 7409785902056023864, guid: d4a1778f2b5ca7a4eb4ac0b72cbba32e, type: 3}
+  - {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0, type: 3}

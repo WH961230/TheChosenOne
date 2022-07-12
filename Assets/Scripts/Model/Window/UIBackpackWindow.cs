@@ -1,7 +1,7 @@
 ﻿public class UIBackpackWindow : Window {
     private UIBackpackComponent uibackpackComponent;
     public override void Init(Game game, Data data) {
-        var obj = game.Get<GameObjFeature>().Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
+        var obj = game.MyGameObjFeature.Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
         uibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
         uibackpackComponent.MyUIBackpackBtn.gameObject.SetActive(true);
         uibackpackComponent.MyUIBackpackWindow.gameObject.SetActive(false);

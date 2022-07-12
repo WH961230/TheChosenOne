@@ -7,6 +7,7 @@ public class SOCameraSetting : ScriptableObject {
     public Vector3 CameraOffsetPosition;
     public List<CameraInfo> CameraInfos;
     public float CameraTraceSpeed;
+    public Vector3 LookTargetOffsetPosition;
 }
 
 public enum CameraType {

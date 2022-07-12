@@ -52,7 +52,7 @@ public class CharacterGameObj : GameObj {
             yRotate += inputSystem.GetAxis("Mouse X");
             if (!pressAltDown) {
                 characterComponent.Body.transform.rotation = Quaternion.Euler(0, yRotate, 0);
-            } 
+            }
 
             // 获取不同的移动方向
             Vector3 dir = Vector3.zero;
@@ -89,7 +89,6 @@ public class CharacterGameObj : GameObj {
 
         // 重力
         if (isStartGravity) {
-            Debug.Log($"{characterData.MyName} isGround {characterComponent.CC.isGrounded}");
             if (!characterComponent.CC.isGrounded) {
                 vec.y = -environmentSystem.mySoEnvironmentSetting.GravitySpeed;
             } else {
@@ -113,8 +112,8 @@ public class CharacterGameObj : GameObj {
         base.LateUpdate();
     }
 
-    private bool CheckCanMove() {
-        return true;
+    public void OnPickUp(int instanceId) {
+        characterData.MySceneItemIds.Add(instanceId);
     }
 
     private void MoveBehaviour() {

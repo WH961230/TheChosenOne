@@ -35,6 +35,14 @@ public class UISystem : GameSys {
         });
     }
 
+    public void InstanceUITipWindow() {
+        gameSystem.InstanceWindow<UITipWindow, UITipGameObj, UITipEntity>(new UITipData() {
+            MyName = "TipWindow",
+            MyObj = Object.Instantiate(gameSystem.soGameSetting.UITipPrefab),
+            MyRootTran = GameData.UIRoot,
+        });
+    }
+
     public void InstanceUIBackpackWindow() {
         gameSystem.InstanceWindow<UIBackpackWindow, UIBackpackGameObj, UIBackpackEntity>(new UIBackpackData() {
             MyName = "BackpackWindow",

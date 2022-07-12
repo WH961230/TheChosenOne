@@ -2,13 +2,13 @@
 
 public class ItemSystem : GameSys {
     private SOSceneItemSetting soSceneItemSetting;
+
     public SOSceneItemSetting MySoSceneItemSetting {
-        get {
-            return soSceneItemSetting;
-        }
+        get { return soSceneItemSetting; }
     }
-    
+
     private GameSystem gameSystem;
+
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
         this.gameSystem = gameSystem;
@@ -22,6 +22,8 @@ public class ItemSystem : GameSys {
     public override void Clear() {
         base.Clear();
     }
+
+    #region 创建
 
     public void InstanceSceneItem() {
         var config = soSceneItemSetting;
@@ -46,4 +48,6 @@ public class ItemSystem : GameSys {
     private void InstanceSceneItem(SceneItemData sceneItemData) {
         gameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
     }
+
+    #endregion
 }
