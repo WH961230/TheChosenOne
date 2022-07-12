@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "SO/SOSceneItemSetting")]
 public class SOSceneItemSetting : ScriptableObject {
@@ -8,6 +9,7 @@ public class SOSceneItemSetting : ScriptableObject {
     public List<SceneItemInfo> MySceneItemInfoList;
 
     public List<GameObject> MySceneItemPrefabOfficialList;
+    public List<SceneItemInfo1> MySceneItemPrefabOfficialList1;
 
     public List<GameObject> GetSceneItemPrefabList() {
         if (GameData.IsOfficial) {
@@ -15,6 +17,10 @@ public class SOSceneItemSetting : ScriptableObject {
         } else {
             return MySceneItemPrefabList;
         }
+    }
+
+    public List<SceneItemInfo1> GetSceneItemPrefabList1() {
+        return MySceneItemPrefabOfficialList1;
     }
 
     public List<SceneItemInfo> GetSceneItemInfoList() {
@@ -27,4 +33,10 @@ public class SOSceneItemSetting : ScriptableObject {
 public struct SceneItemInfo {
     public Vector3 Point;
     public Quaternion Quaternion;
+}
+
+[Serializable]
+public struct SceneItemInfo1 {
+    public GameObject SceneItemPrefab;
+    public Sprite SceneItemPicture;
 }

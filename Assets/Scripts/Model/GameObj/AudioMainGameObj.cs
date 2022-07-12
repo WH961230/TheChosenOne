@@ -18,10 +18,8 @@
         base.Init(game, data);
         this.game = game;
         audiomainData = (AudioMainData) data;
-        audiomainData.MyComponent = MyObj.transform.GetComponent<AudioMainComponent>();
         soAudioMainSetting = MyAudioSystem.MySoAudioMainSetting;
-
-        audioMainComponent = (AudioMainComponent) audiomainData.MyComponent;
+        audioMainComponent = MyObj.transform.GetComponent<AudioMainComponent>();
         audioMainComponent.AudioSource.PlayOneShot(soAudioMainSetting.BackMusic);
     }
 

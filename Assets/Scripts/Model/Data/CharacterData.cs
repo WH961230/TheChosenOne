@@ -4,5 +4,5 @@ public class CharacterData : Data {
     public bool IsMainCharacter;
     public bool IsJumping;
     public bool IsLanding = true;
-    public List<int> MySceneItemIds;
+    public List<int> MySceneItemIds = new List<int>();
 }

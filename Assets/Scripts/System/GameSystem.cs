@@ -34,6 +34,13 @@ public class GameSystem {
 
     #region 子系统
 
+    private BehaviourSystem behaviourSystem = new BehaviourSystem();
+    public BehaviourSystem MyBehaviourSystem {
+        get {
+            return behaviourSystem;
+        }
+    }
+    
     private CharacterSystem characterSystem = new CharacterSystem();
     public CharacterSystem MyCharacterSystem {
         get {
@@ -109,6 +116,7 @@ public class GameSystem {
         characterSystem.Init(this);
         inputSystem.Init(this);
         audioSystem.Init(this);
+        behaviourSystem.Init(this);
     }
 
     public void Update() {
@@ -119,6 +127,7 @@ public class GameSystem {
         characterSystem.Update();
         inputSystem.Update();
         audioSystem.Update();
+        behaviourSystem.Update();
     }
 
     public void FixedUpdate() {
@@ -129,6 +138,7 @@ public class GameSystem {
         characterSystem.FixedUpdate();
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
+        behaviourSystem.FixedUpdate();
     }
 
     public void LateUpdate() {
@@ -139,6 +149,7 @@ public class GameSystem {
         characterSystem.LateUpdate();
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
+        behaviourSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -149,6 +160,7 @@ public class GameSystem {
         characterSystem.Clear();
         inputSystem.Clear();
         audioSystem.Clear();
+        behaviourSystem.Clear();
     }
 
     private void InstanceSwitch() {
@@ -189,7 +201,7 @@ public class GameSystem {
         where T2 : GameObj, new()
         where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        data.MyType.IsWindowPrefab = true;
+        data.IsWindowPrefab = true;
         game.MyGameObjFeature.Register<T2>(data);
         game.MyWindowFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T3>(data);

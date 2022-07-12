@@ -29,3 +29,10 @@ MonoBehaviour:
   MySceneItemPrefabOfficialList:
   - {fileID: 7409785902056023864, guid: d4a1778f2b5ca7a4eb4ac0b72cbba32e, type: 3}
   - {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0, type: 3}
+  MySceneItemPrefabOfficialList1:
+  - SceneItemPrefab: {fileID: 7409785902056023864, guid: d4a1778f2b5ca7a4eb4ac0b72cbba32e,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: 779327a0584443746ad3bcfc8ae7dd2a, type: 3}
+  - SceneItemPrefab: {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: ee3ecb574f6b6764fa85f0af71f457ff, type: 3}

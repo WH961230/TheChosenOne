@@ -3,6 +3,7 @@
 public class GameObj : IGameObj {
     public Data MyData;
     private GameObject myObj;
+    protected MonoBehaviour MyComponent; // 组件
 
     protected GameObject MyObj {
         get { return myObj; }
@@ -12,9 +13,11 @@ public class GameObj : IGameObj {
     public virtual void Init(Game game, Data data) {
         this.MyData = data;
         this.MyData.InstanceID = MyData.MyObj.GetInstanceID();
+
         MyObj = data.MyObj;
         MyObj.name = this.MyData.MyName = string.Concat(this.MyData.MyName, this.MyData.InstanceID);
         MyObj.transform.SetParent(MyData.MyRootTran);
+
         if (data.IfInitMyObj) {
             MyObj.transform.localPosition = MyData.MyTranInfo.MyPos;
             MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
@@ -34,6 +37,10 @@ public class GameObj : IGameObj {
 
     public T GetData<T>() where T : Data {
         return (T)MyData;
+    }
+
+    public T GetComponent<T>() where T : MonoBehaviour {
+        return (T) MyComponent;
     }
 
     public virtual void Update() {

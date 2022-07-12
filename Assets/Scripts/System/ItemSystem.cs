@@ -28,14 +28,15 @@ public class ItemSystem : GameSys {
     public void InstanceSceneItem() {
         var config = soSceneItemSetting;
         var tempInfoList = config.GetSceneItemInfoList();
-        var tempPrefabList = config.GetSceneItemPrefabList();
+        var tempPrefabList1 = config.GetSceneItemPrefabList1();
         // 遍历生成点
         foreach (var item in tempInfoList) {
-            var index = Random.Range(0, tempPrefabList.Count);
-            var obj = tempPrefabList[index];
+            var index = Random.Range(0, tempPrefabList1.Count);
+            var obj = tempPrefabList1[index];
             InstanceSceneItem(new SceneItemData() {
-                MyName = obj.name,
-                MyObj = Object.Instantiate(obj),
+                MyName = obj.SceneItemPrefab.name,
+                MyObj = Object.Instantiate(obj.SceneItemPrefab),
+                MySceneItemPicture = obj.SceneItemPicture,
                 MyRootTran = GameData.ItemRoot,
                 MyTranInfo = new TranInfo() {
                     MyPos = item.Point,

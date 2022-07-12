@@ -22,8 +22,9 @@ public class CameraGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.game = game;
-        cameraData = (CameraData)data;
-        cameraComponent = MyObj.transform.GetComponent<CameraComponent>();
+        cameraData = (CameraData) data;
+        MyComponent = MyObj.transform.GetComponent<CameraComponent>();
+        cameraComponent = (CameraComponent) MyComponent;
         cameraTran = cameraData.MyObj.transform;
     }
 
@@ -44,7 +45,6 @@ public class CameraGameObj : GameObj {
         // 相机追踪行为
         TraceBehaviour();
         // 相机射线中心物体识别
-        CameraScreenCenterRayRecognize();
     }
 
     private void CameraScreenCenterRayRecognize() {

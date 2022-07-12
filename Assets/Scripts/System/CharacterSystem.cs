@@ -51,8 +51,7 @@ public class CharacterSystem : GameSys {
                 // 赋值全局 主角色
                 GameData.MainCharacater = instanceId;
                 // 赋值全局主角色组件
-                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId)
-                    .GetData<CharacterData>().GetComponent<CharacterComponent>();
+                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId).GetComponent<CharacterComponent>();
             }
         }
     }

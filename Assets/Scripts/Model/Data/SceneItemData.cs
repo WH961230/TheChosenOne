@@ -1,3 +1,6 @@
-﻿public class SceneItemData : Data {
+﻿using UnityEngine;
+
+public class SceneItemData : Data {
     public string MySceneItemSign;
+    public Sprite MySceneItemPicture;
 }

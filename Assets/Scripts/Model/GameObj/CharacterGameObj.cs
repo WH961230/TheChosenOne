@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterGameObj : GameObj {
     private float moveSpeed = 0.0f; // 移动速度
@@ -26,8 +25,9 @@ public class CharacterGameObj : GameObj {
         base.Init(game, data);
         this.game = game;
         characterData = (CharacterData) data;
-        characterData.MyComponent = MyObj.transform.GetComponent<CharacterComponent>();
-        characterComponent = (CharacterComponent) characterData.MyComponent;
+        MyComponent = MyObj.transform.GetComponent<CharacterComponent>();
+        characterComponent = (CharacterComponent) MyComponent;
+
         characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
         characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;
         InitConfigParam();
