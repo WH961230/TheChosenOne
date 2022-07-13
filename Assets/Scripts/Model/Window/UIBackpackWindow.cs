@@ -1,15 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-public class UIBackpackWindow : Window {
+﻿public class UIBackpackWindow : Window {
     private CharacterData mainCharacterData;
+    private CharacterComponent mainCharacterComponent;
+    private CharacterGameObj mainCharacterGameObj;
     private UIBackpackComponent uibackpackComponent;
     private Game game;
+
     public override void Init(Game game, Data data) {
         this.game = game;
         var obj = game.MyGameObjFeature.Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
         uibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
-        mainCharacterData = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater).GetData<CharacterData>();
+        mainCharacterGameObj = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater);
+        mainCharacterComponent = mainCharacterGameObj.GetComponent<CharacterComponent>();
+        mainCharacterData = mainCharacterGameObj.GetData<CharacterData>();
 
         var window = uibackpackComponent.MyUIBackpackWindow;
         var openBtn = uibackpackComponent.MyUIBackpackBtn;
@@ -34,13 +36,14 @@ public class UIBackpackWindow : Window {
                 DisplaySceneItemInfo();
             });
         }
-        
+
         // 副武器丢弃
         sideDropBtn.onClick.AddListener(() => {
             DropSceneItemSideWeapon();
             DisplaySceneItemInfo();
         });
 
+        // 关闭界面
         closeBtn.onClick.AddListener(() => {
             openBtn.gameObject.SetActive(true);
             window.gameObject.SetActive(false);
@@ -50,11 +53,19 @@ public class UIBackpackWindow : Window {
     // 丢弃主武器信息
     private void DropSceneItemMainWeapon(int index) {
         // 主武器
-        mainCharacterData.RemoveSceneItemMainWeapon(mainCharacterData.MySceneItemMainWeaponIds[index]);
+        var id = mainCharacterData.MySceneItemMainWeaponIds[index];
+        if (mainCharacterData.RemoveSceneItemMainWeapon(id)) {
+            // 丢弃主武器
+            game.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
+        }
     }
 
     private void DropSceneItemSideWeapon() {
-        mainCharacterData.RemoveSceneItemSideWeapon();
+        var id = mainCharacterData.MySceneItemSideWeaponId;
+        if (mainCharacterData.RemoveSceneItemSideWeapon()) {
+            // 丢弃主武器
+            game.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
+        }
     }
 
     // 展示物品信息
@@ -76,7 +87,8 @@ public class UIBackpackWindow : Window {
         if (sceneItemId2 == 0) {
             uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = null;
         } else {
-            var sceneItemData = gameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>().MyBackpackSprite;
+            var sceneItemData = gameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>()
+                .MyBackpackSprite;
             uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = sceneItemData;
         }
 

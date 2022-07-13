@@ -29,4 +29,14 @@ public static class GameData {
 
     // switch official
     public static bool IsOfficial;
+
+    public static Vector3 GetGround(Vector3 point) {
+        RaycastHit hit;
+        Ray ray = new Ray(point, Vector3.down);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 10)) {
+            return hit.point;
+        }
+
+        return default;
+    }
 }

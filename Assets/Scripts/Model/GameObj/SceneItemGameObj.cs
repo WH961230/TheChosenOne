@@ -1,4 +1,6 @@
-﻿public class SceneItemGameObj : GameObj {
+﻿using UnityEngine;
+
+public class SceneItemGameObj : GameObj {
     private SceneItemComponent sceneItemComponent;
     private SceneItemData sceneitemData;
 
@@ -14,8 +16,9 @@
         MyObj.SetActive(false);
     }
 
-    public void ShowObj() {
+    public void ShowObj(Vector3 point) {
         MyObj.SetActive(true);
+        MyObj.transform.position = point;
     }
 
     public override void Clear() {

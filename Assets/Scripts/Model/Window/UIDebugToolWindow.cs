@@ -1,4 +1,6 @@
-﻿public class UIDebugToolWindow : Window {
+﻿using UnityEngine;
+
+public class UIDebugToolWindow : Window {
     private UIDebugToolComponent uidebugtoolComponent;
 
     public override void Init(Game game, Data data) {
@@ -16,6 +18,12 @@
 
         uidebugtoolComponent.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
             game.MyGameSystem.MyCharacterSystem.InstanceCharacter(false);
+        });
+
+        uidebugtoolComponent.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
+            var characterPos = GameData.MainCharacterComponent.transform.position;
+            var tempObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            tempObj.transform.position = GameData.GetGround(characterPos);
         });
     }
 
