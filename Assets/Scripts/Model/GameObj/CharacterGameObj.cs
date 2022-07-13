@@ -112,10 +112,6 @@ public class CharacterGameObj : GameObj {
         base.LateUpdate();
     }
 
-    public void OnPickUp(int instanceId) {
-        characterData.MySceneItemIds.Add(instanceId);
-    }
-
     private void MoveBehaviour() {
         if (!characterData.IsMainCharacter) {
             return;

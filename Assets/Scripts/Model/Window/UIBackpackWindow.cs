@@ -2,57 +2,43 @@
 using UnityEngine.UI;
 
 public class UIBackpackWindow : Window {
+    private CharacterData mainCharacterData;
     private UIBackpackComponent uibackpackComponent;
     private Game game;
     public override void Init(Game game, Data data) {
         this.game = game;
         var obj = game.MyGameObjFeature.Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
         uibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
+        mainCharacterData = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater).GetData<CharacterData>();
+
         var window = uibackpackComponent.MyUIBackpackWindow;
         var openBtn = uibackpackComponent.MyUIBackpackBtn;
         var closeBtn = uibackpackComponent.MyUIBackpackCloseBtn;
-        var drop1Btn = uibackpackComponent.MyUIBackpackDrop1Btn;
-        var drop2Btn = uibackpackComponent.MyUIBackpackDrop2Btn;
-        
+        var mainDropBtns = uibackpackComponent.MyUIBackpackMainWeaponDropBtns;
+        var sideDropBtn = uibackpackComponent.MyUIBackpackSideWeaponDropBtn;
+
         openBtn.gameObject.SetActive(true);
         window.gameObject.SetActive(false);
 
-
-
+        // 打开背包
         openBtn.onClick.AddListener(() => {
-            var characterGameObj = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater);
-            var characterData = characterGameObj.GetData<CharacterData>();
-
-            // 第一物品栏
-            if (characterData.MySceneItemIds.Count >= 1) {
-                var sceneItemId1 = characterData.MySceneItemIds[0];
-                var sceneItemData = game.MyGameSystem.MyGameObjFeature.Get<SceneItemGameObj>(sceneItemId1).GetData<SceneItemData>().MySceneItemPicture;
-                SetImage1(sceneItemData);
-            }
-
-            // 第二物品栏
-            if (characterData.MySceneItemIds.Count >= 2) {
-                var sceneItemId2 = characterData.MySceneItemIds[1];
-                var sceneItemData = game.MyGameSystem.MyGameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>().MySceneItemPicture;
-                SetImage2(sceneItemData);
-            }
-
+            DisplaySceneItemInfo();
             window.gameObject.SetActive(true);
             openBtn.gameObject.SetActive(false);
         });
-        
-        drop1Btn.onClick.AddListener(() => {
-            var characterGameObj = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater);
-            var characterData = characterGameObj.GetData<CharacterData>();
-            characterData.MySceneItemIds.RemoveAt(0);
-            SetImage1(null);
-        });
 
-        drop2Btn.onClick.AddListener(() => {
-            var characterGameObj = game.MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater);
-            var characterData = characterGameObj.GetData<CharacterData>();
-            characterData.MySceneItemIds.RemoveAt(1);
-            SetImage2(null);
+        // 主武器丢弃
+        for (var i = 0; i < mainDropBtns.Length; i++) {
+            mainDropBtns[i].onClick.AddListener(() => {
+                DropSceneItemMainWeapon(i);
+                DisplaySceneItemInfo();
+            });
+        }
+        
+        // 副武器丢弃
+        sideDropBtn.onClick.AddListener(() => {
+            DropSceneItemSideWeapon();
+            DisplaySceneItemInfo();
         });
 
         closeBtn.onClick.AddListener(() => {
@@ -61,12 +47,51 @@ public class UIBackpackWindow : Window {
         });
     }
 
-    public void SetImage1(Sprite image) {
-        uibackpackComponent.MyUIBackpackItemImage1.sprite = image;
+    // 丢弃主武器信息
+    private void DropSceneItemMainWeapon(int index) {
+        // 主武器
+        mainCharacterData.RemoveSceneItemMainWeapon(mainCharacterData.MySceneItemMainWeaponIds[index]);
     }
 
-    public void SetImage2(Sprite image) {
-        uibackpackComponent.MyUIBackpackItemImage2.sprite = image;
+    private void DropSceneItemSideWeapon() {
+        mainCharacterData.RemoveSceneItemSideWeapon();
+    }
+
+    // 展示物品信息
+    private void DisplaySceneItemInfo() {
+        var gameObjFeature = game.MyGameSystem.MyGameObjFeature;
+        // 主武器
+        for (var i = 0; i < mainCharacterData.MySceneItemMainWeaponIds.Length; i++) {
+            var tempId = mainCharacterData.MySceneItemMainWeaponIds[i];
+            if (tempId == 0) {
+                uibackpackComponent.MyUIBackpackMainWeaponImages[i].sprite = null;
+            } else {
+                var tempSprite = gameObjFeature.Get<SceneItemGameObj>(tempId).GetData<SceneItemData>().MyBackpackSprite;
+                uibackpackComponent.MyUIBackpackMainWeaponImages[i].sprite = tempSprite;
+            }
+        }
+
+        // 副武器
+        var sceneItemId2 = mainCharacterData.MySceneItemSideWeaponId;
+        if (sceneItemId2 == 0) {
+            uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = null;
+        } else {
+            var sceneItemData = gameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>().MyBackpackSprite;
+            uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = sceneItemData;
+        }
+
+        // 玩家物品
+        for (var i = 0; i < mainCharacterData.MySceneItemConsumeIds.Length; i++) {
+            var tempId = mainCharacterData.MySceneItemConsumeIds[i];
+            if (tempId == 0) {
+                uibackpackComponent.MyUIBackpackConsumeImages[i].sprite = null;
+            } else {
+                var tempSprite = gameObjFeature.Get<SceneItemGameObj>(tempId).GetData<SceneItemData>().MyBackpackSprite;
+                uibackpackComponent.MyUIBackpackConsumeImages[i].sprite = tempSprite;
+            }
+        }
+
+        // 附近物体
     }
 
     public override void Open() {

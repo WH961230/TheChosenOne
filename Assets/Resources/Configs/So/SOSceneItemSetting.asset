@@ -29,6 +29,9 @@ MonoBehaviour:
   MySceneItemPrefabOfficialList:
   - {fileID: 7409785902056023864, guid: d4a1778f2b5ca7a4eb4ac0b72cbba32e, type: 3}
   - {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0, type: 3}
+  - {fileID: 3993783960709859755, guid: adf35aa8fdc75e942a8196ab10dc73cc, type: 3}
+  - {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667, type: 3}
+  - {fileID: 8786019937070736618, guid: f3fd987ddbcba0544950f92af866c889, type: 3}
   MySceneItemPrefabOfficialList1:
   - SceneItemPrefab: {fileID: 7409785902056023864, guid: d4a1778f2b5ca7a4eb4ac0b72cbba32e,
       type: 3}
@@ -36,3 +39,12 @@ MonoBehaviour:
   - SceneItemPrefab: {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0,
       type: 3}
     SceneItemPicture: {fileID: 21300000, guid: ee3ecb574f6b6764fa85f0af71f457ff, type: 3}
+  - SceneItemPrefab: {fileID: 3993783960709859755, guid: adf35aa8fdc75e942a8196ab10dc73cc,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: 592298afdcd6ad842974e89ec933ae84, type: 3}
+  - SceneItemPrefab: {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: 49a8f3eaab7b34045870943b972e9158, type: 3}
+  - SceneItemPrefab: {fileID: 8786019937070736618, guid: f3fd987ddbcba0544950f92af866c889,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: d65fc802b4410164fa8d7fce9cd4b041, type: 3}

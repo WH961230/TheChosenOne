@@ -39,6 +39,13 @@ public class CharacterSystem : GameSys {
         });
         // 如果是主角色
         if (isMainCharacter) {
+            if (GameData.MainCharacater == -1) {
+                // 赋值全局 主角色
+                GameData.MainCharacater = instanceId;
+                // 赋值全局主角色组件
+                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId).GetComponent<CharacterComponent>();
+            }
+
             // 加载角色 UI
             gameSystem.MyUISystem.InstanceUICharacterWindow();
             // 加载地图 UI
@@ -47,12 +54,6 @@ public class CharacterSystem : GameSys {
             gameSystem.MyUISystem.InstanceUIBackpackWindow();
             // 加载贴士 UI
             gameSystem.MyUISystem.InstanceUITipWindow();
-            if (GameData.MainCharacater == -1) {
-                // 赋值全局 主角色
-                GameData.MainCharacater = instanceId;
-                // 赋值全局主角色组件
-                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId).GetComponent<CharacterComponent>();
-            }
         }
     }
 

@@ -36,7 +36,7 @@ public class ItemSystem : GameSys {
             InstanceSceneItem(new SceneItemData() {
                 MyName = obj.SceneItemPrefab.name,
                 MyObj = Object.Instantiate(obj.SceneItemPrefab),
-                MySceneItemPicture = obj.SceneItemPicture,
+                MyBackpackSprite = obj.SceneItemPicture,
                 MyRootTran = GameData.ItemRoot,
                 MyTranInfo = new TranInfo() {
                     MyPos = item.Point,
