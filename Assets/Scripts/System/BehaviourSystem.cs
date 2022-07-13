@@ -79,6 +79,9 @@ public class BehaviourSystem : GameSys {
                             Debug.Log("拾取副武器：" + sceneItemId);
                         }
                     } else if (sceneItemComponent.MySceneItemType == SceneItemType.Consume) {
+                        if (mainCharacterData.AddSceneItemConsume(sceneItemId)) {
+                            Debug.Log("拾取消耗品：" + sceneItemId);
+                        }
                     }
 
                     sceneItemGameObj.HideObj();

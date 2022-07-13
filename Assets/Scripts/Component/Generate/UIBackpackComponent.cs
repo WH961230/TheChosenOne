@@ -8,7 +8,8 @@ public class UIBackpackComponent : MonoBehaviour {
     public Button MyUIBackpackCloseBtn;
     public Image[] MyUIBackpackMainWeaponImages = new Image[2];
     public Image MyUIBackpackSideWeaponImage;
-    public Button[] MyUIBackpackMainWeaponDropBtns = new Button[2];
+    public Button MyUIBackpackMainWeaponDropBtn_1;
+    public Button MyUIBackpackMainWeaponDropBtn_2;
     public Button MyUIBackpackSideWeaponDropBtn;
     public List<Image> MyUIBackpackConsumeImages = new List<Image>();
 }

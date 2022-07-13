@@ -16,34 +16,7 @@ MonoBehaviour:
   - {fileID: 57229295734186972, guid: 529ef7d5b663d04449ca021492b89fe6, type: 3}
   - {fileID: 8198302197486460903, guid: 75a0589ab6c3c0449a2e9c05c90547ae, type: 3}
   - {fileID: 8198302197486460903, guid: afe539796d9dd2145a8d7e0a199e2718, type: 3}
-  MySceneBuildingInfoList:
-  - Sign: SceneBuildingHouse_1 (3)
-    Point: {x: -34.89536, y: 0, z: 15.500858}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingFloor
-    Point: {x: 0, y: 0, z: 0}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_1 (2)
-    Point: {x: 28.522762, y: 0, z: 12.956074}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_2
-    Point: {x: 26.696445, y: 0, z: -2.796959}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_1 (1)
-    Point: {x: 17.348349, y: 0, z: -23.249409}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_1
-    Point: {x: -23.678673, y: 0.58364326, z: -7.263668}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_2 (3)
-    Point: {x: 18.587887, y: 0, z: 33.88718}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_2 (2)
-    Point: {x: -20.703087, y: 0, z: 38.737484}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SceneBuildingHouse_2 (1)
-    Point: {x: -5.462015, y: 0, z: 26.544617}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  MySceneBuildingInfoList: []
   MySceneBuildingOfficialPrefabInfoList:
   - {fileID: 3520882674228991320, guid: 033d7ed67fa7e864992231d41a81a175, type: 3}
   - {fileID: 4742465846034646472, guid: d10cfb00c99dd434a9a028ad40253210, type: 3}
@@ -63,30 +36,18 @@ MonoBehaviour:
   - Sign: SM_Env_Ground_Square_02 (2)
     Point: {x: 20.25, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: Building_Shack (4)
-    Point: {x: -1.7151101, y: 0.5699841, z: 13.40937}
-    Quaternion: {x: -0, y: -0.12531018, z: -0, w: 0.99211764}
   - Sign: SM_Env_Ground_Square_02 (3)
     Point: {x: 0, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: SM_Env_Ground_Square_02 (5)
     Point: {x: 20.25, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: Building_Shack (3)
-    Point: {x: 20.777746, y: 0.40525916, z: -12.375875}
-    Quaternion: {x: -0, y: -0.1338877, z: -0, w: 0.99099654}
-  - Sign: Building_Shack (2)
-    Point: {x: 17.063175, y: 0.51404095, z: 23.840385}
-    Quaternion: {x: -0, y: 0.20067137, z: -0, w: 0.9796586}
   - Sign: SM_Env_Ground_Square_02 (6)
     Point: {x: 0, y: 0, z: -20.1}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: SM_Env_Ground_Square_02 (1)
     Point: {x: -20.25, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: Building_Shack
-    Point: {x: -26.461618, y: 0.096821025, z: 9.524897}
-    Quaternion: {x: -0, y: 0.2624337, z: -0, w: 0.9649501}
   - Sign: SM_Env_Ground_Square_02 (4)
     Point: {x: -20.25, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}

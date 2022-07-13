@@ -1935,9 +1935,8 @@ MonoBehaviour:
   - {fileID: 5287102993667292340}
   - {fileID: 3727060468603454994}
   MyUIBackpackSideWeaponImage: {fileID: 47796364655152308}
-  MyUIBackpackMainWeaponDropBtns:
-  - {fileID: 291852089104221632}
-  - {fileID: 3576028265082917903}
+  MyUIBackpackMainWeaponDropBtn_1: {fileID: 291852089104221632}
+  MyUIBackpackMainWeaponDropBtn_2: {fileID: 3576028265082917903}
   MyUIBackpackSideWeaponDropBtn: {fileID: 6126474699634864069}
   MyUIBackpackConsumeImages:
   - {fileID: 289843707551397432}

@@ -16,7 +16,8 @@
         var window = uibackpackComponent.MyUIBackpackWindow;
         var openBtn = uibackpackComponent.MyUIBackpackBtn;
         var closeBtn = uibackpackComponent.MyUIBackpackCloseBtn;
-        var mainDropBtns = uibackpackComponent.MyUIBackpackMainWeaponDropBtns;
+        var mainDropBtn_1 = uibackpackComponent.MyUIBackpackMainWeaponDropBtn_1;
+        var mainDropBtn_2 = uibackpackComponent.MyUIBackpackMainWeaponDropBtn_2;
         var sideDropBtn = uibackpackComponent.MyUIBackpackSideWeaponDropBtn;
 
         openBtn.gameObject.SetActive(true);
@@ -30,12 +31,15 @@
         });
 
         // 主武器丢弃
-        for (var i = 0; i < mainDropBtns.Length; i++) {
-            mainDropBtns[i].onClick.AddListener(() => {
-                DropSceneItemMainWeapon(i);
-                DisplaySceneItemInfo();
-            });
-        }
+        mainDropBtn_1.onClick.AddListener(() => {
+            DropSceneItemMainWeapon(0);
+            DisplaySceneItemInfo();
+        });
+
+        mainDropBtn_2.onClick.AddListener(() => {
+            DropSceneItemMainWeapon(1);
+            DisplaySceneItemInfo();
+        });
 
         // 副武器丢弃
         sideDropBtn.onClick.AddListener(() => {

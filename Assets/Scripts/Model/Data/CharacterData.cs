@@ -54,6 +54,19 @@ public class CharacterData : Data {
         return false;
     }
 
+
+    private bool HasSceneItemConsumeId(int id) {
+        foreach (var wid in MySceneItemConsumeIds) {
+            if (wid == id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #region 添加
+
     public bool AddSceneItemMainWeapon(int id) {
         if (HasSceneItemId(id)) {
             return false;
@@ -96,6 +109,28 @@ public class CharacterData : Data {
         mySceneItemSideWeaponId = id;
         return true;
     }
+
+    public bool AddSceneItemConsume(int id) {
+        if (HasSceneItemId(id)) {
+            return false;
+        }
+
+        if (HasSceneItemConsumeId(id)) {
+            return false;
+        }
+
+        myAllSceneItemIds.Add(id);
+        for (int i = 0; i < MySceneItemConsumeIds.Length; i++) {
+            if (MySceneItemConsumeIds[i] == 0) {
+                MySceneItemConsumeIds[i] = id;
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
 
     #region 移除
 
@@ -145,6 +180,38 @@ public class CharacterData : Data {
 
         myAllSceneItemIds.RemoveAt(index);
         mySceneItemSideWeaponId = 0;
+        return true;
+    }
+
+    public bool RemoveSceneItemConsume(int id) {
+        if (id == 0) {
+            return false;
+        }
+
+        if (!HasSceneItemId(id)) {
+            return false;
+        }
+
+        if (!HasSceneItemConsumeId(id)) {
+            return false;
+        }
+
+        var index = -1;
+        for (int i = 0; i < myAllSceneItemIds.Count; i++) {
+            if (id == myAllSceneItemIds[i]) {
+                index = i;
+            }
+        }
+
+        myAllSceneItemIds.RemoveAt(index);
+
+        for (int i = 0; i < mySceneItemConsumeIds.Length; i++) {
+            if (id == mySceneItemConsumeIds[i]) {
+                index = i;
+            }
+        }
+
+        mySceneItemConsumeIds[index] = 0;
         return true;
     }
 

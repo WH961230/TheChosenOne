@@ -57,32 +57,61 @@ public class CharacterGameObj : GameObj {
             // 获取不同的移动方向
             Vector3 dir = Vector3.zero;
 
+            var h = characterComponent.AnimatorController.GetFloat("Horizontal");
+            var v = characterComponent.AnimatorController.GetFloat("Vertical");
+            var speed = 10;
             if (inputSystem.GetKey(KeyCode.W)) {
                 dir = characterComponent.Body.transform.forward;
                 if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
                     vec = dir * soCharacterSetting.MyMoveInfo.RunSpeed;
-                    characterComponent.AnimatorController.SetFloat("Move", 2);
+                    h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
+                    characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                    v = Mathf.Lerp(v, 2, Time.deltaTime * speed);
+                    characterComponent.AnimatorController.SetFloat("Vertical", v);
                 } else {
                     // 移动速度
                     vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
-                    characterComponent.AnimatorController.SetFloat("Move", 1);
+                    h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
+                    characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                    v = Mathf.Lerp(v, 1, Time.deltaTime * speed);
+                    characterComponent.AnimatorController.SetFloat("Vertical", v);
                 }
                 characterComponent.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.S)) {
                 dir = -characterComponent.Body.transform.forward;
                 vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
-                characterComponent.AnimatorController.SetFloat("Move", -1);
+                h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                v = Mathf.Lerp(v, -1, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Vertical", v);
                 characterComponent.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.A)) {
                 dir = -characterComponent.Body.transform.right;
                 vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                h = Mathf.Lerp(h, -1, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Vertical", v);
                 characterComponent.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.D)) {
                 dir = characterComponent.Body.transform.right;
                 vec = dir * soCharacterSetting.MyMoveInfo.WalkSpeed;
+                h = Mathf.Lerp(h, 1, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Vertical", v);
                 characterComponent.AnimatorController.SetBool("IsMove", true);
             } else {
-                characterComponent.AnimatorController.SetFloat("Move", 0);
+                h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    
+                v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
+                characterComponent.AnimatorController.SetFloat("Vertical", v);
                 characterComponent.AnimatorController.SetBool("IsMove", false);
             }
         }
