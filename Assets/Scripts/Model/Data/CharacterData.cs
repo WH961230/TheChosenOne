@@ -278,7 +278,7 @@ public class CharacterData : Data {
         }
 
         myAllSceneItemIds.RemoveAt(ii);
-        mySceneItemEquipmentIds[index] = id;
+        mySceneItemEquipmentIds[index] = 0;
 
         return true;
     }

@@ -51,8 +51,24 @@
             DropSceneItemSideWeapon();
             DisplaySceneItemInfo();
         });
-        
-        
+
+        // 装备丢弃
+        equipmentBtn_1.onClick.AddListener(() => {
+            DropSceneItemEquipment(0);
+            DisplaySceneItemInfo();
+        });
+        equipmentBtn_2.onClick.AddListener(() => {
+            DropSceneItemEquipment(1);
+            DisplaySceneItemInfo();
+        });
+        equipmentBtn_3.onClick.AddListener(() => {
+            DropSceneItemEquipment(2);
+            DisplaySceneItemInfo();
+        });
+        equipmentBtn_4.onClick.AddListener(() => {
+            DropSceneItemEquipment(3);
+            DisplaySceneItemInfo();
+        });
 
         // 关闭界面
         closeBtn.onClick.AddListener(() => {
