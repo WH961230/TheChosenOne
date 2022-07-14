@@ -82,6 +82,22 @@ public class BehaviourSystem : GameSys {
                         if (mainCharacterData.AddSceneItemConsume(sceneItemId)) {
                             Debug.Log("拾取消耗品：" + sceneItemId);
                         }
+                    } else if (sceneItemComponent.MySceneItemType == SceneItemType.Equipment) {
+                        if (sceneItemComponent.SceneItemSign.Contains("防弹衣")) {
+                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "防弹衣")) {
+                                Debug.Log("拾取消耗品：" + sceneItemId);
+                            }
+                        } else if (sceneItemComponent.SceneItemSign.Contains("背包")) {
+                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "背包")) {
+                                Debug.Log("拾取消耗品：" + sceneItemId);
+                            }
+                        } else if (sceneItemComponent.SceneItemSign.Contains("头盔")) {
+                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "头盔")) {
+                                Debug.Log("拾取消耗品：" + sceneItemId);
+                            }
+                        } else if (sceneItemComponent.SceneItemSign.Contains("")) {
+                            
+                        }
                     }
 
                     sceneItemGameObj.HideObj();

@@ -20,6 +20,11 @@
         var mainDropBtn_2 = uibackpackComponent.MyUIBackpackMainWeaponDropBtn_2;
         var sideDropBtn = uibackpackComponent.MyUIBackpackSideWeaponDropBtn;
 
+        var equipmentBtn_1 = uibackpackComponent.MyUIBackpackEquipment_1;
+        var equipmentBtn_2 = uibackpackComponent.MyUIBackpackEquipment_2;
+        var equipmentBtn_3 = uibackpackComponent.MyUIBackpackEquipment_3;
+        var equipmentBtn_4 = uibackpackComponent.MyUIBackpackEquipment_4;
+
         openBtn.gameObject.SetActive(true);
         window.gameObject.SetActive(false);
 
@@ -46,6 +51,8 @@
             DropSceneItemSideWeapon();
             DisplaySceneItemInfo();
         });
+        
+        
 
         // 关闭界面
         closeBtn.onClick.AddListener(() => {
@@ -72,6 +79,14 @@
         }
     }
 
+    private void DropSceneItemEquipment(int index) {
+        var id = mainCharacterData.MySceneItemEquipmentIds[index];
+        if (mainCharacterData.RemoveSceneItemEquipment(id, index)) {
+            // 丢弃主武器
+            game.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
+        }
+    }
+
     // 展示物品信息
     private void DisplaySceneItemInfo() {
         var gameObjFeature = game.MyGameSystem.MyGameObjFeature;
@@ -91,9 +106,19 @@
         if (sceneItemId2 == 0) {
             uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = null;
         } else {
-            var sceneItemData = gameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>()
-                .MyBackpackSprite;
+            var sceneItemData = gameObjFeature.Get<SceneItemGameObj>(sceneItemId2).GetData<SceneItemData>().MyBackpackSprite;
             uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = sceneItemData;
+        }
+
+        // 装备
+        for (int i = 0; i < mainCharacterData.MySceneItemEquipmentIds.Length; i++) {
+            var tempId = mainCharacterData.MySceneItemEquipmentIds[i];
+            if (tempId == 0) {
+                uibackpackComponent.MyUIBackpackEquipmentImages[i].sprite = null;
+            } else {
+                var tempSprite = gameObjFeature.Get<SceneItemGameObj>(tempId).GetData<SceneItemData>().MyBackpackSprite;
+                uibackpackComponent.MyUIBackpackEquipmentImages[i].sprite = tempSprite;
+            }
         }
 
         // 玩家物品

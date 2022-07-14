@@ -28,6 +28,12 @@ public class CharacterData : Data {
         get { return mySceneItemConsumeIds; }
     }
 
+    private const int MySceneItemEquipmentNum = 4;
+    private int[] mySceneItemEquipmentIds = new int[MySceneItemEquipmentNum]; // 1、头盔 2、防弹衣 3、背包
+    public int[] MySceneItemEquipmentIds {
+        get { return mySceneItemEquipmentIds; }
+    }
+
     // 所有物体
     private List<int> myAllSceneItemIds = new List<int>(); // 所有物品 id 上限为当前
     public List<int> MyAllSceneItemIds {
@@ -58,6 +64,16 @@ public class CharacterData : Data {
     private bool HasSceneItemConsumeId(int id) {
         foreach (var wid in MySceneItemConsumeIds) {
             if (wid == id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool HasSceneItemEquipmentId(int id) {
+        foreach (var eId in MySceneItemEquipmentIds) {
+            if (eId == id) {
                 return true;
             }
         }
@@ -125,6 +141,32 @@ public class CharacterData : Data {
                 MySceneItemConsumeIds[i] = id;
                 break;
             }
+        }
+
+        return true;
+    }
+
+    public bool AddSceneItemEquipment(int id, string sceneName) {
+        if (id == 0) {
+            return false;
+        }
+
+        if (HasSceneItemId(id)) {
+            return false;
+        }
+
+        if (HasSceneItemEquipmentId(id)) {
+            return false;
+        }
+
+        myAllSceneItemIds.Add(id);
+
+        if (sceneName.Contains("头盔")) {
+            MySceneItemEquipmentIds[0] = id;
+        } else if (sceneName.Contains("防弹衣")) {
+            MySceneItemEquipmentIds[1] = id;
+        } else if (sceneName.Contains("背包")) {
+            mySceneItemEquipmentIds[2] = id;
         }
 
         return true;
@@ -212,6 +254,32 @@ public class CharacterData : Data {
         }
 
         mySceneItemConsumeIds[index] = 0;
+        return true;
+    }
+
+    public bool RemoveSceneItemEquipment(int id, int index) {
+        if (id == 0) {
+            return false;
+        }
+
+        if (!HasSceneItemId(id)) {
+            return false;
+        }
+
+        if (!HasSceneItemEquipmentId(id)) {
+            return false;
+        }
+
+        var ii = -1;
+        for (int i = 0; i < myAllSceneItemIds.Count; i++) {
+            if (id == myAllSceneItemIds[i]) {
+                ii = i;
+            }
+        }
+
+        myAllSceneItemIds.RemoveAt(ii);
+        mySceneItemEquipmentIds[index] = id;
+
         return true;
     }
 
