@@ -43,8 +43,23 @@ public class CharacterGameObj : GameObj {
 
     public override void Update() {
         base.Update();
-        Vector3 vec = Vector3.zero;
+        CharacterMotion();
+        CharacterAnimation();
+    }
 
+    private void CharacterAnimation() {
+        // 当前武器不为空 播放手持武器动画
+        characterComponent.AnimatorController.SetBool("IsWeapon", true);
+        return;
+        if (characterData.MyCurrentSceneItemWeapon != 0) {
+            characterComponent.AnimatorController.SetBool("IsWeapon", true);
+        } else {
+            characterComponent.AnimatorController.SetBool("IsWeapon", false);
+        }
+    }
+
+    private void CharacterMotion() {
+        Vector3 vec = Vector3.zero;
         if (characterData.IsMainCharacter) {
             // 视角 当玩家未按下 alt 视角移动角色 Body
             var pressAltDown = inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt);

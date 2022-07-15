@@ -6,7 +6,12 @@ public class CharacterData : Data {
     public bool IsJumping;
     public bool IsLanding = true;
 
-    private int MyCurrentSceneItemWeapon;
+    // 当前武器
+    private int myCurrentSceneItemWeapon = 0;
+    public int MyCurrentSceneItemWeapon {
+        get { return myCurrentSceneItemWeapon; }
+        set { myCurrentSceneItemWeapon = value; }
+    }
 
     // 主武器
     private const int MyWeaponMaxNum = 2;
