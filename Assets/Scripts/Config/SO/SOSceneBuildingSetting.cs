@@ -4,9 +4,6 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/SOSceneBuildingSetting")]
 public class SOSceneBuildingSetting : ScriptableObject {
-    public List<GameObject> MySceneBuildingPrefabInfoList;
-    public List<SceneBuildingInfo> MySceneBuildingInfoList;
-
     public List<GameObject> MySceneBuildingOfficialPrefabInfoList;
     public List<SceneBuildingInfo> MySceneBuildingOfficialInfoList;
 
@@ -22,19 +19,11 @@ public class SOSceneBuildingSetting : ScriptableObject {
     }
 
     public List<GameObject> GetSceneBuildingPrefabList() {
-        if (GameData.IsOfficial) {
-            return MySceneBuildingOfficialPrefabInfoList;
-        } else {
-            return MySceneBuildingPrefabInfoList;
-        }
+        return MySceneBuildingOfficialPrefabInfoList;
     }
     
     public List<SceneBuildingInfo> GetSceneBuildingInfoList() {
-        if (GameData.IsOfficial) {
-            return MySceneBuildingOfficialInfoList;
-        } else {
-            return MySceneBuildingInfoList;
-        }
+        return MySceneBuildingOfficialInfoList;
     }
 }
 

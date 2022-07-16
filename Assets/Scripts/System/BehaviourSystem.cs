@@ -5,6 +5,7 @@ public class BehaviourSystem : GameSys {
     private GameSystem gameSystem;
     private CharacterData mainCharacterData;
     private CameraComponent mainCharacterCameraComponent;
+    private SceneItemGameObj sceneItemGameObj;
 
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
@@ -58,8 +59,7 @@ public class BehaviourSystem : GameSys {
                 var sceneItemId = hit.collider.gameObject.GetInstanceID();
 
                 // 获取物体标识
-                var sceneItemGameObj = gameSystem.MyGameObjFeature.Get<SceneItemGameObj>(sceneItemId);
-                var sceneItemComponent = sceneItemGameObj.GetComponent<SceneItemComponent>();
+                sceneItemGameObj = gameSystem.MyGameObjFeature.Get<SceneItemGameObj>(sceneItemId);
                 var name = sceneItemGameObj.GetData<SceneItemData>().MySceneItemSign;
 
                 // 设置贴士 UI 内容
@@ -69,38 +69,9 @@ public class BehaviourSystem : GameSys {
 
                 // 输入F键
                 if (gameSystem.MyInputSystem.GetKeyDown(KeyCode.F)) {
-                    if (sceneItemComponent.MySceneItemType == SceneItemType.MainWeapon) {
-                        // 根据物品的类型 将物品 id 放入玩家 物品 id 中
-                        if (mainCharacterData.AddSceneItemMainWeapon(sceneItemId)) {
-                            Debug.Log("拾取主武器：" + sceneItemId);
-                        }
-                    } else if (sceneItemComponent.MySceneItemType == SceneItemType.SideWeapon) {
-                        if (mainCharacterData.AddSceneItemSideWeapon(sceneItemId)) {
-                            Debug.Log("拾取副武器：" + sceneItemId);
-                        }
-                    } else if (sceneItemComponent.MySceneItemType == SceneItemType.Consume) {
-                        if (mainCharacterData.AddSceneItemConsume(sceneItemId)) {
-                            Debug.Log("拾取消耗品：" + sceneItemId);
-                        }
-                    } else if (sceneItemComponent.MySceneItemType == SceneItemType.Equipment) {
-                        if (sceneItemComponent.SceneItemSign.Contains("防弹衣")) {
-                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "防弹衣")) {
-                                Debug.Log("拾取消耗品：" + sceneItemId);
-                            }
-                        } else if (sceneItemComponent.SceneItemSign.Contains("背包")) {
-                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "背包")) {
-                                Debug.Log("拾取消耗品：" + sceneItemId);
-                            }
-                        } else if (sceneItemComponent.SceneItemSign.Contains("头盔")) {
-                            if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "头盔")) {
-                                Debug.Log("拾取消耗品：" + sceneItemId);
-                            }
-                        } else if (sceneItemComponent.SceneItemSign.Contains("")) {
-                            
-                        }
-                    }
-
-                    sceneItemGameObj.HideObj();
+                    // 添加物品
+                    AddSceneItem(sceneItemId);
+                    // AddWeapon()
                 }
 
                 Debug.DrawLine(mainCharacterCameraComponent.MyCamera.transform.position, hit.point, Color.red);
@@ -109,5 +80,41 @@ public class BehaviourSystem : GameSys {
                 uiTipWindow.Close();
             }
         }
+    }
+
+    private void AddSceneItem(int sceneItemId) {
+        var sceneItemComponent = sceneItemGameObj.GetComponent<SceneItemComponent>();
+        if (sceneItemComponent.MySceneItemType == SceneItemType.MainWeapon) {
+            // 根据物品的类型 将物品 id 放入玩家 物品 id 中
+            if (mainCharacterData.AddSceneItemMainWeapon(sceneItemId)) {
+                Debug.Log("拾取主武器：" + sceneItemId);
+            }
+        } else if (sceneItemComponent.MySceneItemType == SceneItemType.SideWeapon) {
+            if (mainCharacterData.AddSceneItemSideWeapon(sceneItemId)) {
+                Debug.Log("拾取副武器：" + sceneItemId);
+            }
+        } else if (sceneItemComponent.MySceneItemType == SceneItemType.Consume) {
+            if (mainCharacterData.AddSceneItemConsume(sceneItemId)) {
+                Debug.Log("拾取消耗品：" + sceneItemId);
+            }
+        } else if (sceneItemComponent.MySceneItemType == SceneItemType.Equipment) {
+            if (sceneItemComponent.SceneItemSign.Contains("防弹衣")) {
+                if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "防弹衣")) {
+                    Debug.Log("拾取消耗品：" + sceneItemId);
+                }
+            } else if (sceneItemComponent.SceneItemSign.Contains("背包")) {
+                if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "背包")) {
+                    Debug.Log("拾取消耗品：" + sceneItemId);
+                }
+            } else if (sceneItemComponent.SceneItemSign.Contains("头盔")) {
+                if (mainCharacterData.AddSceneItemEquipment(sceneItemId, "头盔")) {
+                    Debug.Log("拾取消耗品：" + sceneItemId);
+                }
+            } else if (sceneItemComponent.SceneItemSign.Contains("")) {
+                            
+            }
+        }
+
+        sceneItemGameObj.HideObj();
     }
 }

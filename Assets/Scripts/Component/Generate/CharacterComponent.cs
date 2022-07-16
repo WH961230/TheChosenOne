@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CharacterComponent : MonoBehaviour {
     public GameObject Head;
@@ -7,7 +8,13 @@ public class CharacterComponent : MonoBehaviour {
     public Animator AnimatorController;
 
     [Header("武器模型")] 
-    public GameObject AKC;
-    public GameObject AK47;
-    public GameObject Pistol;
+    public WeaponInfo AKC;
+    public WeaponInfo AK47;
+    public WeaponInfo Pistol;
+}
+
+[Serializable]
+public struct WeaponInfo {
+    public GameObject WeaponGameObj;
+    public int WeaponId;
 }

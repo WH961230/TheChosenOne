@@ -26,7 +26,7 @@ public class GenerateScriptEditor : EditorWindow {
         foreach (var id in s) {
             var guidToAssetPath = AssetDatabase.GUIDToAssetPath(id);
             var o = AssetDatabase.LoadAssetAtPath<GameObject>(guidToAssetPath);
-            GameObject.Instantiate(o);
+            Instantiate(o);
             Debug.Log(guidToAssetPath);
         }
     }

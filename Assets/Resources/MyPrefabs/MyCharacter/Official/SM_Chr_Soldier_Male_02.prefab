@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4778067609308664793
 Transform:
   m_ObjectHideFlags: 0
@@ -839,9 +839,15 @@ MonoBehaviour:
   Body: {fileID: 5988454832137893343}
   CC: {fileID: 2538798550090026928}
   AnimatorController: {fileID: 875691681780233923}
-  AKC: {fileID: 6203322830822954797}
-  AK47: {fileID: 7628389573809513217}
-  Pistol: {fileID: 4774957674292141995}
+  AKC:
+    WeaponGameObj: {fileID: 6203322830822954797}
+    WeaponId: 0
+  AK47:
+    WeaponGameObj: {fileID: 7628389573809513217}
+    WeaponId: 0
+  Pistol:
+    WeaponGameObj: {fileID: 4774957674292141995}
+    WeaponId: 0
 --- !u!95 &875691681780233923
 Animator:
   serializedVersion: 3

@@ -10,11 +10,7 @@ public class SOCharacterSetting : ScriptableObject {
     public CharacterInfo MyCharacterInfo;
 
     public GameObject GetCharacterPrefab (){
-        if (GameData.IsOfficial) {
-            return MyOfficicalPrefab;
-        } else {
-            return MyPrefab;
-        }
+        return MyOfficicalPrefab;
     }
 }
 

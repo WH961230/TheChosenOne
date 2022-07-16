@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
     #region 序列化公共参数
 
-    public bool IsOfficial;
     public int IsShowLog; // 0:不打印日志 1:普通日志 2:错误日志 3:全部日志
 
     #endregion

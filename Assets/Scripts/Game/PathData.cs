@@ -25,4 +25,5 @@
     public const string SOCameraSettingPath = "MyConfigs/MySO/SOCameraSetting";
     public const string SOLightSettingPath = "MyConfigs/MySO/SOLightSetting";
     public const string SOAudioMainSettingPath = "MyConfigs/MySO/SOAudioMainSetting";
+    public const string SOWeaponSettingPath = "MyConfigs/MySO/SOWeaponSetting";
 }

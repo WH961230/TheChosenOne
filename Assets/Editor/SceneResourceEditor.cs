@@ -13,24 +13,19 @@ public class SceneResourceEditor : EditorWindow {
     public static void GatherSceneBuildingInfoToConfig() {
         var sceneBuildingList = FindObjectsOfType<SceneBuildingComponent>();
         var soSceneBuilding = Resources.Load<SOSceneBuildingSetting>(PathData.SOSceneBuildingSettingPath);
-        soSceneBuilding.MySceneBuildingInfoList.Clear();
         soSceneBuilding.MySceneBuildingOfficialInfoList.Clear();
         // 遍历场景物体到集合
         foreach (var building in sceneBuildingList) {
-            List<SceneBuildingInfo> tempList = null;
-            if (building.IsOfficialResource) {
-                tempList = soSceneBuilding.MySceneBuildingOfficialInfoList;
-            } else {
-                tempList = soSceneBuilding.MySceneBuildingInfoList;
-            }
+            List<SceneBuildingInfo> tempList = soSceneBuilding.MySceneBuildingOfficialInfoList;
             var pos = building.transform.position;
             var rat = building.transform.rotation;
             tempList.Add(new SceneBuildingInfo() {
-                Sign = building.name,
-                Point = pos,
+                Sign = building.name, 
+                Point = pos, 
                 Quaternion = rat,
             });
         }
+
         EditorUtility.SetDirty(soSceneBuilding);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -51,9 +46,13 @@ public class SceneResourceEditor : EditorWindow {
     [MenuItem("点这里/收集/收集【场景物资位置】到【配置】")]
     public static void GatherSceneItemInfoToConfig() {
         var sceneItemList = FindObjectsOfType<SceneItemComponent>();
+        var weaponItemList = FindObjectsOfType<WeaponComponent>();
         var soSceneItem = Resources.Load<SOSceneItemSetting>(PathData.SOSceneItemSettingPath);
         soSceneItem.MySceneItemInfoList.Clear();
 
+        var soWeapon = Resources.Load<SOWeaponSetting>(PathData.SOWeaponSettingPath);
+        soWeapon.weaponCreatePointInfo.Clear();
+        
         foreach (var item in sceneItemList) {
             soSceneItem.MySceneItemInfoList.Add(new SceneItemInfo() {
                 Point = item.transform.position,

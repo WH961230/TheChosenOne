@@ -27,9 +27,6 @@ public static class GameData {
     public static int MainCharacater = -1;
     public static CharacterComponent MainCharacterComponent;
 
-    // switch official
-    public static bool IsOfficial;
-
     public static Vector3 GetGround(Vector3 point) {
         RaycastHit hit;
         Ray ray = new Ray(point, Vector3.down);

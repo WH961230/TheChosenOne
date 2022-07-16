@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 public class GameSystem {
-
     #region 配置
 
     public SOGameSetting soGameSetting;
@@ -13,21 +12,15 @@ public class GameSystem {
     private Game game;
 
     public GameObjFeature MyGameObjFeature {
-        get {
-            return game.MyGameObjFeature;
-        }
+        get { return game.MyGameObjFeature; }
     }
 
     public WindowFeature MyWindowFeature {
-        get {
-            return game.MyWindowFeature;
-        }
+        get { return game.MyWindowFeature; }
     }
 
     public EntityFeature MyEntityFeature {
-        get {
-            return game.MyEntityFeature;
-        }
+        get { return game.MyEntityFeature; }
     }
 
     #endregion
@@ -35,59 +28,57 @@ public class GameSystem {
     #region 子系统
 
     private BehaviourSystem behaviourSystem = new BehaviourSystem();
+
     public BehaviourSystem MyBehaviourSystem {
-        get {
-            return behaviourSystem;
-        }
+        get { return behaviourSystem; }
     }
-    
+
     private CharacterSystem characterSystem = new CharacterSystem();
+
     public CharacterSystem MyCharacterSystem {
-        get {
-            return characterSystem;
-        }
+        get { return characterSystem; }
+    }
+
+    private WeaponSystem weaponSystem = new WeaponSystem();
+
+    public WeaponSystem MyWeaponSystem {
+        get { return weaponSystem; }
     }
 
     private EnvironmentSystem environmentSystem = new EnvironmentSystem();
+
     public EnvironmentSystem MyEnvironmentSystem {
-        get {
-            return environmentSystem;
-        }
+        get { return environmentSystem; }
     }
 
     private UISystem uISystem = new UISystem();
+
     public UISystem MyUISystem {
-        get {
-            return uISystem;
-        }
+        get { return uISystem; }
     }
 
     private CameraSystem cameraSystem = new CameraSystem();
+
     public CameraSystem MyCameraSystem {
-        get {
-            return cameraSystem;
-        }
+        get { return cameraSystem; }
     }
 
     private ItemSystem itemSystem = new ItemSystem();
+
     public ItemSystem MyItemSystem {
-        get {
-            return itemSystem;
-        }
+        get { return itemSystem; }
     }
 
     private InputSystem inputSystem = new InputSystem();
+
     public InputSystem MyInputSystem {
-        get {
-            return inputSystem;
-        }
+        get { return inputSystem; }
     }
-    
+
     private AudioSystem audioSystem = new AudioSystem();
+
     public AudioSystem MyAudioSystem {
-        get {
-            return audioSystem;
-        }
+        get { return audioSystem; }
     }
 
     #endregion
@@ -95,9 +86,7 @@ public class GameSystem {
     #region 消息
 
     public GameMessageCenter MyGameMessageCenter {
-        get {
-            return game.MyGameMessageCenter;
-        }
+        get { return game.MyGameMessageCenter; }
     }
 
     #endregion
@@ -114,6 +103,7 @@ public class GameSystem {
         itemSystem.Init(this);
         cameraSystem.Init(this);
         characterSystem.Init(this);
+        weaponSystem.Init(this);
         inputSystem.Init(this);
         audioSystem.Init(this);
         behaviourSystem.Init(this);
@@ -125,6 +115,7 @@ public class GameSystem {
         itemSystem.Update();
         cameraSystem.Update();
         characterSystem.Update();
+        weaponSystem.Update();
         inputSystem.Update();
         audioSystem.Update();
         behaviourSystem.Update();
@@ -136,6 +127,7 @@ public class GameSystem {
         itemSystem.FixedUpdate();
         cameraSystem.FixedUpdate();
         characterSystem.FixedUpdate();
+        weaponSystem.FixedUpdate();
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
         behaviourSystem.FixedUpdate();
@@ -147,6 +139,7 @@ public class GameSystem {
         itemSystem.LateUpdate();
         cameraSystem.LateUpdate();
         characterSystem.LateUpdate();
+        weaponSystem.LateUpdate();
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
         behaviourSystem.LateUpdate();
@@ -158,6 +151,7 @@ public class GameSystem {
         itemSystem.Clear();
         cameraSystem.Clear();
         characterSystem.Clear();
+        weaponSystem.Clear();
         inputSystem.Clear();
         audioSystem.Clear();
         behaviourSystem.Clear();
@@ -165,7 +159,6 @@ public class GameSystem {
 
     private void InstanceSwitch() {
         GameData.IsShowLog = game.IsShowLog;
-        GameData.IsOfficial = game.IsOfficial;
     }
 
     private void InstanceRoot() {
@@ -192,14 +185,12 @@ public class GameSystem {
 
         GameData.LightRoot = new GameObject("LightRoot").transform;
         GameData.LightRoot.SetParent(gameRoot);
-        
+
         GameData.AudioRoot = new GameObject("AudioRoot").transform;
         GameData.AudioRoot.SetParent(gameRoot);
     }
 
-    public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new()
-        where T2 : GameObj, new()
-        where T3 : Entity, new() {
+    public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
         data.IsWindowPrefab = true;
         game.MyGameObjFeature.Register<T2>(data);

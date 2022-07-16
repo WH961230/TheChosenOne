@@ -12,11 +12,7 @@ public class SOSceneItemSetting : ScriptableObject {
     public List<SceneItemInfo1> MySceneItemPrefabOfficialList1;
 
     public List<GameObject> GetSceneItemPrefabList() {
-        if (GameData.IsOfficial) {
-            return MySceneItemPrefabOfficialList;
-        } else {
-            return MySceneItemPrefabList;
-        }
+        return MySceneItemPrefabOfficialList;
     }
 
     public List<SceneItemInfo1> GetSceneItemPrefabList1() {
