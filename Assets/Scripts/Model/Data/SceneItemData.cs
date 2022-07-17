@@ -8,8 +8,6 @@ public class SceneItemData : Data {
 }
 
 public enum SceneItemType {
-    MainWeapon,
-    SideWeapon,
     Consume,
     Equipment,
 }

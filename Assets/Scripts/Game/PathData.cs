@@ -16,7 +16,9 @@
     public const string ComponentTemplatePath = "Assets/Resources/MyConfigs/MyTxt/Template/GenerateComponentScript.txt";
     public const string SOSettingTemplatePath = "Assets/Resources/MyConfigs/MyTxt/Template/GenerateSOSettingScript.txt";
 
-    // 配置使用
+    // 配置使用 - 通过遍历的方式获取。
+    public const string RootPath = "MyConfigs/MySO/";
+
     public const string SOGameSettingPath = "MyConfigs/MySO/SOGameSetting";
     public const string SOCharacterSettingPath = "MyConfigs/MySO/SOCharacterSetting";
     public const string SOSceneBuildingSettingPath = "MyConfigs/MySO/SOSceneBuildingSetting";

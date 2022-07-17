@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 public class GameMessageCenter {
     private GameMessageRegisger register = new GameMessageRegisger();
+
     public void Register(int id, Action action) {
         register.Register(id, action);
     }
 
     public void Register<T>(int id, Action<T> action) {
+        register.Register(id, action);
+    }
+
+    public void Register<T1, T2>(int id, Action<T1, T2> action) {
         register.Register(id, action);
     }
 
@@ -22,17 +27,25 @@ public class GameMessageCenter {
     public void Dispather<T>(int id, T t) {
         register.Dispather(id, t);
     }
+
+    public void Dispather<T1, T2>(int id, T1 t1, T2 t2) {
+        register.Dispather(id, t1, t2);
+    }
 }
 
 public class Act {
     public Delegate handler;
 
     public void Invoke() {
-        ((Action)handler).Invoke();
+        ((Action) handler).Invoke();
     }
 
     public void Invoke<T>(T t) {
-        ((Action<T>)handler).Invoke(t);
+        ((Action<T>) handler).Invoke(t);
+    }
+
+    public void Invoke<T1, T2>(T1 t1, T2 t2) {
+        ((Action<T1, T2>) handler).Invoke(t1, t2);
     }
 }
 
@@ -62,6 +75,12 @@ public class GameMessageRegisger {
     public void Dispather<T>(int id, T t) {
         if (temps.TryGetValue(id, out var tmp)) {
             tmp.Invoke(t);
+        }
+    }
+
+    public void Dispather<T1, T2>(int id, T1 t1, T2 t2) {
+        if (temps.TryGetValue(id, out var tmp)) {
+            tmp.Invoke(t1, t2);
         }
     }
 }

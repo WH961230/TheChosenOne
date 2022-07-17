@@ -12,3 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfb2bea279c1dd41aea43951eede1a6, type: 3}
   m_Name: SOWeaponSetting
   m_EditorClassIdentifier: 
+  MyWeaponMapInfo:
+  - Point: {x: -4.0437117, y: 0.10042632, z: -9.894415}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -1.4703289, y: 0.4851014, z: -7.185048}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: 4.744194, y: 0.5248426, z: -13.246333}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -0.42577296, y: 0.41759902, z: -1.2999115}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  MyWeaponParameterInfo:
+  - Prefab: {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667,
+      type: 3}
+    Picture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
+  - Prefab: {fileID: 8786019937070736618, guid: f3fd987ddbcba0544950f92af866c889,
+      type: 3}
+    Picture: {fileID: 21300000, guid: 78d523d7664f69d46b06a79678875e39, type: 3}
+  - Prefab: {fileID: 3993783960709859755, guid: adf35aa8fdc75e942a8196ab10dc73cc,
+      type: 3}
+    Picture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}

@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 
 public class CameraSystem : GameSys {
-
-    private SOCameraSetting soCameraSetting;
-    public SOCameraSetting MySoCameraSetting {
-        get { return soCameraSetting; }
-    }
-
     private GameSystem gameSystem;
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
         this.gameSystem = gameSystem;
-        soCameraSetting = Resources.Load<SOCameraSetting>(PathData.SOCameraSettingPath);
         InstanceCamera(CameraType.MainCamera);
     }
 
@@ -50,7 +43,7 @@ public class CameraSystem : GameSys {
     }
 
     private bool TryGetCamera(CameraType cameraType, out GameObject camera) {
-        foreach (var info in soCameraSetting.CameraInfos) {
+        foreach (var info in SOData.MySOCameraSetting.CameraInfos) {
             if (info.MyCameraType == cameraType) {
                 camera = info.MyCameraObj;
                 return true;

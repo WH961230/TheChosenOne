@@ -5,12 +5,15 @@ public class GameObj : IGameObj {
     private GameObject myObj;
     protected MonoBehaviour MyComponent; // 组件
 
+    protected Game MyGame;
+
     protected GameObject MyObj {
         get { return myObj; }
         set { myObj = value; }
     }
 
     public virtual void Init(Game game, Data data) {
+        this.MyGame = game;
         this.MyData = data;
         this.MyData.InstanceID = MyData.MyObj.GetInstanceID();
 

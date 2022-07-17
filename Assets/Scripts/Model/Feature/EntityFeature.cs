@@ -38,7 +38,7 @@ public class EntityFeature : IFeature {
         entityManager.Remove(entity);
     }
 
-    public Entity Get(int id) {
-        return entityManager.Get(id);
+    public T Get<T>(int id) where T : Entity, new() {
+        return (T) entityManager.Get(id);
     }
 }

@@ -9,7 +9,7 @@ public class SceneItemGameObj : GameObj {
         sceneitemData = (SceneItemData) data;
         MyComponent = MyObj.transform.GetComponent<SceneItemComponent>();
         sceneItemComponent = (SceneItemComponent) MyComponent;
-        sceneitemData.MySceneItemSign = MyObj.GetComponent<SceneItemComponent>().SceneItemSign;
+        sceneitemData.MySceneItemSign = sceneItemComponent.SceneItemSign;
     }
 
     public void HideObj() {

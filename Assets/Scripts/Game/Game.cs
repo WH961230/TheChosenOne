@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Game : MonoBehaviour {
     #region 序列化公共参数
@@ -83,6 +81,15 @@ public class Game : MonoBehaviour {
 
     #endregion
     void Start() {
+        // game 序列化设置
+        GameData.IsShowLog = IsShowLog;
+
+        // 配置初始化 - 供全局使用
+        InitSOData();
+
+        // 游戏根目录初始化
+        InitRoot();
+
         // 数据模块模块注册
         Register<WindowFeature>();
         Register<GameObjFeature>();
@@ -91,6 +98,39 @@ public class Game : MonoBehaviour {
         // 逻辑初始化
         gameSystem.Init(this);
         gameComponent.Init(this);
+    }
+
+    private void InitRoot() {
+        var gameRoot = new GameObject("GameRoot").transform;
+
+        GameData.UIRoot = Instantiate(SOData.MySOGameSetting.UIRoot).transform;
+        GameData.UIRoot.name = "UIRoot";
+        GameData.UIRoot.SetParent(gameRoot);
+
+        GameData.CharacterRoot = new GameObject("CharacterRoot").transform;
+        GameData.CharacterRoot.SetParent(gameRoot);
+
+        GameData.AudioRoot = new GameObject("AudioRoot").transform;
+        GameData.AudioRoot.SetParent(gameRoot);
+
+        GameData.EnvironmentRoot = new GameObject("EnvironmentRoot").transform;
+        GameData.EnvironmentRoot.SetParent(gameRoot);
+
+        GameData.ItemRoot = new GameObject("ItemRoot").transform;
+        GameData.ItemRoot.SetParent(gameRoot);
+
+        GameData.CameraRoot = new GameObject("CameraRoot").transform;
+        GameData.CameraRoot.SetParent(gameRoot);
+
+        GameData.LightRoot = new GameObject("LightRoot").transform;
+        GameData.LightRoot.SetParent(gameRoot);
+
+        GameData.AudioRoot = new GameObject("AudioRoot").transform;
+        GameData.AudioRoot.SetParent(gameRoot);
+    }
+
+    private void InitSOData() {
+        SOData.Init();
     }
 
     void Clear() {

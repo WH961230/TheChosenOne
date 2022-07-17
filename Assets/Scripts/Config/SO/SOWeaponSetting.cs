@@ -4,11 +4,18 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/SOWeaponSetting")]
 public class SOWeaponSetting : ScriptableObject {
-    public List<WeaponCreatePointInfo> weaponCreatePointInfo = new List<WeaponCreatePointInfo>();
+    public List<WeaponMapInfo> MyWeaponMapInfo;
+    public List<WeaponParameterInfo> MyWeaponParameterInfo;
 }
 
 [Serializable]
-public struct WeaponCreatePointInfo {
-    public Vector3 MyCreatePosition;
-    public Quaternion MyCreateRotation;
+public struct WeaponMapInfo {
+    public Vector3 Point;
+    public Quaternion Quaternion;
+}
+
+[Serializable]
+public struct WeaponParameterInfo {
+    public GameObject Prefab;
+    public Sprite Picture;
 }

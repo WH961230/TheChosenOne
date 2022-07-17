@@ -25,6 +25,9 @@ public class UIMainWindow : Window {
 
             // 场景物体
             game.MyGameSystem.MyItemSystem.InstanceSceneItem();
+            
+            // 加载武器
+            game.MyGameSystem.MyWeaponSystem.InstanceWeapon();
 
             // 读取玩家生成点 创建主玩家
             game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);

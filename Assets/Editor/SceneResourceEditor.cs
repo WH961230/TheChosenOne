@@ -45,21 +45,29 @@ public class SceneResourceEditor : EditorWindow {
 
     [MenuItem("点这里/收集/收集【场景物资位置】到【配置】")]
     public static void GatherSceneItemInfoToConfig() {
-        var sceneItemList = FindObjectsOfType<SceneItemComponent>();
-        var weaponItemList = FindObjectsOfType<WeaponComponent>();
-        var soSceneItem = Resources.Load<SOSceneItemSetting>(PathData.SOSceneItemSettingPath);
-        soSceneItem.MySceneItemInfoList.Clear();
+        SOData.Init();
 
-        var soWeapon = Resources.Load<SOWeaponSetting>(PathData.SOWeaponSettingPath);
-        soWeapon.weaponCreatePointInfo.Clear();
-        
+        var sceneItemList = FindObjectsOfType<SceneItemComponent>();
+
+        SOData.MySOSceneItemSetting.MySceneItemMapInfo.Clear();
+        SOData.MySOWeaponSetting.MyWeaponMapInfo.Clear();
+
         foreach (var item in sceneItemList) {
-            soSceneItem.MySceneItemInfoList.Add(new SceneItemInfo() {
-                Point = item.transform.position,
-                Quaternion = item.transform.rotation,
-            });
+            var rand = Random.Range(0, 2);
+            if (rand == 0) {
+                SOData.MySOSceneItemSetting.MySceneItemMapInfo.Add(new SceneItemMapInfo() {
+                    Point = item.transform.position, Quaternion = item.transform.rotation,
+                });
+            } else {
+                SOData.MySOWeaponSetting.MyWeaponMapInfo.Add(new WeaponMapInfo() {
+                    Point = item.transform.position,
+                    Quaternion = item.transform.rotation,
+                });
+            }
         }
-        EditorUtility.SetDirty(soSceneItem);
+
+        EditorUtility.SetDirty(SOData.MySOSceneItemSetting);
+        EditorUtility.SetDirty(SOData.MySOWeaponSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -67,10 +75,9 @@ public class SceneResourceEditor : EditorWindow {
     [MenuItem("点这里/收集/收集【灯光位置】到【配置】")]
     public static void GatherLightInfoToConfig() {
         var component = FindObjectOfType<LightComponent>();
-        var config = Resources.Load<SOLightSetting>(PathData.SOLightSettingPath);
-        config.MainLightInfo.position = component.transform.position;
-        config.MainLightInfo.rotation = component.transform.rotation;
-        EditorUtility.SetDirty(config);
+        SOData.MySOLightSetting.MainLightInfo.position = component.transform.position;
+        SOData.MySOLightSetting.MainLightInfo.rotation = component.transform.rotation;
+        EditorUtility.SetDirty(SOData.MySOLightSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

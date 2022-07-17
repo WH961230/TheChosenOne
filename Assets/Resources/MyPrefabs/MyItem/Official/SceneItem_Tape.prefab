@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneItemSign: "\u7EF7\u5E26"
-  MySceneItemType: 2
+  MySceneItemType: 0

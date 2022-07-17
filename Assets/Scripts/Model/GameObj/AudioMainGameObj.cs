@@ -1,10 +1,4 @@
 ﻿public class AudioMainGameObj : GameObj {
-    private SOAudioMainSetting soAudioMainSetting;
-
-    public SOAudioMainSetting SoAudioMainSetting {
-        get { return soAudioMainSetting; }
-    }
-
     private AudioMainComponent audioMainComponent;
     private AudioMainData audiomainData;
 
@@ -18,9 +12,8 @@
         base.Init(game, data);
         this.game = game;
         audiomainData = (AudioMainData) data;
-        soAudioMainSetting = MyAudioSystem.MySoAudioMainSetting;
         audioMainComponent = MyObj.transform.GetComponent<AudioMainComponent>();
-        audioMainComponent.AudioSource.PlayOneShot(soAudioMainSetting.BackMusic);
+        audioMainComponent.AudioSource.PlayOneShot(SOData.MySOAudioMainSetting.BackMusic);
     }
 
     public override void Clear() {

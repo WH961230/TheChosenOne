@@ -1,5 +1,7 @@
 ﻿public class GameSys : ISystem {
+    protected GameSystem MyGameSystem;
     public virtual void Init(GameSystem gameSystem) {
+        this.MyGameSystem = gameSystem;
     }
 
     public virtual void Update() {

@@ -25,6 +25,9 @@ public static class GameData {
 
     // MainCharacter
     public static int MainCharacater = -1;
+    public static bool IsHaveMainCharacter {
+        get { return MainCharacater != -1; }
+    }
     public static CharacterComponent MainCharacterComponent;
 
     public static Vector3 GetGround(Vector3 point) {

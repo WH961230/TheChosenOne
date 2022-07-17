@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 
 public class GameSystem {
-    #region 配置
-
-    public SOGameSetting soGameSetting;
-
-    #endregion
-
     #region 上级
 
     private Game game;
@@ -26,12 +20,6 @@ public class GameSystem {
     #endregion
 
     #region 子系统
-
-    private BehaviourSystem behaviourSystem = new BehaviourSystem();
-
-    public BehaviourSystem MyBehaviourSystem {
-        get { return behaviourSystem; }
-    }
 
     private CharacterSystem characterSystem = new CharacterSystem();
 
@@ -80,6 +68,12 @@ public class GameSystem {
     public AudioSystem MyAudioSystem {
         get { return audioSystem; }
     }
+    
+    private BackpackSystem backpackSystem = new BackpackSystem();
+
+    public BackpackSystem MyBackpackSystem {
+        get { return backpackSystem; }
+    }
 
     #endregion
 
@@ -93,11 +87,6 @@ public class GameSystem {
 
     public void Init(Game game) {
         this.game = game;
-        this.soGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
-
-        InstanceSwitch();
-        InstanceRoot();
-
         uISystem.Init(this);
         environmentSystem.Init(this);
         itemSystem.Init(this);
@@ -106,7 +95,7 @@ public class GameSystem {
         weaponSystem.Init(this);
         inputSystem.Init(this);
         audioSystem.Init(this);
-        behaviourSystem.Init(this);
+        backpackSystem.Init(this);
     }
 
     public void Update() {
@@ -118,7 +107,7 @@ public class GameSystem {
         weaponSystem.Update();
         inputSystem.Update();
         audioSystem.Update();
-        behaviourSystem.Update();
+        backpackSystem.Update();
     }
 
     public void FixedUpdate() {
@@ -130,7 +119,7 @@ public class GameSystem {
         weaponSystem.FixedUpdate();
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
-        behaviourSystem.FixedUpdate();
+        backpackSystem.FixedUpdate();
     }
 
     public void LateUpdate() {
@@ -142,7 +131,7 @@ public class GameSystem {
         weaponSystem.LateUpdate();
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
-        behaviourSystem.LateUpdate();
+        backpackSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -154,40 +143,7 @@ public class GameSystem {
         weaponSystem.Clear();
         inputSystem.Clear();
         audioSystem.Clear();
-        behaviourSystem.Clear();
-    }
-
-    private void InstanceSwitch() {
-        GameData.IsShowLog = game.IsShowLog;
-    }
-
-    private void InstanceRoot() {
-        var gameRoot = new GameObject("GameRoot").transform;
-
-        GameData.UIRoot = Object.Instantiate(soGameSetting.UIRoot).transform;
-        GameData.UIRoot.name = "UIRoot";
-        GameData.UIRoot.SetParent(gameRoot);
-
-        GameData.CharacterRoot = new GameObject("CharacterRoot").transform;
-        GameData.CharacterRoot.SetParent(gameRoot);
-
-        GameData.AudioRoot = new GameObject("AudioRoot").transform;
-        GameData.AudioRoot.SetParent(gameRoot);
-
-        GameData.EnvironmentRoot = new GameObject("EnvironmentRoot").transform;
-        GameData.EnvironmentRoot.SetParent(gameRoot);
-
-        GameData.ItemRoot = new GameObject("ItemRoot").transform;
-        GameData.ItemRoot.SetParent(gameRoot);
-
-        GameData.CameraRoot = new GameObject("CameraRoot").transform;
-        GameData.CameraRoot.SetParent(gameRoot);
-
-        GameData.LightRoot = new GameObject("LightRoot").transform;
-        GameData.LightRoot.SetParent(gameRoot);
-
-        GameData.AudioRoot = new GameObject("AudioRoot").transform;
-        GameData.AudioRoot.SetParent(gameRoot);
+        backpackSystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {

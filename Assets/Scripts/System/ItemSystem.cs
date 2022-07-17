@@ -1,18 +1,11 @@
 ﻿using UnityEngine;
 
 public class ItemSystem : GameSys {
-    private SOSceneItemSetting soSceneItemSetting;
-
-    public SOSceneItemSetting MySoSceneItemSetting {
-        get { return soSceneItemSetting; }
-    }
-
     private GameSystem gameSystem;
 
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
         this.gameSystem = gameSystem;
-        soSceneItemSetting = Resources.Load<SOSceneItemSetting>(PathData.SOSceneItemSettingPath);
     }
 
     public override void Update() {
@@ -23,16 +16,38 @@ public class ItemSystem : GameSys {
         base.Clear();
     }
 
+    #region 获取
+
+    public SceneItemGameObj GetSceneItemGameObj(int id) { // 物体
+        return gameSystem.MyGameObjFeature.Get<SceneItemGameObj>(id);
+    }
+
+    public SceneItemEntity GetSceneItemEntity(int id) { // 实体
+        return gameSystem.MyEntityFeature.Get<SceneItemEntity>(id);
+    }
+
+    public SceneItemComponent GetSceneItemComponent(int id) { // 实体 - 组件
+        return GetSceneItemGameObj(id).GetComponent<SceneItemComponent>();
+    }
+
+    public SceneItemData GetSceneItemData(int id) { // 组件 - 数据
+        return GetSceneItemEntity(id).GetData<SceneItemData>();
+    }
+
+    public SceneItemType GetSceneItemType(int id) {
+        return GetSceneItemComponent(id).MySceneItemType;
+    }
+
+    #endregion
+
     #region 创建
 
     public void InstanceSceneItem() {
-        var config = soSceneItemSetting;
-        var tempInfoList = config.GetSceneItemInfoList();
-        var tempPrefabList1 = config.GetSceneItemPrefabList1();
-        // 遍历生成点
-        foreach (var item in tempInfoList) {
-            var index = Random.Range(0, tempPrefabList1.Count);
-            var obj = tempPrefabList1[index];
+        var mapInfo = SOData.MySOSceneItemSetting.MySceneItemMapInfo;
+        var parameterInfo = SOData.MySOSceneItemSetting.MySceneItemParameterInfo;
+        foreach (var item in mapInfo) {
+            var index = Random.Range(0, parameterInfo.Count);
+            var obj = parameterInfo[index];
             InstanceSceneItem(new SceneItemData() {
                 MyName = obj.SceneItemPrefab.name,
                 MyObj = Object.Instantiate(obj.SceneItemPrefab),
