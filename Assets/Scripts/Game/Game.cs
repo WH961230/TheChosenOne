@@ -23,16 +23,6 @@ public class Game : MonoBehaviour {
 
     #endregion
 
-    #region 组件
-
-    private GameComponent gameComponent = new GameComponent();
-
-    public GameComponent MyGameComponent {
-        get { return gameComponent; }
-    }
-
-    #endregion
-
     #region 模块
 
     private GameObjFeature myGameObjFeature;
@@ -97,7 +87,6 @@ public class Game : MonoBehaviour {
 
         // 逻辑初始化
         gameSystem.Init(this);
-        gameComponent.Init(this);
     }
 
     private void InitRoot() {
@@ -138,25 +127,21 @@ public class Game : MonoBehaviour {
         Remove<GameObjFeature>();
         Remove<EntityFeature>();
         gameSystem.Clear();
-        gameComponent.Clear();
     }
 
     void Update() {
         gameSystem.Update();
         gameManager.Update();
-        gameComponent.Update();
     }
 
     private void FixedUpdate() {
         gameSystem.FixedUpdate();
         gameManager.FixedUpdate();
-        gameComponent.FixedUpdate();
     }
 
     private void LateUpdate() {
         gameSystem.LateUpdate();
         gameManager.LateUpdate();
-        gameComponent.LateUpdate();
     }
 
     private void Register<T>() where T : IFeature, new() {

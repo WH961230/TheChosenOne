@@ -1,18 +1,18 @@
-﻿public class GameComponent : GameComp {
-    public override void Init(Game game) {
-        base.Init(game);
+﻿public class AnimatorSystem : GameSys {
+    public override void Init(GameSystem gameSystem) {
+        base.Init(gameSystem);
     }
 
     public override void Update() {
         base.Update();
     }
 
-    public override void Clear() {
-        base.Clear();
-    }
-
     public override void FixedUpdate() {
         base.FixedUpdate();
+    }
+
+    public override void Clear() {
+        base.Clear();
     }
 
     public override void LateUpdate() {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class GameSystem {
     #region 上级
@@ -75,6 +75,16 @@ public class GameSystem {
         get { return backpackSystem; }
     }
 
+    private AnimatorSystem animatorSystem = new AnimatorSystem();
+
+    public AnimatorSystem MyAnimaterSystem {
+        get {
+            return animatorSystem;
+        }
+    }
+
+    public List<GameSys> systems = new List<GameSys>();
+
     #endregion
 
     #region 消息
@@ -87,7 +97,17 @@ public class GameSystem {
 
     public void Init(Game game) {
         this.game = game;
-        uISystem.Init(this);
+        systems.Add(new UISystem());
+        systems.Add(new EnvironmentSystem());
+        systems.Add(new ItemSystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
+        systems.Add(new UISystem());
         environmentSystem.Init(this);
         itemSystem.Init(this);
         cameraSystem.Init(this);
@@ -96,6 +116,10 @@ public class GameSystem {
         inputSystem.Init(this);
         audioSystem.Init(this);
         backpackSystem.Init(this);
+        animatorSystem.Init(this);
+        for (var i = 0; i < systems.Count; i++) {
+            systems[i].Init(this);
+        }
     }
 
     public void Update() {
@@ -108,6 +132,11 @@ public class GameSystem {
         inputSystem.Update();
         audioSystem.Update();
         backpackSystem.Update();
+        animatorSystem.Update();
+
+        for (var i = 0; i < systems.Count; i++) {
+            systems[i].Update();
+        }
     }
 
     public void FixedUpdate() {
@@ -120,6 +149,11 @@ public class GameSystem {
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
         backpackSystem.FixedUpdate();
+        animatorSystem.FixedUpdate();
+        
+        for (var i = 0; i < systems.Count; i++) {
+            systems[i].FixedUpdate();
+        }
     }
 
     public void LateUpdate() {
@@ -132,6 +166,11 @@ public class GameSystem {
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
         backpackSystem.LateUpdate();
+        animatorSystem.LateUpdate();
+        
+        for (var i = 0; i < systems.Count; i++) {
+            systems[i].LateUpdate();
+        }
     }
 
     public void Clear() {
@@ -144,6 +183,11 @@ public class GameSystem {
         inputSystem.Clear();
         audioSystem.Clear();
         backpackSystem.Clear();
+        animatorSystem.Clear();
+
+        for (var i = 0; i < systems.Count; i++) {
+            systems[i].Clear();
+        }
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
