@@ -80,7 +80,7 @@ public class CameraGameObj : GameObj {
                     
                     // 输入F键
                     if (inputSystem.GetKeyDown(KeyCode.F)) {
-                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADDSCENEITEM, id);
+                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD,  id, layer);
                     }
                     
                     break;
@@ -91,16 +91,15 @@ public class CameraGameObj : GameObj {
                     
                     // 输入F键
                     if (inputSystem.GetKeyDown(KeyCode.F)) {
-                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADDWEAPON, id);
+                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, layer);
                     }
                     
                     break;
             }
 
+            // 提示 UI
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, name);
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemKeycode, "拾取[F]");
-
-
 
             Debug.Log("检测物体 " + name + " InstanceId: " + hit.collider.gameObject.GetInstanceID());
         } else {

@@ -25,6 +25,10 @@ public class WeaponSystem : GameSys {
         return MyGameSystem.MyGameObjFeature.Get<WeaponGameObj>(weaponId);
     }
 
+    public WeaponComponent GetWeaponComponent(int id) {
+        return GetWeaponGameObj(id).GetComponent<WeaponComponent>();
+    }
+
     public void InstanceWeapon() {
         var weaponMapInfo = SOData.MySOWeaponSetting.MyWeaponMapInfo;
         var weaponParameterInfo = SOData.MySOWeaponSetting.MyWeaponParameterInfo;
@@ -46,5 +50,9 @@ public class WeaponSystem : GameSys {
 
     private int InstanceWeapon(WeaponData weaponData) {
         return MyGameSystem.InstanceGameObj<WeaponGameObj, WeaponEntity>(weaponData);
+    }
+
+    public WeaponType GetWeaponType(int id) {
+        return GetWeaponComponent(id).MyWeaponType;
     }
 }

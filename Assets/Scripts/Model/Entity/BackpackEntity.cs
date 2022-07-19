@@ -13,13 +13,19 @@
         base.Clear();
     }
 
-    /// <summary>
-    /// 获取场景物体到背包 1、消耗品 2、武器 3、
-    /// </summary>
-    public bool PickSceneItem(int sceneItemId) {
+    public bool PickSceneItem(int id) {
         // 判断物品的类型 物品 武器 
-        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(sceneItemId);
-        if (AddSceneItem(type, sceneItemId)) {
+        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
+        if (AddSceneItem(type, id)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool PickWeapon(int id) {
+        var type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(id);
+        if (AddWeapon(type, id)) {
             return true;
         }
 
@@ -29,10 +35,25 @@
     private bool AddSceneItem(SceneItemType type, int sceneItemId) {
         switch (type) {
             case SceneItemType.Consume:
-                backpackData.MySceneItemConsumeIds[0] = sceneItemId;
+                // 判断物体 进行叠加
+                backpackData.MySceneItemConsumeIds.Add(sceneItemId);
                 return true;
             case SceneItemType.Equipment:
+                
                 backpackData.MySceneItemEquipmentIds[0] = sceneItemId;
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool AddWeapon(WeaponType type, int id) {
+        switch (type) {
+            case WeaponType.MainWeapon:
+                backpackData.MySceneItemMainWeaponIds[0] = id;
+                return true;
+            case WeaponType.SideWeapon:
+                backpackData.MySceneItemSideWeaponId = id;
                 return true;
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BackpackData : Data {
     // 当前武器
@@ -13,7 +14,7 @@ public class BackpackData : Data {
 
     // 消耗物品 包含 1投掷物 2能量饮料 3子弹 4其他等 有数量下标
     private const int MySceneItemConsumeNum = 2;
-    public int[] MySceneItemConsumeIds = new int[MySceneItemConsumeNum];
+    public List<int> MySceneItemConsumeIds = new List<int>();
 
     // 装备
     private const int MySceneItemEquipmentNum = 4;
