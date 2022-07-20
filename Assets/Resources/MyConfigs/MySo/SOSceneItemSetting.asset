@@ -13,23 +13,9 @@ MonoBehaviour:
   m_Name: SOSceneItemSetting
   m_EditorClassIdentifier: 
   MySceneItemMapInfo:
-  - Point: {x: 2.8153832, y: 0.057015564, z: -10.125593}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -10.139815, y: 0.051399913, z: -4.0853534}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -0.5545768, y: 0.4320013, z: -15.574171}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -14.9017935, y: 0.49911386, z: 5.692292}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -11.910411, y: 0.27932382, z: -16.51045}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Point: {x: -16.43938, y: 4.008327, z: -7.856031}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Point: {x: -15.568351, y: 4.705992, z: -11.370773}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 6.0944533, y: 0.44602704, z: -6.3259487}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -19.320795, y: 4.240742, z: -10.159517}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Point: {x: -16.033089, y: 0.62529933, z: -2.143947}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}

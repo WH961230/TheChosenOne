@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: SOWeaponSetting
   m_EditorClassIdentifier: 
   MyWeaponMapInfo:
-  - Point: {x: -4.0437117, y: 0.10042632, z: -9.894415}
+  - Point: {x: 2.8153832, y: 0.057015564, z: -10.125593}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -1.4703289, y: 0.4851014, z: -7.185048}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 4.744194, y: 0.5248426, z: -13.246333}
+  - Point: {x: -14.9017935, y: 0.49911386, z: 5.692292}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Point: {x: -0.42577296, y: 0.41759902, z: -1.2999115}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}

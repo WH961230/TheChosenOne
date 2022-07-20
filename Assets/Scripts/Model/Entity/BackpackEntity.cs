@@ -32,15 +32,20 @@
         return false;
     }
 
+    public bool PickEquipment(int id) {
+        var type = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentType(id);
+        if (AddEquipment(type, id)) {
+            return true;
+        }
+
+        return false;
+    }
+
     private bool AddSceneItem(SceneItemType type, int sceneItemId) {
         switch (type) {
             case SceneItemType.Consume:
                 // 判断物体 进行叠加
                 backpackData.MySceneItemConsumeIds.Add(sceneItemId);
-                return true;
-            case SceneItemType.Equipment:
-                
-                backpackData.MySceneItemEquipmentIds[0] = sceneItemId;
                 return true;
         }
 
@@ -54,6 +59,22 @@
                 return true;
             case WeaponType.SideWeapon:
                 backpackData.MySceneItemSideWeaponId = id;
+                return true;
+        }
+
+        return false;
+    }
+
+    private bool AddEquipment(EquipmentType type, int id) {
+        switch (type) {
+            case EquipmentType.Helmet:
+                backpackData.MySceneItemEquipmentIds[0] = id;
+                return true;
+            case EquipmentType.Armour:
+                backpackData.MySceneItemEquipmentIds[0] = id;
+                return true;
+            case EquipmentType.Backpack:
+                backpackData.MySceneItemEquipmentIds[0] = id;
                 return true;
         }
 

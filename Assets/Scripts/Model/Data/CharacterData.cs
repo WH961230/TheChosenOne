@@ -66,7 +66,6 @@ public class CharacterData : Data {
         return false;
     }
 
-
     private bool HasSceneItemConsumeId(int id) {
         foreach (var wid in MySceneItemConsumeIds) {
             if (wid == id) {

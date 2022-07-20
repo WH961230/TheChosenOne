@@ -8,15 +8,13 @@ public class CameraGameObj : GameObj {
     private CameraComponent cameraComponent;
 
     private InputSystem inputSystem {
-        get { return game.MyGameSystem.MyInputSystem; }
+        get { return MyGame.MyGameSystem.MyInputSystem; }
     }
 
     private CameraData cameraData;
-    private Game game;
 
     public override void Init(Game game, Data data) {
         base.Init(game, data);
-        this.game = game;
         cameraData = (CameraData) data;
         MyComponent = MyObj.transform.GetComponent<CameraComponent>();
         cameraComponent = (CameraComponent) MyComponent;
@@ -62,7 +60,7 @@ public class CameraGameObj : GameObj {
         RaycastHit hit;
 
         // 获取贴士 UI
-        var uiTipWindow = game.MyWindowFeature.Get<UITipWindow>();
+        var uiTipWindow = MyGame.MyWindowFeature.Get<UITipWindow>();
         if (null == uiTipWindow) {
             return;
         }
@@ -75,26 +73,23 @@ public class CameraGameObj : GameObj {
             switch (layer) {
                 case 9:
                     // 获取物体标识
-                    var sceneItemGameObj = game.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id);
+                    var sceneItemGameObj = MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id);
                     name = sceneItemGameObj.GetData<SceneItemData>().MySceneItemSign;
-                    
-                    // 输入F键
-                    if (inputSystem.GetKeyDown(KeyCode.F)) {
-                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD,  id, layer);
-                    }
-                    
                     break;
                 case 12:
                     // 获取物体标识
-                    var weaponGameObj = game.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(id);
+                    var weaponGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(id);
                     name = weaponGameObj.GetData<WeaponData>().MyWeaponSign;
-                    
-                    // 输入F键
-                    if (inputSystem.GetKeyDown(KeyCode.F)) {
-                        MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, layer);
-                    }
-                    
                     break;
+                case 13:
+                    var equipmentGameObj = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(id);
+                    name = equipmentGameObj.GetData<EquipmentData>().MySign;
+                    break;
+            }
+
+            // 输入F键
+            if (inputSystem.GetKeyDown(KeyCode.F)) {
+                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, layer);
             }
 
             // 提示 UI

@@ -9,5 +9,4 @@ public class SceneItemData : Data {
 
 public enum SceneItemType {
     Consume,
-    Equipment,
 }

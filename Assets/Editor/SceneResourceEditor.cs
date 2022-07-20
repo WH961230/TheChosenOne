@@ -51,15 +51,21 @@ public class SceneResourceEditor : EditorWindow {
 
         SOData.MySOSceneItemSetting.MySceneItemMapInfo.Clear();
         SOData.MySOWeaponSetting.MyWeaponMapInfo.Clear();
+        SOData.MySOEquipmentSetting.MyEquipmentMapInfo.Clear();
 
         foreach (var item in sceneItemList) {
-            var rand = Random.Range(0, 2);
+            var rand = Random.Range(0, 3);
             if (rand == 0) {
                 SOData.MySOSceneItemSetting.MySceneItemMapInfo.Add(new SceneItemMapInfo() {
                     Point = item.transform.position, Quaternion = item.transform.rotation,
                 });
-            } else {
+            } else if(rand == 1){
                 SOData.MySOWeaponSetting.MyWeaponMapInfo.Add(new WeaponMapInfo() {
+                    Point = item.transform.position,
+                    Quaternion = item.transform.rotation,
+                });
+            } else if (rand == 2) {
+                SOData.MySOEquipmentSetting.MyEquipmentMapInfo.Add(new EquipmentMapInfo() {
                     Point = item.transform.position,
                     Quaternion = item.transform.rotation,
                 });
@@ -68,6 +74,7 @@ public class SceneResourceEditor : EditorWindow {
 
         EditorUtility.SetDirty(SOData.MySOSceneItemSetting);
         EditorUtility.SetDirty(SOData.MySOWeaponSetting);
+        EditorUtility.SetDirty(SOData.MySOEquipmentSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }

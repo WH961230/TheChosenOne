@@ -1,5 +1,5 @@
 ﻿public static class PathData {
-    
+
     // 自动生成脚本使用
     public const string DataPath = "Assets/Scripts/Model/Data/";
     public const string EntityPath = "Assets/Scripts/Model/Entity/";
@@ -28,4 +28,5 @@
     public const string SOLightSettingPath = "MyConfigs/MySO/SOLightSetting";
     public const string SOAudioMainSettingPath = "MyConfigs/MySO/SOAudioMainSetting";
     public const string SOWeaponSettingPath = "MyConfigs/MySO/SOWeaponSetting";
+    public const string SOEquipmentSettingPath = "MyConfigs/MySO/SOEquipmentSetting";
 }

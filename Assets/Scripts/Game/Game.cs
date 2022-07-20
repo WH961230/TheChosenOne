@@ -113,9 +113,6 @@ public class Game : MonoBehaviour {
 
         GameData.LightRoot = new GameObject("LightRoot").transform;
         GameData.LightRoot.SetParent(gameRoot);
-
-        GameData.AudioRoot = new GameObject("AudioRoot").transform;
-        GameData.AudioRoot.SetParent(gameRoot);
     }
 
     private void InitSOData() {

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1802076e00c74e4fae510a646b1c8ff, type: 3}
+  m_Name: SOEquipmentSetting
+  m_EditorClassIdentifier: 
+  MyEquipmentMapInfo:
+  - Point: {x: -10.139815, y: 0.051399913, z: -4.0853534}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -0.5545768, y: 0.4320013, z: -15.574171}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -4.0437117, y: 0.10042632, z: -9.894415}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -1.4703289, y: 0.4851014, z: -7.185048}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -11.910411, y: 0.27932382, z: -16.51045}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: 4.744194, y: 0.5248426, z: -13.246333}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: 6.0944533, y: 0.44602704, z: -6.3259487}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -19.320795, y: 4.240742, z: -10.159517}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  MyEquipmentParameterInfo:
+  - Prefab: {fileID: 1136465837782449927, guid: dfd9ab7d258639548893b6fb578aea7b,
+      type: 3}
+    Picture: {fileID: 21300000, guid: 499c00f3fc5a3f5409c0a8ff0da56c3c, type: 3}
+  - Prefab: {fileID: 7078612992048091247, guid: fdb4fdbf3f0b7eb46893a175b09e55cd,
+      type: 3}
+    Picture: {fileID: 21300000, guid: 9da817b4b432a134d9f35f49c08fec39, type: 3}

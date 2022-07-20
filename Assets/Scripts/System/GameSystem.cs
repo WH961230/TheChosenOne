@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class GameSystem {
     #region 上级
@@ -75,6 +76,12 @@ public class GameSystem {
         get { return backpackSystem; }
     }
 
+    private EquipmentSystem equipmentSystem = new EquipmentSystem();
+
+    public EquipmentSystem MyEquipmentSystem {
+        get { return equipmentSystem; }
+    }
+
     private AnimatorSystem animatorSystem = new AnimatorSystem();
 
     public AnimatorSystem MyAnimaterSystem {
@@ -107,6 +114,7 @@ public class GameSystem {
         audioSystem.Init(this);
         backpackSystem.Init(this);
         animatorSystem.Init(this);
+        equipmentSystem.Init(this);
     }
 
     public void Update() {
@@ -120,6 +128,7 @@ public class GameSystem {
         audioSystem.Update();
         backpackSystem.Update();
         animatorSystem.Update();
+        equipmentSystem.Update();
     }
 
     public void FixedUpdate() {
@@ -133,6 +142,7 @@ public class GameSystem {
         audioSystem.FixedUpdate();
         backpackSystem.FixedUpdate();
         animatorSystem.FixedUpdate();
+        equipmentSystem.FixedUpdate();
     }
 
     public void LateUpdate() {
@@ -146,6 +156,7 @@ public class GameSystem {
         audioSystem.LateUpdate();
         backpackSystem.LateUpdate();
         animatorSystem.LateUpdate();
+        equipmentSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -159,6 +170,7 @@ public class GameSystem {
         audioSystem.Clear();
         backpackSystem.Clear();
         animatorSystem.Clear();
+        equipmentSystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
