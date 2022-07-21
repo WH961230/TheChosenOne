@@ -28,7 +28,5 @@ MonoBehaviour:
   MyOfficicalPrefab: {fileID: 5988454832137893343, guid: bb6215a941a28114c93f7df4c3e5767d,
     type: 3}
   MyCharacterInfo:
-    MyCharacterPoint: {x: -17.83, y: 7.39, z: -8.96}
+    MyCharacterPoint: {x: -7.2648673, y: 0.23492275, z: -7.879776}
     MyCharacterQuaternion: {x: -0, y: -0, z: -0, w: 1}
-  UIPrefab: {fileID: 9165863534260716852, guid: dbc29cf8f5ced06438e28b1bbdf7f8bc,
-    type: 3}

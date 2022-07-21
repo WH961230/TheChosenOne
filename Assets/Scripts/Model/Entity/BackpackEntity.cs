@@ -1,4 +1,6 @@
-﻿public class BackpackEntity : Entity {
+﻿using System.Collections.Generic;
+
+public class BackpackEntity : Entity {
     private BackpackData backpackData;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
@@ -13,10 +15,11 @@
         base.Clear();
     }
 
+    #region 拾取物体到背包
+
     public bool PickSceneItem(int id) {
-        // 判断物品的类型 物品 武器 
         var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
-        if (AddSceneItem(type, id)) {
+        if (backpackData.AddSceneItem(type, id)) {
             return true;
         }
 
@@ -25,8 +28,14 @@
 
     public bool PickWeapon(int id) {
         var type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(id);
-        if (AddWeapon(type, id)) {
-            return true;
+        if (type == WeaponType.MainWeapon) {
+            if (backpackData.AddMainWeapon(id)) {
+                return true;
+            }
+        } else if (type == WeaponType.SideWeapon) {
+            if (backpackData.AddSideWeapon(id)) {
+                return true;
+            }
         }
 
         return false;
@@ -34,50 +43,82 @@
 
     public bool PickEquipment(int id) {
         var type = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentType(id);
-        if (AddEquipment(type, id)) {
+        if (backpackData.AddEquipment(type, id)) {
             return true;
         }
 
         return false;
     }
 
-    private bool AddSceneItem(SceneItemType type, int sceneItemId) {
-        switch (type) {
-            case SceneItemType.Consume:
-                // 判断物体 进行叠加
-                backpackData.MySceneItemConsumeIds.Add(sceneItemId);
-                return true;
+    #endregion
+
+    #region 丢弃物体
+
+    public bool DropSceneItem(int id) {
+        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
+        if (backpackData.RemoveSceneItem(type, id)) {
+            return true;
         }
 
         return false;
     }
 
-    private bool AddWeapon(WeaponType type, int id) {
-        switch (type) {
-            case WeaponType.MainWeapon:
-                backpackData.MySceneItemMainWeaponIds[0] = id;
-                return true;
-            case WeaponType.SideWeapon:
-                backpackData.MySceneItemSideWeaponId = id;
-                return true;
+    public bool DropMainWeapon(int index) {
+        if (backpackData.RemoveMainWeapon(index)) {
+            return true;
         }
 
         return false;
     }
 
-    private bool AddEquipment(EquipmentType type, int id) {
-        switch (type) {
-            case EquipmentType.Helmet:
-                backpackData.MySceneItemEquipmentIds[0] = id;
-                return true;
-            case EquipmentType.Armour:
-                backpackData.MySceneItemEquipmentIds[0] = id;
-                return true;
-            case EquipmentType.Backpack:
-                backpackData.MySceneItemEquipmentIds[0] = id;
-                return true;
+    public bool DropSideWeapon() {
+        if (backpackData.RemoveSideWeapon()) {
+            return true;
         }
 
         return false;
     }
+
+    public bool DropEquipment(int index) {
+        if (backpackData.RemoveEquipment(index)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region 消耗物体
+
+    
+
+    #endregion
+
+    #region 获取物体
+
+    public int[] GetMainWeaponIds() {
+        return backpackData.GetMainWeaponIds();
+    }
+
+    public int GetMainWeaponId(int index) {
+        return backpackData.GetMainWeaponId(index);
+    }
+
+    public int GetSideWeaponId() {
+        return backpackData.GetSideWeaponId();
+    }
+
+    public int[] GetEquipmentIds() {
+        return backpackData.GetEquipmentIds();
+    }
+
+    public int GetEquipmentId(int index) {
+        return backpackData.GetEquipmentIds()[index];
+    }
+
+    public List<int> GetSceneItemIds() {
+        return backpackData.GetSceneItemIds();
+    }
+    #endregion
 }

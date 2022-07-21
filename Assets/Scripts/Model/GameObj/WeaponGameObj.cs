@@ -7,13 +7,27 @@
         MyComponent = MyObj.transform.GetComponent<WeaponComponent>();
         weaponComponent = (WeaponComponent) MyComponent;
         weaponData.MyWeaponSign = weaponComponent.MyWeaponSign;
+
+        MyGame.MyGameMessageCenter.Register<int>(GameMessageConstants.WEAPONSYSTEM_DROP, MsgWeaponDrop);
+        MyGame.MyGameMessageCenter.Register<int>(GameMessageConstants.WEAPONSYSTEM_HIDE, MsgWeaponHide);
     }
 
-    public override void Clear() {
-        base.Clear();
+    private void MsgWeaponHide(int id) {
+        if (id == weaponData.InstanceID) {
+            Hide();
+        }
     }
 
-    public override void Update() {
-        base.Update();
+    private void MsgWeaponDrop(int id) {
+        if (id == weaponData.InstanceID) {
+            Display();
+            Drop();
+        }
+    }
+
+    public override void Drop() {
+        base.Drop();
+        var characterComponent = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent();
+        weaponComponent.transform.position = GameData.GetGround(characterComponent.transform.position);
     }
 }

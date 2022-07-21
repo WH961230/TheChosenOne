@@ -48,19 +48,13 @@ public class BackpackSystem : GameSys {
                 isSuc = AddEquipment(id);
                 break;
         }
-
-        if (isSuc) {
-            MyGameSystem.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH, layer);
-        } else {
-            MyGameSystem.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UITIP_SHOWTIP);
-        }
     }
 
     // 将物品放入背包数据中
     private bool AddSceneItem(int id) {
         if (MyBackpackEntity.PickSceneItem(id)) {
             LogSystem.Print($"拾取物品：{id}");
-            MyGameSystem.MyItemSystem.GetSceneItemGameObj(id).Hide();
+            MyGameSystem.MyGameMessageCenter.Dispather(GameMessageConstants.SCENEITEMSYSTEM_HIDE, id);
             return true;
         }
 
@@ -70,7 +64,7 @@ public class BackpackSystem : GameSys {
     private bool AddWeapon(int id) {
         if (MyBackpackEntity.PickWeapon(id)) {
             LogSystem.Print($"拾取武器：{id}");
-            MyGameSystem.MyWeaponSystem.GetWeaponGameObj(id).Hide();
+            MyGameSystem.MyGameMessageCenter.Dispather(GameMessageConstants.WEAPONSYSTEM_HIDE, id);
             return true;
         }
 
@@ -80,7 +74,7 @@ public class BackpackSystem : GameSys {
     private bool AddEquipment(int id) {
         if (MyBackpackEntity.PickEquipment(id)) {
             LogSystem.Print($"拾取装备：{id}");
-            MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(id).Hide();
+            MyGameSystem.MyGameMessageCenter.Dispather(GameMessageConstants.EQUIPMENTSYSTEM_HIDE, id);
             return true;
         }
 
@@ -101,10 +95,6 @@ public class BackpackSystem : GameSys {
 
     public BackpackEntity GetBackpackEntity(int id) {
         return MyGameSystem.MyEntityFeature.Get<BackpackEntity>(id);
-    }
-
-    public BackpackData GetBackpackData(int id) {
-        return GetBackpackEntity(id).GetData<BackpackData>();
     }
 
     #endregion

@@ -2,10 +2,8 @@
 using UnityEngine;
 
 public class EnvironmentSystem : GameSys {
-    private GameSystem gameSystem;
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
-        this.gameSystem = gameSystem;
     }
 
     public override void Update() {
@@ -45,10 +43,10 @@ public class EnvironmentSystem : GameSys {
     }
 
     private void InstanceSceneBuilding(SceneBuildingData sceneBuildingData) {
-        gameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
+        MyGameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
     }
 
     private void InstanceLight(LightData lightData) {
-        gameSystem.InstanceGameObj<LightGameObj, LightEntity>(lightData);
+        MyGameSystem.InstanceGameObj<LightGameObj, LightEntity>(lightData);
     }
 }

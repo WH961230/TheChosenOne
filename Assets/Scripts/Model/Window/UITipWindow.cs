@@ -7,7 +7,6 @@
         uitipComponent.MyTip.SetActive(false);
 
         MyGame.MyGameMessageCenter.Register<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
-        MyGame.MyGameMessageCenter.Register(GameMessageConstants.UITIPWINDOW_CLOSETIPDESCRIPTION, Close);
     }
 
     public override void Open() {
@@ -15,6 +14,11 @@
     }
 
     public override void Update() {
+        if (string.IsNullOrEmpty(uitipComponent.MyTipName.text) || string.IsNullOrEmpty(uitipComponent.MyTipKeycode.text)) {
+            Close();
+        } else {
+            Open();
+        }
     }
 
     public override void Close() {
@@ -23,12 +27,10 @@
 
     public override void Clear() {
         MyGame.MyGameMessageCenter.UnRegister(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION);
-        MyGame.MyGameMessageCenter.UnRegister(GameMessageConstants.UITIPWINDOW_CLOSETIPDESCRIPTION);
     }
 
     private void MsgSetTipDescription(UITipType tipType, string description) {
         SetTipDescription(tipType, description);
-        Open();
     }
 
     public void SetTipDescription(UITipType tipType, string description) {

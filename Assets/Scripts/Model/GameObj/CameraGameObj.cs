@@ -5,14 +5,17 @@ public class CameraGameObj : GameObj {
     private Vector3 cameraTranDefaultPosition;
     private float mouseY;
     private Transform cameraTran;
-    private CameraComponent cameraComponent;
 
     private InputSystem inputSystem {
         get { return MyGame.MyGameSystem.MyInputSystem; }
     }
 
     private CameraData cameraData;
+    private CameraComponent cameraComponent;
 
+    private CharacterComponent MyMainCharacterComponent {
+        get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent(); }
+    }
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         cameraData = (CameraData) data;
@@ -41,53 +44,35 @@ public class CameraGameObj : GameObj {
         OnCameraScreenCenterRayRecognize();
     }
 
-    // 相机中心打出射线获取物体
+    // 相机中心打出射线获取物体 低帧执行
     private void OnCameraScreenCenterRayRecognize() {
-        // 角色未加载
-        if (!GameData.IsHaveMainCharacter) {
+        // 角色未加载 // 不是角色相机
+        if (GameData.MainCharacterId == 0 || cameraData.MyCameraType != CameraType.MainCharacterCamera) {
             return;
         }
-
-        // 不是角色相机
-        if (cameraData.MyCameraType != CameraType.MainCharacterCamera) {
-            return;
-        }
-
-        var mCamera = cameraComponent.MyCamera;
 
         // 打射线
-        Ray ray = mCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        Ray ray = cameraComponent.MyCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
-
-        // 获取贴士 UI
-        var uiTipWindow = MyGame.MyWindowFeature.Get<UITipWindow>();
-        if (null == uiTipWindow) {
-            return;
-        }
 
         // 打射线
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 9 | 1 << 12)) {
             var id = hit.collider.gameObject.GetInstanceID();
             var layer = hit.collider.gameObject.layer;
+
             string name = "";
             switch (layer) {
                 case 9:
-                    // 获取物体标识
-                    var sceneItemGameObj = MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id);
-                    name = sceneItemGameObj.GetData<SceneItemData>().MySceneItemSign;
+                    name = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MySceneItemSign;
                     break;
                 case 12:
-                    // 获取物体标识
-                    var weaponGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(id);
-                    name = weaponGameObj.GetData<WeaponData>().MyWeaponSign;
+                    name = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSign;
                     break;
                 case 13:
-                    var equipmentGameObj = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(id);
-                    name = equipmentGameObj.GetData<EquipmentData>().MySign;
+                    name = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySign;
                     break;
             }
 
-            // 输入F键
             if (inputSystem.GetKeyDown(KeyCode.F)) {
                 MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, layer);
             }
@@ -98,15 +83,15 @@ public class CameraGameObj : GameObj {
 
             Debug.Log("检测物体 " + name + " InstanceId: " + hit.collider.gameObject.GetInstanceID());
         } else {
-            uiTipWindow.Close();
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, "");
         }
     }
 
     private void TraceBehaviour() {
         // 主角色主相机
         if (cameraData.MyCameraType == CameraType.MainCharacterCamera) {
-            if (null != GameData.MainCharacterComponent) {
-                var characterTran = GameData.MainCharacterComponent.transform;
+            if (null != MyMainCharacterComponent) {
+                var characterTran = MyMainCharacterComponent.transform;
 
                 // 父物体位置
                 cameraTran.position = Vector3.Lerp(cameraTran.position, characterTran.position,
@@ -119,7 +104,7 @@ public class CameraGameObj : GameObj {
                     Time.deltaTime * SOData.MySOCameraSetting.CameraTraceSpeed);
 
                 RaycastHit hit;
-                var targetTran = GameData.MainCharacterComponent.Head.transform;
+                var targetTran = MyMainCharacterComponent.Head.transform;
                 Ray ray = new Ray(targetTran.position,
                     (cameraComponent.MyCameraX.transform.position - targetTran.transform.position).normalized);
                 if (Physics.Raycast(ray, out hit, 3.5f, ~(1 << 8))) {
@@ -137,7 +122,7 @@ public class CameraGameObj : GameObj {
                 }
 
                 // 相机旋转
-                cameraComponent.MyCamera.transform.LookAt(GameData.MainCharacterComponent.Head.transform.position + SOData.MySOCameraSetting.LookTargetOffsetPosition);
+                cameraComponent.MyCamera.transform.LookAt(MyMainCharacterComponent.Head.transform.position + SOData.MySOCameraSetting.LookTargetOffsetPosition);
 
                 // 自由状态
                 if (inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt)) {

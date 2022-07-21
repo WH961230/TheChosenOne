@@ -15,7 +15,6 @@ public class GameObj : IGameObj {
     public virtual void Init(Game game, Data data) {
         this.MyGame = game;
         this.MyData = data;
-        this.MyData.InstanceID = MyData.MyObj.GetInstanceID();
 
         MyObj = data.MyObj;
         MyObj.name = this.MyData.MyName = string.Concat(this.MyData.MyName, this.MyData.InstanceID);
@@ -33,6 +32,9 @@ public class GameObj : IGameObj {
 
     public virtual void Hide() {
         MyObj.SetActive(false);
+    }
+
+    public virtual void Drop() {
     }
 
     public virtual void Clear() {

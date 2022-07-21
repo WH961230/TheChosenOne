@@ -60,6 +60,7 @@ public class WeaponSystem : GameSys {
                 MyName = "Weapon",
                 MyRootTran = GameData.ItemRoot,
                 MyObj = Object.Instantiate(weaponParameterInfo[rand].Prefab),
+                MyWeaponSprite = weaponParameterInfo[rand].Picture,
                 MyTranInfo = new TranInfo() {
                     MyPos = weapon.Point, MyRot = weapon.Quaternion,
                 },

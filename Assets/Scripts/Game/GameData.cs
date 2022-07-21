@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 public static class GameData {
-    // Root
     public static Transform UIRoot;
     public static Transform CharacterRoot;
     public static Transform AudioRoot;
@@ -10,25 +9,16 @@ public static class GameData {
     public static Transform CameraRoot;
     public static Transform LightRoot;
 
-    // Camera
-    public static int MainCamera = -1;
-    public static CameraComponent MainCameraComponent;
+    public static int MainCamera = 0;
+    public static int MainCharacterCamera = 0;
 
-    public static int MainCharacterCamera = -1;
-    public static CameraComponent CharacterCameraComponent;
-
-    // Light
     public static Light MainLight;
 
-    // Log
     public static int IsShowLog;
 
-    // MainCharacter
-    public static int MainCharacater = -1;
-    public static bool IsHaveMainCharacter {
-        get { return MainCharacater != -1; }
-    }
-    public static CharacterComponent MainCharacterComponent;
+    public static int MainCharacterId = 0;
+
+    #region 通用方法
 
     public static Vector3 GetGround(Vector3 point) {
         RaycastHit hit;
@@ -39,4 +29,6 @@ public static class GameData {
 
         return default;
     }
+
+    #endregion
 }

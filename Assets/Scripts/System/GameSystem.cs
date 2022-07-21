@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameSystem {
     #region 上级
@@ -104,7 +105,6 @@ public class GameSystem {
 
     public void Init(Game game) {
         this.game = game;
-        uISystem.Init(this);
         environmentSystem.Init(this);
         itemSystem.Init(this);
         cameraSystem.Init(this);
@@ -115,10 +115,10 @@ public class GameSystem {
         backpackSystem.Init(this);
         animatorSystem.Init(this);
         equipmentSystem.Init(this);
+        uISystem.Init(this);
     }
 
     public void Update() {
-        uISystem.Update();
         environmentSystem.Update();
         itemSystem.Update();
         cameraSystem.Update();
@@ -129,10 +129,15 @@ public class GameSystem {
         backpackSystem.Update();
         animatorSystem.Update();
         equipmentSystem.Update();
+        uISystem.Update();
+        if (inputSystem.GetKeyDown(KeyCode.Space)) {
+            ShowWeaponPos();
+            PickWeapon();
+            OpenBackpack();
+        }
     }
 
     public void FixedUpdate() {
-        uISystem.FixedUpdate();
         environmentSystem.FixedUpdate();
         itemSystem.FixedUpdate();
         cameraSystem.FixedUpdate();
@@ -143,10 +148,10 @@ public class GameSystem {
         backpackSystem.FixedUpdate();
         animatorSystem.FixedUpdate();
         equipmentSystem.FixedUpdate();
+        uISystem.FixedUpdate();
     }
 
     public void LateUpdate() {
-        uISystem.LateUpdate();
         environmentSystem.LateUpdate();
         itemSystem.LateUpdate();
         cameraSystem.LateUpdate();
@@ -157,10 +162,10 @@ public class GameSystem {
         backpackSystem.LateUpdate();
         animatorSystem.LateUpdate();
         equipmentSystem.LateUpdate();
+        uISystem.LateUpdate();
     }
 
     public void Clear() {
-        uISystem.Clear();
         environmentSystem.Clear();
         itemSystem.Clear();
         cameraSystem.Clear();
@@ -171,6 +176,7 @@ public class GameSystem {
         backpackSystem.Clear();
         animatorSystem.Clear();
         equipmentSystem.Clear();
+        uISystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
@@ -184,6 +190,9 @@ public class GameSystem {
 
     public int InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
+        if (TestWeaponId == 0 && typeof(T1) == typeof(WeaponGameObj)) {
+            TestWeaponId = data.InstanceID;
+        }
         game.MyGameObjFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T2>(data);
         return data.InstanceID;
@@ -192,4 +201,25 @@ public class GameSystem {
     public void InstanceEntity<T>(Data data) where T : Entity, new() {
         game.MyEntityFeature.Register<T>(data);
     }
+
+    #region 测试
+
+    // 仅供测试使用 不用后删除整条测试链
+    public int TestWeaponId;
+    public void ShowWeaponPos() {
+        var wComp =  weaponSystem.GetWeaponComponent(TestWeaponId);
+        Debug.Log(wComp.transform.position);
+    }
+
+    public void PickWeapon() {
+        MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, TestWeaponId, LayerData.WeaponLayer);
+    }
+
+    private void OpenBackpack() {
+        MyWindowFeature.Get<UIMainWindow>().MyUiMainComponent.MyButton.gameObject.SetActive(false);
+        MyWindowFeature.Get<UIBackpackWindow>().MyUibackpackComponent.MyUIBackpackWindow.gameObject.SetActive(true);
+        MyWindowFeature.Get<UIBackpackWindow>().Refresh();
+    }
+
+    #endregion
 }

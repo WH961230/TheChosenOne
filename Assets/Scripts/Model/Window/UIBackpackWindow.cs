@@ -1,16 +1,17 @@
-﻿public class UIBackpackWindow : Window {
-    private CharacterData mainCharacterData;
-    private CharacterComponent mainCharacterComponent;
-    private CharacterGameObj mainCharacterGameObj;
-    private UIBackpackComponent uibackpackComponent;
+﻿using UnityEngine;
+
+public class UIBackpackWindow : Window {
+    public UIBackpackComponent MyUibackpackComponent;
+
+    private CharacterData MyMainCharacterData {
+        get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData(); }
+    }
 
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         var obj = game.MyGameObjFeature.Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
-        uibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
-
+        MyUibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
         MyGame.MyGameMessageCenter.Register<int>(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH, MsgRefresh);
-        
         AddButtonListener();
     }
 
@@ -18,57 +19,62 @@
         MyGame.MyGameMessageCenter.UnRegister(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH);
     }
 
-    private void AddButtonListener() {
-        var window = uibackpackComponent.MyUIBackpackWindow;
-        var openBtn = uibackpackComponent.MyUIBackpackBtn;
-        var closeBtn = uibackpackComponent.MyUIBackpackCloseBtn;
-        var mainDropBtn_1 = uibackpackComponent.MyUIBackpackMainWeaponDropBtn_1;
-        var mainDropBtn_2 = uibackpackComponent.MyUIBackpackMainWeaponDropBtn_2;
-        var sideDropBtn = uibackpackComponent.MyUIBackpackSideWeaponDropBtn;
+    #region 监听
 
-        var equipmentBtn_1 = uibackpackComponent.MyUIBackpackEquipment_1;
-        var equipmentBtn_2 = uibackpackComponent.MyUIBackpackEquipment_2;
-        var equipmentBtn_3 = uibackpackComponent.MyUIBackpackEquipment_3;
-        var equipmentBtn_4 = uibackpackComponent.MyUIBackpackEquipment_4;
+    private void AddButtonListener() {
+        var window = MyUibackpackComponent.MyUIBackpackWindow;
+        var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+        var closeBtn = MyUibackpackComponent.MyUIBackpackCloseBtn;
+        var mainDropBtn_1 = MyUibackpackComponent.MyUIBackpackMainWeaponDropBtn_1;
+        var mainDropBtn_2 = MyUibackpackComponent.MyUIBackpackMainWeaponDropBtn_2;
+        var sideDropBtn = MyUibackpackComponent.MyUIBackpackSideWeaponDropBtn;
+
+        var equipmentBtn_1 = MyUibackpackComponent.MyUIBackpackEquipment_1;
+        var equipmentBtn_2 = MyUibackpackComponent.MyUIBackpackEquipment_2;
+        var equipmentBtn_3 = MyUibackpackComponent.MyUIBackpackEquipment_3;
+        var equipmentBtn_4 = MyUibackpackComponent.MyUIBackpackEquipment_4;
 
         openBtn.gameObject.SetActive(true);
         window.gameObject.SetActive(false);
 
         openBtn.onClick.AddListener(() => {
-            Refresh();
             window.gameObject.SetActive(true);
             openBtn.gameObject.SetActive(false);
+            Refresh();
         });
 
         mainDropBtn_1.onClick.AddListener(() => {
-            DropSceneItemMainWeapon(0);
+            DropMainWeapon(0);
             RefreshWeapon();
         });
 
         mainDropBtn_2.onClick.AddListener(() => {
-            DropSceneItemMainWeapon(1);
+            DropMainWeapon(1);
             RefreshWeapon();
         });
 
         sideDropBtn.onClick.AddListener(() => {
-            DropSceneItemSideWeapon();
+            DropSideWeapon();
             RefreshWeapon();
         });
 
         equipmentBtn_1.onClick.AddListener(() => {
-            DropSceneItemEquipment(0);
+            DropEquipment(0);
             RefreshEquipment();
         });
+
         equipmentBtn_2.onClick.AddListener(() => {
-            DropSceneItemEquipment(1);
+            DropEquipment(1);
             RefreshEquipment();
         });
+
         equipmentBtn_3.onClick.AddListener(() => {
-            DropSceneItemEquipment(2);
+            DropEquipment(2);
             RefreshEquipment();
         });
+
         equipmentBtn_4.onClick.AddListener(() => {
-            DropSceneItemEquipment(3);
+            DropEquipment(3);
             RefreshEquipment();
         });
 
@@ -78,6 +84,38 @@
             window.gameObject.SetActive(false);
         });
     }
+
+    #endregion
+
+    #region 丢弃
+
+    private void DropMainWeapon(int index) {
+        var bpId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        var weapId = backpackEntity.GetMainWeaponId(index);
+        if (backpackEntity.DropMainWeapon(index)) {
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.WEAPONSYSTEM_DROP, weapId);
+        }
+    }
+
+    private void DropSideWeapon() {
+        var bpId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        if (backpackEntity.DropSideWeapon()) {
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.WEAPONSYSTEM_DROP, backpackEntity.GetSideWeaponId());
+        }
+    }
+
+    private void DropEquipment(int index) {
+        var bpId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        if (backpackEntity.DropEquipment(index)) {
+        }
+    }
+
+    #endregion
+
+    #region 刷新
 
     private void MsgRefresh(int layer) {
         switch (layer) {
@@ -93,71 +131,61 @@
         }
     }
 
-    private void DropSceneItemMainWeapon(int index) {
-        var id = mainCharacterData.MySceneItemMainWeaponIds[index];
-        if (mainCharacterData.RemoveSceneItemMainWeapon(id)) {
-            MyGame.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
-        }
-    }
-
-    private void DropSceneItemSideWeapon() {
-        var id = mainCharacterData.MySceneItemSideWeaponId;
-        if (mainCharacterData.RemoveSceneItemSideWeapon()) {
-            MyGame.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
-        }
-    }
-
-    private void DropSceneItemEquipment(int index) {
-        var id = mainCharacterData.MySceneItemEquipmentIds[index];
-        if (mainCharacterData.RemoveSceneItemEquipment(id, index)) {
-            MyGame.MyGameObjFeature.Get<SceneItemGameObj>(id).ShowObj(GameData.GetGround(mainCharacterComponent.transform.position));
-        }
-    }
-
-    private void Refresh() {
+    public void Refresh() {
         RefreshEquipment();
         RefreshWeapon();
         RefreshSceneItem();
     }
 
     private void RefreshSceneItem() {
-        var characterBackpackId = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId;
-        var data = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackData(characterBackpackId);
-        for (int i = 0; i < data.MySceneItemConsumeIds.Count; i++) {
-            var id = data.MySceneItemConsumeIds[i];
+        var bpId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        var ids = backpackEntity.GetSceneItemIds();
+        for (int i = 0; i < ids.Count; i++) {
+            var id = ids[i];
             var sprite = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MyBackpackSprite;
-            uibackpackComponent.MyUIBackpackConsumeImages[i].sprite = sprite;
+            MyUibackpackComponent.MyUIBackpackConsumeImages[i].sprite = sprite;
         }
     }
 
     private void RefreshWeapon() {
-        var characterBackpackId = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId;
-        var data = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackData(characterBackpackId);
-        for (int i = 0; i < data.MySceneItemMainWeaponIds.Length; i++) {
-            var id = data.MySceneItemMainWeaponIds[i];
-            var sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSprite;
-            uibackpackComponent.MyUIBackpackMainWeaponImages[i].sprite = sprite;
+        var characterBackpackId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterBackpackId);
+        var mainWeaponIds = backpackEntity.GetMainWeaponIds();
+        Sprite sprite = null;
+        for (int i = 0; i < mainWeaponIds.Length; i++) {
+            sprite = null;
+            var id = mainWeaponIds[i];
+            if (id != 0) {
+                sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSprite;
+            }
+
+            MyUibackpackComponent.MyUIBackpackMainWeaponImages[i].sprite = sprite;
         }
 
-        uibackpackComponent.MyUIBackpackSideWeaponImage.sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(data.MySceneItemSideWeaponId).MyWeaponSprite;
+        var sideWeaponid = backpackEntity.GetSideWeaponId();
+        sprite = null;
+        if (sideWeaponid != 0) {
+            sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(sideWeaponid).MyWeaponSprite;
+        }
+
+        MyUibackpackComponent.MyUIBackpackSideWeaponImage.sprite = sprite;
     }
 
     private void RefreshEquipment() {
-        var characterBackpackId = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId;
-        var data = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackData(characterBackpackId);
-        for (int i = 0; i < data.MySceneItemEquipmentIds.Length; i++) {
-            var id = data.MySceneItemEquipmentIds[i];
-            var sprite = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySprite;
-            uibackpackComponent.MyUIBackpackEquipmentImages[i].sprite = sprite;
+        var characterBackpackId = MyMainCharacterData.BackpackInstanceId;
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterBackpackId);
+        var ids = backpackEntity.GetEquipmentIds();
+        for (int i = 0; i < ids.Length; i++) {
+            var id = ids[i];
+            Sprite sprite = null;
+            if (id != 0) {
+                sprite = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySprite;
+            }
+
+            MyUibackpackComponent.MyUIBackpackEquipmentImages[i].sprite = sprite;
         }
     }
 
-    public override void Open() {
-    }
-
-    public override void Update() {
-    }
-
-    public override void Close() {
-    }
+    #endregion
 }

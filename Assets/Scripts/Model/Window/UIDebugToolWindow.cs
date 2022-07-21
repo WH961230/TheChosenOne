@@ -21,7 +21,7 @@ public class UIDebugToolWindow : Window {
         });
 
         uidebugtoolComponent.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
-            var characterPos = GameData.MainCharacterComponent.transform.position;
+            var characterPos =  MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent().transform.position;
             var tempObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             tempObj.transform.position = GameData.GetGround(characterPos);
         });

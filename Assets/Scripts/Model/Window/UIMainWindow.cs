@@ -1,36 +1,47 @@
-﻿using UnityEngine;
-
-public class UIMainWindow : Window {
-    private Game game;
-    private UIMainComponent uiMainComponent;
+﻿public class UIMainWindow : Window {
+    public UIMainComponent MyUiMainComponent;
     private UIMainGameObj uiMainGameObj;
 
     public override void Init(Game game, Data data) {
+        base.Init(game, data);
         // 初始化界面
-        uiMainGameObj = game.MyGameObjFeature.Get<UIMainGameObj>(data.InstanceID);
-        uiMainComponent = uiMainGameObj.MyData.MyObj.transform.GetComponent<UIMainComponent>();
-        this.game = game;
+        uiMainGameObj = MyGame.MyGameObjFeature.Get<UIMainGameObj>(data.InstanceID);
+        MyUiMainComponent = uiMainGameObj.MyData.MyObj.transform.GetComponent<UIMainComponent>();
 
         // 默认界面开启
         Open();
-        uiMainComponent.MyButton.onClick.AddListener(() => {
+        MyUiMainComponent.MyButton.onClick.AddListener(() => {
             // 加载 DebugUI
-            game.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
+            MyGame.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
 
             // 加载灯光
-            game.MyGameSystem.MyEnvironmentSystem.InstanceLight();
+            // MyGame.MyGameSystem.MyEnvironmentSystem.InstanceLight();
 
-            // 读取场景配置 创建场景实例
-            game.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
+            // 加载建筑、地面
+            MyGame.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
 
-            // 场景物体
-            game.MyGameSystem.MyItemSystem.InstanceSceneItem();
-            
+            // 加载场景可拾取物体
+            MyGame.MyGameSystem.MyItemSystem.InstanceSceneItem();
+
             // 加载武器
-            game.MyGameSystem.MyWeaponSystem.InstanceWeapon();
+            MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
 
             // 读取玩家生成点 创建主玩家
-            game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
+            if (GameData.MainCharacterId == 0) {
+                GameData.MainCharacterId = game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
+            }
+
+            // 加载角色 UI
+            MyGame.MyGameSystem.MyUISystem.InstanceUICharacterWindow();
+
+            // 加载地图 UI
+            MyGame.MyGameSystem.MyUISystem.InstanceUIMapWindow();
+
+            // 加载背包 UI
+            MyGame.MyGameSystem.MyUISystem.InstanceUIBackpackWindow();
+
+            // 加载贴士 UI
+            MyGame.MyGameSystem.MyUISystem.InstanceUITipWindow();
 
             // 播放背景音效（替代资源）
             game.MyGameSystem.MyAudioSystem.InstanceAudioMain();
@@ -38,23 +49,21 @@ public class UIMainWindow : Window {
             // 关闭界面
             Close();
         });
+
+        MyUiMainComponent.MyButton.onClick.Invoke();
     }
 
     public override void Open() {
-        // 开启界面
         uiMainGameObj.Display();
     }
 
     public override void Update() {
-        // 更新界面
     }
 
     public override void Close() {
-        // 关闭界面
         uiMainGameObj.Hide();
     }
 
     public override void Clear() {
-        // 清除界面
     }
 }

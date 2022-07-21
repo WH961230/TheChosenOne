@@ -38,12 +38,6 @@ public class CharacterGameObj : GameObj {
     private void CharacterAnimation() {
         // 当前武器不为空 播放手持武器动画c
         characterComponent.AnimatorController.SetBool("IsWeapon", true);
-        return;
-        if (characterData.MyCurrentSceneItemWeapon != 0) {
-            characterComponent.AnimatorController.SetBool("IsWeapon", true);
-        } else {
-            characterComponent.AnimatorController.SetBool("IsWeapon", false);
-        }
     }
 
     private void CharacterMotion() {

@@ -34,14 +34,14 @@ public class CharacterSystem : GameSys {
     public CharacterData GetCharacterData(int id) {
         return GetCharacterEntity(id).GetData<CharacterData>();
     }
-    
+
     // 特殊获取
     public CharacterGameObj GetMainCharacterGameObj() {
-        if (GameData.MainCharacater == 0) {
+        if (GameData.MainCharacterId == 0) {
             return null;
         }
 
-        return MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacater);
+        return MyGameSystem.MyGameObjFeature.Get<CharacterGameObj>(GameData.MainCharacterId);
     }
 
     public CharacterComponent GetMainCharacterComponent() {
@@ -53,11 +53,11 @@ public class CharacterSystem : GameSys {
     }
 
     public CharacterEntity GetMainCharacterEntity() {
-        if (GameData.MainCharacater == 0) {
+        if (GameData.MainCharacterId == 0) {
             return null;
         }
 
-        return MyGameSystem.MyEntityFeature.Get<CharacterEntity>(GameData.MainCharacater);
+        return MyGameSystem.MyEntityFeature.Get<CharacterEntity>(GameData.MainCharacterId);
     }
 
     public CharacterData GetMainCharacterData() {
@@ -72,45 +72,30 @@ public class CharacterSystem : GameSys {
 
     #region 创建
 
-    public void InstanceCharacter(bool isMainCharacter) {
+    public int InstanceCharacter(bool isMainCharacter) {
         var backpackId = gameSystem.MyBackpackSystem.InstanceBackpack();
-        var instanceId = InstanceCharacter(new CharacterData() {
+        return InstanceCharacter(new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(SOData.MySOCharacter.GetCharacterPrefab()),
             MyRootTran = GameData.CharacterRoot,
-
             IfInitMyObj = false,
             MyTranInfo = new TranInfo() {
-                MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint,
-                MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
+                MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
             },
             BackpackInstanceId = backpackId, // 背包
             IsMainCharacter = isMainCharacter,
         });
-
-        // 如果是主角色
-        if (isMainCharacter) {
-            if (GameData.MainCharacater == -1) {
-                // 赋值全局 主角色
-                GameData.MainCharacater = instanceId;
-                // 赋值全局主角色组件
-                GameData.MainCharacterComponent = gameSystem.MyGameObjFeature.Get<CharacterGameObj>(instanceId).GetComponent<CharacterComponent>();
-            }
-
-            // 加载角色 UI
-            gameSystem.MyUISystem.InstanceUICharacterWindow();
-            // 加载地图 UI
-            gameSystem.MyUISystem.InstanceUIMapWindow();
-            // 加载背包 UI
-            gameSystem.MyUISystem.InstanceUIBackpackWindow();
-            // 加载贴士 UI
-            gameSystem.MyUISystem.InstanceUITipWindow();
-        }
     }
 
     private int InstanceCharacter(CharacterData characterData) {
         return gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }
+
+    #endregion
+
+    #region 移除
+
+    
 
     #endregion
 }
