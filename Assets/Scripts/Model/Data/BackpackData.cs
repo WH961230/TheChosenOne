@@ -15,7 +15,16 @@ public class BackpackData : Data {
     private int MySideWeaponId;
 
     // 消耗物品 包含 1投掷物 2能量饮料 3子弹 4其他等 有数量下标
-    private const int MySceneItemConsumeNum = 2;
+    private int MySceneItemConsumeCurrentLevel = 0;
+    private const int MySceneItemConsumeNum_level_1 = 1;
+    private int[] MySceneItemConsumeIds_level_1 = new int[MySceneItemConsumeNum_level_1];
+    private const int MySceneItemConsumeNum_level_2 = 2;
+    private int[] MySceneItemConsumeIds_level_2 = new int[MySceneItemConsumeNum_level_2];
+    private const int MySceneItemConsumeNum_level_3 = 3;
+    private int[] MySceneItemConsumeIds_level_3 = new int[MySceneItemConsumeNum_level_3];
+    private const int MySceneItemConsumeNum_level_4 = 4;
+    private int[] MySceneItemConsumeIds_level_4 = new int[MySceneItemConsumeNum_level_4];
+
     private List<int> MySceneItemConsumeIds = new List<int>();
 
     // 装备
@@ -24,7 +33,7 @@ public class BackpackData : Data {
 
     #endregion
 
-    #region 新增
+    #region 增
 
     public bool AddSceneItem(SceneItemType type, int sceneItemId) {
         switch (type) {
@@ -57,6 +66,8 @@ public class BackpackData : Data {
                 return true;
             case EquipmentType.Backpack:
                 MySceneItemEquipmentIds[2] = id;
+                // 设置背包 level
+                
                 return true;
         }
 
@@ -65,13 +76,16 @@ public class BackpackData : Data {
 
     #endregion
 
-    #region 修改
+    #region 改
 
-
+    public bool SetSceneItemLevel(int level) {
+        MySceneItemConsumeCurrentLevel = level;
+        return true;
+    }
 
     #endregion
 
-    #region 查找
+    #region 查
 
     public int[] GetMainWeaponIds() {
         return MyMainWeaponIds;
@@ -89,6 +103,25 @@ public class BackpackData : Data {
         return MySceneItemConsumeIds;
     }
 
+    public int GetSceneItemId(int index) {
+        return MySceneItemConsumeIds[index];
+    }
+
+    public int[] GetSceneItemIdsLevel() {
+        switch (MySceneItemConsumeCurrentLevel) {
+            case 1:
+                return MySceneItemConsumeIds_level_1;
+            case 2:
+                return MySceneItemConsumeIds_level_2;
+            case 3:
+                return MySceneItemConsumeIds_level_3;
+            case 4:
+                return MySceneItemConsumeIds_level_4;
+            default:
+                return MySceneItemConsumeIds_level_1;
+        }
+    }
+
     public int[] GetEquipmentIds() {
         return MySceneItemEquipmentIds;
     }
@@ -99,7 +132,7 @@ public class BackpackData : Data {
 
     #endregion
 
-    #region 删除
+    #region 删
 
     public bool RemoveSceneItem(SceneItemType type, int id) {
         switch (type) {

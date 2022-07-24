@@ -71,9 +71,6 @@ public class Game : MonoBehaviour {
 
     #endregion
     void Start() {
-        // game 序列化设置
-        GameData.IsShowLog = IsShowLog;
-
         // 配置初始化 - 供全局使用
         InitSOData();
 

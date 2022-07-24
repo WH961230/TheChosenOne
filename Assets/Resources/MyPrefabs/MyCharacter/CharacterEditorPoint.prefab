@@ -15,7 +15,7 @@ GameObject:
   m_Layer: 0
   m_Name: CharacterEditorPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -92,7 +92,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68e00d16b3dee745a12b2a3fc7208aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraTarget: {fileID: 0}
   Head: {fileID: 0}
   Body: {fileID: 0}
   CC: {fileID: 0}
+  AnimatorController: {fileID: 0}
+  AKC:
+    WeaponGameObj: {fileID: 0}
+    WeaponId: 0
+  AK47:
+    WeaponGameObj: {fileID: 0}
+    WeaponId: 0
+  Pistol:
+    WeaponGameObj: {fileID: 0}
+    WeaponId: 0

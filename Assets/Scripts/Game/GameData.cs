@@ -14,8 +14,6 @@ public static class GameData {
 
     public static Light MainLight;
 
-    public static int IsShowLog;
-
     public static int MainCharacterId = 0;
 
     #region 通用方法

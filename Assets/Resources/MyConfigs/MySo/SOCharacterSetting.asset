@@ -23,9 +23,7 @@ MonoBehaviour:
     IsOpenJump: 0
     IsOpenRun: 0
     IsOpenAirWalk: 0
-  MyPrefab: {fileID: 5045448924459881338, guid: da22bc425b8d3644b8dd5d52019b432a,
-    type: 3}
-  MyOfficicalPrefab: {fileID: 5988454832137893343, guid: bb6215a941a28114c93f7df4c3e5767d,
+  MyPrefab: {fileID: 5988454832137893343, guid: bb6215a941a28114c93f7df4c3e5767d,
     type: 3}
   MyCharacterInfo:
     MyCharacterPoint: {x: -7.2648673, y: 0.23492275, z: -7.879776}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class UIBackpackWindow : Window {
     public UIBackpackComponent MyUibackpackComponent;
@@ -16,73 +17,62 @@ public class UIBackpackWindow : Window {
     }
 
     public override void Clear() {
-        MyGame.MyGameMessageCenter.UnRegister(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH);
+        MyGame.MyGameMessageCenter.UnRegister<int>(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH, MsgRefresh);
+        base.Clear();
     }
 
     #region 监听
 
     private void AddButtonListener() {
         var window = MyUibackpackComponent.MyUIBackpackWindow;
-        var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
-        var closeBtn = MyUibackpackComponent.MyUIBackpackCloseBtn;
-        var mainDropBtn_1 = MyUibackpackComponent.MyUIBackpackMainWeaponDropBtn_1;
-        var mainDropBtn_2 = MyUibackpackComponent.MyUIBackpackMainWeaponDropBtn_2;
-        var sideDropBtn = MyUibackpackComponent.MyUIBackpackSideWeaponDropBtn;
-
-        var equipmentBtn_1 = MyUibackpackComponent.MyUIBackpackEquipment_1;
-        var equipmentBtn_2 = MyUibackpackComponent.MyUIBackpackEquipment_2;
-        var equipmentBtn_3 = MyUibackpackComponent.MyUIBackpackEquipment_3;
-        var equipmentBtn_4 = MyUibackpackComponent.MyUIBackpackEquipment_4;
-
-        openBtn.gameObject.SetActive(true);
         window.gameObject.SetActive(false);
 
+        var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+        openBtn.gameObject.SetActive(true);
         openBtn.onClick.AddListener(() => {
             window.gameObject.SetActive(true);
             openBtn.gameObject.SetActive(false);
             Refresh();
         });
 
-        mainDropBtn_1.onClick.AddListener(() => {
-            DropMainWeapon(0);
-            RefreshWeapon();
-        });
-
-        mainDropBtn_2.onClick.AddListener(() => {
-            DropMainWeapon(1);
-            RefreshWeapon();
-        });
-
-        sideDropBtn.onClick.AddListener(() => {
-            DropSideWeapon();
-            RefreshWeapon();
-        });
-
-        equipmentBtn_1.onClick.AddListener(() => {
-            DropEquipment(0);
-            RefreshEquipment();
-        });
-
-        equipmentBtn_2.onClick.AddListener(() => {
-            DropEquipment(1);
-            RefreshEquipment();
-        });
-
-        equipmentBtn_3.onClick.AddListener(() => {
-            DropEquipment(2);
-            RefreshEquipment();
-        });
-
-        equipmentBtn_4.onClick.AddListener(() => {
-            DropEquipment(3);
-            RefreshEquipment();
-        });
-
+        var closeBtn = MyUibackpackComponent.MyUIBackpackCloseBtn;
         // 关闭界面
         closeBtn.onClick.AddListener(() => {
             openBtn.gameObject.SetActive(true);
             window.gameObject.SetActive(false);
         });
+
+        var mainWeapon = MyUibackpackComponent.MyUIBackpackMainWeaponImages;
+        for (int i = 0; i < mainWeapon.Length; i++) {
+            int ii = i;
+            mainWeapon[i].MyButton.onClick.AddListener(() => {
+                DropMainWeapon(ii);
+                RefreshWeapon();
+            });
+        }
+
+        var sideWeapon = MyUibackpackComponent.MyUIBackpackSideWeaponImage;
+        sideWeapon.MyButton.onClick.AddListener(() => {
+            DropSideWeapon();
+            RefreshWeapon();
+        });
+
+        var equipment = MyUibackpackComponent.MyUIBackpackEquipmentImages;
+        for (int i = 0; i < equipment.Length; i++) {
+            int ii = i;
+            equipment[i].MyButton.onClick.AddListener(() => {
+                DropEquipment(ii);
+                RefreshEquipment();
+            });
+        }
+
+        for (int i = 0; i < MyUibackpackComponent.MyUIBackpackConsumeImages.Count; i++) {
+            int ii = i;
+            MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.onClick.AddListener(() => {
+                DropSceneItem(ii);
+                RefreshSceneItem();
+            });
+        }
     }
 
     #endregion
@@ -90,29 +80,53 @@ public class UIBackpackWindow : Window {
     #region 丢弃
 
     private void DropMainWeapon(int index) {
-        var bpId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        var backpackEntity = GetBackpackEntity();
         var weapId = backpackEntity.GetMainWeaponId(index);
         if (backpackEntity.DropMainWeapon(index)) {
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.WEAPONSYSTEM_DROP, weapId);
+            LogSystem.Print("发送丢弃消息 id: " + weapId);
+            var dropPoint = GetDropPoint();
+            MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
         }
     }
 
     private void DropSideWeapon() {
-        var bpId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        var backpackEntity = GetBackpackEntity();
+        var weapId = backpackEntity.GetSideWeaponId();
         if (backpackEntity.DropSideWeapon()) {
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.WEAPONSYSTEM_DROP, backpackEntity.GetSideWeaponId());
+            LogSystem.Print("发送丢弃消息 id: " + weapId);
+            var dropPoint = GetDropPoint();
+            MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
+        }
+    }
+
+    private void DropSceneItem(int index) {
+        var backpackEntity = GetBackpackEntity();
+        var sceneItemId = backpackEntity.GetSceneItemId(index);
+        if (backpackEntity.DropSceneItem(index)) {
+            var dropPoint = GetDropPoint();
+            MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(sceneItemId).Drop(dropPoint);
         }
     }
 
     private void DropEquipment(int index) {
-        var bpId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        var backpackEntity = GetBackpackEntity();
+        var equipmentId = backpackEntity.GetEquipmentId(index);
         if (backpackEntity.DropEquipment(index)) {
+            var dropPoint = GetDropPoint();
+            MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(equipmentId).Drop(dropPoint);
         }
     }
 
+    private Vector3 GetDropPoint() {
+        var characterPoint = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent().transform.position;
+        return GameData.GetGround(characterPoint);
+    }
+
+    private BackpackEntity GetBackpackEntity() {
+        var bpId = MyMainCharacterData.BackpackInstanceId;
+        return MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+    }
+    
     #endregion
 
     #region 刷新
@@ -138,43 +152,52 @@ public class UIBackpackWindow : Window {
     }
 
     private void RefreshSceneItem() {
-        var bpId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
-        var ids = backpackEntity.GetSceneItemIds();
-        for (int i = 0; i < ids.Count; i++) {
-            var id = ids[i];
-            var sprite = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MyBackpackSprite;
-            MyUibackpackComponent.MyUIBackpackConsumeImages[i].sprite = sprite;
+        var backpackEntity = GetBackpackEntity();
+        var ids = backpackEntity.GetSceneItemIds(); // 物品
+        var level = backpackEntity.GetSceneItemIdsLevel(); // 容量
+
+        if (ids.Count > level.Length) {
+            LogSystem.PrintE("物品数量大于容量！");
+        }
+
+        for (int i = 0; i < level.Length; i++) {
+            Sprite sprite;
+            if (ids.Count > i) {
+                var id = ids[i];
+                sprite = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MyBackpackSprite;
+
+            } else {
+                sprite = null;
+            }
+            MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
         }
     }
 
     private void RefreshWeapon() {
-        var characterBackpackId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterBackpackId);
+        var backpackEntity = GetBackpackEntity();
         var mainWeaponIds = backpackEntity.GetMainWeaponIds();
         Sprite sprite = null;
         for (int i = 0; i < mainWeaponIds.Length; i++) {
             sprite = null;
             var id = mainWeaponIds[i];
             if (id != 0) {
-                sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSprite;
+                sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MySprite;
             }
 
-            MyUibackpackComponent.MyUIBackpackMainWeaponImages[i].sprite = sprite;
+            MyUibackpackComponent.MyUIBackpackMainWeaponImages[i].MyButton.image.sprite = sprite;
         }
 
         var sideWeaponid = backpackEntity.GetSideWeaponId();
         sprite = null;
         if (sideWeaponid != 0) {
-            sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(sideWeaponid).MyWeaponSprite;
+            sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(sideWeaponid).MySprite;
         }
 
-        MyUibackpackComponent.MyUIBackpackSideWeaponImage.sprite = sprite;
+        MyUibackpackComponent.MyUIBackpackSideWeaponImage.MyButton.image.sprite = sprite;
     }
 
     private void RefreshEquipment() {
-        var characterBackpackId = MyMainCharacterData.BackpackInstanceId;
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterBackpackId);
+        var backpackEntity = GetBackpackEntity();
         var ids = backpackEntity.GetEquipmentIds();
         for (int i = 0; i < ids.Length; i++) {
             var id = ids[i];
@@ -183,7 +206,7 @@ public class UIBackpackWindow : Window {
                 sprite = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySprite;
             }
 
-            MyUibackpackComponent.MyUIBackpackEquipmentImages[i].sprite = sprite;
+            MyUibackpackComponent.MyUIBackpackEquipmentImages[i].MyButton.image.sprite = sprite;
         }
     }
 

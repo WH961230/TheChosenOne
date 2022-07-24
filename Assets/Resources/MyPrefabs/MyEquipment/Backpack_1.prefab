@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1137263061016634045}
   - component: {fileID: 1131326546497705883}
   - component: {fileID: 1122626563232610911}
+  - component: {fileID: 7572104212322028304}
   - component: {fileID: 1136465837782449924}
   m_Layer: 13
   m_Name: Backpack_1
@@ -80,6 +81,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7572104212322028304
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136465837782449927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: be3582b2e7bbc534f9e4b31d1f69facd, type: 3}
 --- !u!114 &1136465837782449924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,3 +109,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyEquipmentSign: "\u80CC\u5305"
   MyEquipmentType: 2
+  MyEquipmentLevel: 1

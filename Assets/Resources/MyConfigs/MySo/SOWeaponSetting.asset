@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: SOWeaponSetting
   m_EditorClassIdentifier: 
   MyWeaponMapInfo:
-  - Point: {x: 2.8153832, y: 0.057015564, z: -10.125593}
+  - Point: {x: -0.21892528, y: 0.31846368, z: -14.315628}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -14.9017935, y: 0.49911386, z: 5.692292}
+  - Point: {x: -3.9866407, y: 0.56105876, z: -3.388463}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -0.42577296, y: 0.41759902, z: -1.2999115}
+  - Point: {x: -7.5681586, y: 0.3156364, z: -12.747857}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -13.571798, y: 0.3192897, z: -5.720832}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -11.164907, y: 0.13208468, z: -10.414871}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -1.9463106, y: 0.5652755, z: -5.883581}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MyWeaponParameterInfo:
   - Prefab: {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667,

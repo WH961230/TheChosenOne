@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioMain: {fileID: 4615660636998466705, guid: 015391aa7277659438c5ad5e9ae922a1,
     type: 3}
-  BackMusic: {fileID: 0}
+  BackMusic: {fileID: 8300000, guid: 8e606d0969dfdaa4285e65b79eaadea5, type: 3}
   PlaneMusic: {fileID: 8300000, guid: 98d28f3dd1c558441997396c6bbeb739, type: 3}

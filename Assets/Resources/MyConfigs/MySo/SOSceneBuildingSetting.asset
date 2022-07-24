@@ -12,42 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b9d14cf1b5b7c4eaad7eddf4d696a6, type: 3}
   m_Name: SOSceneBuildingSetting
   m_EditorClassIdentifier: 
-  MySceneBuildingPrefabInfoList:
-  - {fileID: 57229295734186972, guid: 529ef7d5b663d04449ca021492b89fe6, type: 3}
-  - {fileID: 8198302197486460903, guid: 75a0589ab6c3c0449a2e9c05c90547ae, type: 3}
-  - {fileID: 8198302197486460903, guid: afe539796d9dd2145a8d7e0a199e2718, type: 3}
-  MySceneBuildingInfoList: []
   MySceneBuildingOfficialPrefabInfoList:
   - {fileID: 3520882674228991320, guid: 033d7ed67fa7e864992231d41a81a175, type: 3}
   - {fileID: 4742465846034646472, guid: d10cfb00c99dd434a9a028ad40253210, type: 3}
   MySceneBuildingOfficialInfoList:
-  - Sign: SM_Env_Ground_Square_02
+  - Sign: Floor
     Point: {x: 0, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (8)
+  - Sign: Floor
     Point: {x: 20.25, y: 0, z: -20.100002}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (7)
+  - Sign: Floor
     Point: {x: -20.25, y: 0, z: -20.100002}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: Building_Shack (1)
+  - Sign: Room
     Point: {x: -17.168602, y: 0.07467086, z: -10.079406}
     Quaternion: {x: -0, y: -0.29608303, z: -0, w: 0.9551622}
-  - Sign: SM_Env_Ground_Square_02 (2)
+  - Sign: Floor
     Point: {x: 20.25, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (3)
+  - Sign: Floor
     Point: {x: 0, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (5)
+  - Sign: Floor
     Point: {x: 20.25, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (6)
+  - Sign: Floor
     Point: {x: 0, y: 0, z: -20.1}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (1)
+  - Sign: Floor
     Point: {x: -20.25, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Sign: SM_Env_Ground_Square_02 (4)
+  - Sign: Floor
     Point: {x: -20.25, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}

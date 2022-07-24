@@ -12,13 +12,8 @@ public class SceneItemGameObj : GameObj {
         sceneitemData.MySceneItemSign = sceneItemComponent.SceneItemSign;
     }
 
-    public void HideObj() {
-        MyObj.SetActive(false);
-    }
-
-    public void ShowObj(Vector3 point) {
-        MyObj.SetActive(true);
-        MyObj.transform.position = point;
+    public override void Hide() {
+        base.Hide();
     }
 
     public override void Clear() {

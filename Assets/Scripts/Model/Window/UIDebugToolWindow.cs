@@ -4,20 +4,40 @@ public class UIDebugToolWindow : Window {
     private UIDebugToolComponent uidebugtoolComponent;
 
     public override void Init(Game game, Data data) {
-        var obj = game.MyGameObjFeature.Get<UIDebugToolGameObj>(data.InstanceID).MyData.MyObj;
+        base.Init(game, data);
+        var obj = MyGame.MyGameObjFeature.Get<UIDebugToolGameObj>(data.InstanceID).MyData.MyObj;
         uidebugtoolComponent = obj.transform.GetComponent<UIDebugToolComponent>();
 
-        uidebugtoolComponent.MyDebugToolWin.SetActive(false);
+        uidebugtoolComponent.MyDebugToolFunctionWin.SetActive(false);
+        uidebugtoolComponent.MyDebugToolCloseBtn.gameObject.SetActive(false);
+        uidebugtoolComponent.MyConsoleWin.SetActive(false);
+        uidebugtoolComponent.MyDebugToolSideBtnWin.SetActive(false);
+
         uidebugtoolComponent.MyDebugToolBtn.onClick.AddListener(() => {
-            uidebugtoolComponent.MyDebugToolWin.SetActive(true);
+            uidebugtoolComponent.MyDebugToolFunctionWin.SetActive(true);
+            uidebugtoolComponent.MyConsoleWin.SetActive(false);
+            uidebugtoolComponent.MyDebugToolSideBtnWin.SetActive(true);
+            uidebugtoolComponent.MyDebugToolCloseBtn.gameObject.SetActive(true);
         });
 
         uidebugtoolComponent.MyDebugToolCloseBtn.onClick.AddListener(() => {
-            uidebugtoolComponent.MyDebugToolWin.SetActive(false);
+            uidebugtoolComponent.MyDebugToolFunctionWin.SetActive(false);
+            uidebugtoolComponent.MyDebugToolCloseBtn.gameObject.SetActive(false);
+            uidebugtoolComponent.MyDebugToolSideBtnWin.SetActive(false);
         });
 
         uidebugtoolComponent.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
-            game.MyGameSystem.MyCharacterSystem.InstanceCharacter(false);
+            MyGame.MyGameSystem.MyCharacterSystem.InstanceCharacter(false);
+        });
+        
+        uidebugtoolComponent.MyDebugToolConsoleSelectBtn.onClick.AddListener(() => {
+            uidebugtoolComponent.MyConsoleWin.SetActive(true);
+            uidebugtoolComponent.MyDebugToolFunctionWin.SetActive(false);
+        });
+        
+        uidebugtoolComponent.MyDebugToolFunctionSelectBtn.onClick.AddListener(() => {
+            uidebugtoolComponent.MyConsoleWin.SetActive(false);
+            uidebugtoolComponent.MyDebugToolFunctionWin.SetActive(true);
         });
 
         uidebugtoolComponent.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {

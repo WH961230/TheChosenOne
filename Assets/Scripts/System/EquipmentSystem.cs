@@ -25,8 +25,14 @@ public class EquipmentSystem : GameSys {
 
     #region 获取
 
+    
+    // 基础
     public EquipmentGameObj GetEquipmentGameObj(int id) {
         return MyGameSystem.MyGameObjFeature.Get<EquipmentGameObj>(id);
+    }
+
+    public EquipmentComponent GetEquipmentComponent(int id) {
+        return GetEquipmentGameObj(id).GetComponent<EquipmentComponent>();
     }
 
     public EquipmentType GetEquipmentType(int id) {
@@ -59,9 +65,10 @@ public class EquipmentSystem : GameSys {
         foreach (var info in mapInfo) {
             var rand = UnityEngine.Random.Range(0, parameterInfo.Count);
             InstanceEquipment(new EquipmentData() {
-                MyName = "Character",
+                MyName = "Equipment",
                 MyObj = Object.Instantiate(SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[rand].Prefab),
                 MyRootTran = GameData.ItemRoot,
+                MySprite = SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[rand].Picture,
                 MyTranInfo = new TranInfo() {
                     MyPos = info.Point,
                     MyRot = info.Quaternion,

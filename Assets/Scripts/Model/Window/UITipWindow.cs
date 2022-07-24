@@ -5,8 +5,12 @@
         var obj = game.MyGameObjFeature.Get<UITipGameObj>(data.InstanceID).MyData.MyObj;
         uitipComponent = obj.transform.GetComponent<UITipComponent>();
         uitipComponent.MyTip.SetActive(false);
-
         MyGame.MyGameMessageCenter.Register<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
+    }
+
+    public override void Clear() {
+        MyGame.MyGameMessageCenter.UnRegister<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
+        base.Clear();
     }
 
     public override void Open() {
@@ -23,10 +27,6 @@
 
     public override void Close() {
         uitipComponent.MyTip.SetActive(false);
-    }
-
-    public override void Clear() {
-        MyGame.MyGameMessageCenter.UnRegister(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION);
     }
 
     private void MsgSetTipDescription(UITipType tipType, string description) {

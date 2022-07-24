@@ -208,7 +208,7 @@ public class GameSystem {
     public int TestWeaponId;
     public void ShowWeaponPos() {
         var wComp =  weaponSystem.GetWeaponComponent(TestWeaponId);
-        Debug.Log(wComp.transform.position);
+        // Debug.Log(wComp.transform.position);
     }
 
     public void PickWeapon() {

@@ -56,19 +56,19 @@ public class CameraGameObj : GameObj {
         RaycastHit hit;
 
         // 打射线
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 9 | 1 << 12)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerData.SceneItemLayerMask | LayerData.WeaponLayerMask | LayerData.EquipmentLayerMask)) {
             var id = hit.collider.gameObject.GetInstanceID();
             var layer = hit.collider.gameObject.layer;
 
             string name = "";
             switch (layer) {
-                case 9:
+                case LayerData.SceneItemLayer:
                     name = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MySceneItemSign;
                     break;
-                case 12:
+                case LayerData.WeaponLayer:
                     name = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSign;
                     break;
-                case 13:
+                case LayerData.EquipmentLayer:
                     name = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySign;
                     break;
             }
@@ -81,7 +81,7 @@ public class CameraGameObj : GameObj {
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, name);
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemKeycode, "拾取[F]");
 
-            Debug.Log("检测物体 " + name + " InstanceId: " + hit.collider.gameObject.GetInstanceID());
+            LogSystem.Print("检测物体: " + name + " id: " + hit.collider.gameObject.GetInstanceID());
         } else {
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, "");
         }

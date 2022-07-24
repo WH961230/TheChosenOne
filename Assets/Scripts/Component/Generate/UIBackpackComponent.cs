@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,22 +12,16 @@ public class UIBackpackComponent : MonoBehaviour {
     public GameObject MyUIBackpackWindow;
 
     [Header("主武器图片")]
-    public Image[] MyUIBackpackMainWeaponImages = new Image[2];
+    public MyContent[] MyUIBackpackMainWeaponImages = new MyContent[2];
     [Header("副武器图片")]
-    public Image MyUIBackpackSideWeaponImage;
+    public MyContent MyUIBackpackSideWeaponImage;
     [Header("消耗品图片")]
-    public List<Image> MyUIBackpackConsumeImages = new List<Image>();
+    public List<MyContent> MyUIBackpackConsumeImages = new List<MyContent>();
     [Header("装备图片")]
-    public Image[] MyUIBackpackEquipmentImages = new Image[4];
+    public MyContent[] MyUIBackpackEquipmentImages = new MyContent[4];
+}
 
-    [Header("武器丢弃按钮")]
-    public Button MyUIBackpackMainWeaponDropBtn_1;
-    public Button MyUIBackpackMainWeaponDropBtn_2;
-    public Button MyUIBackpackSideWeaponDropBtn;
-
-    [Header("装备丢弃按钮")]
-    public Button MyUIBackpackEquipment_1;
-    public Button MyUIBackpackEquipment_2;
-    public Button MyUIBackpackEquipment_3;
-    public Button MyUIBackpackEquipment_4;
+[Serializable]
+public struct MyContent {
+    public Button MyButton;
 }

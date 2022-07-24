@@ -16,8 +16,16 @@ public class GameMessageCenter {
         register.Register(id, action);
     }
 
-    public void UnRegister(int id) {
-        register.UnRegister(id);
+    public void UnRegister(int id, Action a) {
+        register.UnRegister(id, a);
+    }
+
+    public void UnRegister<T>(int id, Action<T> a) {
+        register.UnRegister(id, a);
+    }
+
+    public void UnRegister<T1, T2>(int id, Action<T1, T2> a) {
+        register.UnRegister(id, a);
     }
 
     public void Dispather(int id) {
@@ -34,18 +42,24 @@ public class GameMessageCenter {
 }
 
 public class Act {
-    public Delegate handler;
+    public List<Delegate> handler = new List<Delegate>();
 
     public void Invoke() {
-        ((Action) handler).Invoke();
+        foreach (var temp in handler) {
+            ((Action) temp).Invoke();
+        }
     }
 
     public void Invoke<T>(T t) {
-        ((Action<T>) handler).Invoke(t);
+        foreach (var temp in handler) {
+            ((Action<T>) temp).Invoke(t);
+        }
     }
 
     public void Invoke<T1, T2>(T1 t1, T2 t2) {
-        ((Action<T1, T2>) handler).Invoke(t1, t2);
+        foreach (var temp in handler) {
+            ((Action<T1, T2>) temp).Invoke(t1, t2);
+        }
     }
 }
 
@@ -53,16 +67,64 @@ public class GameMessageRegisger {
     private Dictionary<int, Act> temps = new Dictionary<int, Act>();
 
     public void Register(int id, Delegate e) {
-        if (!temps.TryGetValue(id, out var tmp)) {
-            temps.Add(id, new Act() {
-                handler = e,
-            });
+        if (temps.TryGetValue(id, out Act tmp)) {
+            if (!tmp.handler.Contains(e)) {
+                tmp.handler.Add(e);
+            }
+
+            temps[id] = tmp;
+        } else {
+            Act act = new Act();
+            act.handler.Add(e);
+            temps.Add(id, act);
         }
     }
 
     public void UnRegister(int id) {
-        if (temps.TryGetValue(id, out var tmp)) {
+        if (temps.TryGetValue(id, out var act)) {
             temps.Remove(id);
+        }
+    }
+
+    public void UnRegister(int id, Action a) {
+        if (temps.TryGetValue(id, out Act act)) {
+            int index = -1;
+            for (int i = 0; i < act.handler.Count; i++) {
+                if (act.handler[i] == a) {
+                    index = i;
+                }
+            }
+
+            act.handler.RemoveAt(index);
+            temps[id] = act;
+        }
+    }
+
+    public void UnRegister<T>(int id, Action<T> a) {
+        if (temps.TryGetValue(id, out Act act)) {
+            int index = -1;
+            for (int i = 0; i < act.handler.Count; i++) {
+                if (act.handler[i] == a) {
+                    index = i;
+                }
+            }
+
+            act.handler.RemoveAt(index);
+            temps[id] = act;
+        }
+    }
+
+    public void UnRegister<T1, T2>(int id, Action<T1, T2> a) {
+        if (temps.TryGetValue(id, out Act act)) {
+            int index = -1;
+            for (int i = 0; i < act.handler.Count; i++) {
+                if (act.handler[i] == a) {
+                    index = i;
+                }
+            }
+
+            act.handler.RemoveAt(index);
+            temps[id] = act;
         }
     }
 

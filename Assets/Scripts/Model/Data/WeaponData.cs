@@ -2,7 +2,7 @@
 
 public class WeaponData : Data {
     public string MyWeaponSign;
-    public Sprite MyWeaponSprite;
+    public Sprite MySprite;
     public WeaponType MyWeaponType;
 }
 

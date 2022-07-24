@@ -2,15 +2,9 @@
 
 public class GameObj : IGameObj {
     public Data MyData;
-    private GameObject myObj;
     protected MonoBehaviour MyComponent; // 组件
-
     protected Game MyGame;
-
-    protected GameObject MyObj {
-        get { return myObj; }
-        set { myObj = value; }
-    }
+    protected GameObject MyObj;
 
     public virtual void Init(Game game, Data data) {
         this.MyGame = game;
@@ -31,10 +25,14 @@ public class GameObj : IGameObj {
     }
 
     public virtual void Hide() {
+        LogSystem.Print("拾取隐藏 id: " + MyData.InstanceID);
         MyObj.SetActive(false);
     }
 
-    public virtual void Drop() {
+    public virtual void Drop(Vector3 point) {
+        LogSystem.Print("丢弃到玩家脚下 id: " + MyData.InstanceID);
+        Display();
+        MyObj.transform.position = point;
     }
 
     public virtual void Clear() {

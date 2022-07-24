@@ -6,11 +6,10 @@ public class SOCharacterSetting : ScriptableObject {
     public MoveInfo MyMoveInfo;
     public MoveSwitch MyMoveSwitch;
     public GameObject MyPrefab;
-    public GameObject MyOfficicalPrefab;
     public CharacterInfo MyCharacterInfo;
 
     public GameObject GetCharacterPrefab (){
-        return MyOfficicalPrefab;
+        return MyPrefab;
     }
 }
 

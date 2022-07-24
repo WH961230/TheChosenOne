@@ -13,24 +13,19 @@ MonoBehaviour:
   m_Name: SOEquipmentSetting
   m_EditorClassIdentifier: 
   MyEquipmentMapInfo:
-  - Point: {x: -10.139815, y: 0.051399913, z: -4.0853534}
+  - Point: {x: 0.54797584, y: 0.42091846, z: -7.536197}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -0.5545768, y: 0.4320013, z: -15.574171}
+  - Point: {x: -7.078856, y: 0.3296987, z: -2.1954415}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -4.0437117, y: 0.10042632, z: -9.894415}
+  - Point: {x: -1.3200226, y: 0.076298095, z: -10.623276}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -1.4703289, y: 0.4851014, z: -7.185048}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -11.910411, y: 0.27932382, z: -16.51045}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 4.744194, y: 0.5248426, z: -13.246333}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 6.0944533, y: 0.44602704, z: -6.3259487}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -19.320795, y: 4.240742, z: -10.159517}
+  - Point: {x: -11.722369, y: 0.28856474, z: -13.873168}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MyEquipmentParameterInfo:
   - Prefab: {fileID: 1136465837782449927, guid: dfd9ab7d258639548893b6fb578aea7b,
+      type: 3}
+    Picture: {fileID: 21300000, guid: 499c00f3fc5a3f5409c0a8ff0da56c3c, type: 3}
+  - Prefab: {fileID: 5456742770359109664, guid: 2f13c905af65a7043a2e997b4c366d30,
       type: 3}
     Picture: {fileID: 21300000, guid: 499c00f3fc5a3f5409c0a8ff0da56c3c, type: 3}
   - Prefab: {fileID: 7078612992048091247, guid: fdb4fdbf3f0b7eb46893a175b09e55cd,

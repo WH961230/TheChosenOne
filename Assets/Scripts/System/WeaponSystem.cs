@@ -38,7 +38,6 @@ public class WeaponSystem : GameSys {
     public WeaponData GetWeaponData(int id) {
         return GetWeaponEntity(id).GetData<WeaponData>();
     }
-
     public WeaponType GetWeaponType(int id) {
         return GetWeaponComponent(id).MyWeaponType;
     }
@@ -60,7 +59,7 @@ public class WeaponSystem : GameSys {
                 MyName = "Weapon",
                 MyRootTran = GameData.ItemRoot,
                 MyObj = Object.Instantiate(weaponParameterInfo[rand].Prefab),
-                MyWeaponSprite = weaponParameterInfo[rand].Picture,
+                MySprite = weaponParameterInfo[rand].Picture,
                 MyTranInfo = new TranInfo() {
                     MyPos = weapon.Point, MyRot = weapon.Quaternion,
                 },
