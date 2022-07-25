@@ -81,45 +81,22 @@ public class UIBackpackWindow : Window {
 
     private void DropMainWeapon(int index) {
         var backpackEntity = GetBackpackEntity();
-        var weapId = backpackEntity.GetMainWeaponId(index);
-        if (backpackEntity.DropMainWeapon(index)) {
-            LogSystem.Print("发送丢弃消息 id: " + weapId);
-            var dropPoint = GetDropPoint();
-            MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
-        }
+        backpackEntity.DropMainWeapon(index);
     }
 
     private void DropSideWeapon() {
         var backpackEntity = GetBackpackEntity();
-        var weapId = backpackEntity.GetSideWeaponId();
-        if (backpackEntity.DropSideWeapon()) {
-            LogSystem.Print("发送丢弃消息 id: " + weapId);
-            var dropPoint = GetDropPoint();
-            MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
-        }
+        backpackEntity.DropSideWeapon();
     }
 
     private void DropSceneItem(int index) {
         var backpackEntity = GetBackpackEntity();
-        var sceneItemId = backpackEntity.GetSceneItemId(index);
-        if (backpackEntity.DropSceneItem(index)) {
-            var dropPoint = GetDropPoint();
-            MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(sceneItemId).Drop(dropPoint);
-        }
+        backpackEntity.DropSceneItem(index);
     }
 
     private void DropEquipment(int index) {
         var backpackEntity = GetBackpackEntity();
-        var equipmentId = backpackEntity.GetEquipmentId(index);
-        if (backpackEntity.DropEquipment(index)) {
-            var dropPoint = GetDropPoint();
-            MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(equipmentId).Drop(dropPoint);
-        }
-    }
-
-    private Vector3 GetDropPoint() {
-        var characterPoint = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent().transform.position;
-        return GameData.GetGround(characterPoint);
+        backpackEntity.DropEquipment(index);
     }
 
     private BackpackEntity GetBackpackEntity() {

@@ -5,7 +5,7 @@ public class BackpackData : Data {
     #region 数据
 
     // 当前武器
-    public int MyCurrentSceneItemWeapon = 0;
+    public int MyCurrentWeapon = 0;
 
     // 主武器
     private const int MyWeaponMaxNum = 2;
@@ -46,8 +46,8 @@ public class BackpackData : Data {
         return false;
     }
 
-    public bool AddMainWeapon(int id) {
-        MyMainWeaponIds[0] = id;
+    public bool AddMainWeapon(int index, int id) {
+        MyMainWeaponIds[index] = id;
         return true;
     }
 
@@ -83,9 +83,18 @@ public class BackpackData : Data {
         return true;
     }
 
+    public bool SetCurWeapon(int id) {
+        MyCurrentWeapon = id;
+        return true;
+    }
+
     #endregion
 
     #region 查
+
+    public int GetCurWeapId() {
+        return MyCurrentWeapon;
+    }
 
     public int[] GetMainWeaponIds() {
         return MyMainWeaponIds;
@@ -128,6 +137,30 @@ public class BackpackData : Data {
 
     public int GetEquipmentId(int index) {
         return MySceneItemEquipmentIds[index];
+    }
+
+    public bool GetEmptyMainWeaponIndex(out int outIndex) {
+        for (int i = 0; i < MyMainWeaponIds.Length; i++) {
+            if (MyMainWeaponIds[i] == 0) {
+                outIndex = i;
+                return true;
+            }
+        }
+
+        outIndex = 0;
+        return false;
+    }
+
+    public bool GetMainWeaponIndexById(int id, out int outIndex) {
+        for (int i = 0; i < MyMainWeaponIds.Length; i++) {
+            if (MyMainWeaponIds[i] == id) {
+                outIndex = i;
+                return true;
+            }
+        }
+
+        outIndex = 0;
+        return false;
     }
 
     #endregion

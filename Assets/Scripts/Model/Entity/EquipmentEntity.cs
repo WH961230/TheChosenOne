@@ -1,4 +1,6 @@
-﻿public class EquipmentEntity : Entity {
+﻿using UnityEngine;
+
+public class EquipmentEntity : Entity {
     private EquipmentData equipmentData;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
