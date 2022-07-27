@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class GameSystem {
     #region 上级
@@ -130,11 +128,6 @@ public class GameSystem {
         animatorSystem.Update();
         equipmentSystem.Update();
         uISystem.Update();
-        if (inputSystem.GetKeyDown(KeyCode.Space)) {
-            ShowWeaponPos();
-            PickWeapon();
-            OpenBackpack();
-        }
     }
 
     public void FixedUpdate() {
@@ -161,7 +154,7 @@ public class GameSystem {
         audioSystem.LateUpdate();
         backpackSystem.LateUpdate();
         animatorSystem.LateUpdate();
-        equipmentSystem.LateUpdate();
+        equipmentSystem.LateUpdate(); 
         uISystem.LateUpdate();
     }
 
@@ -190,9 +183,6 @@ public class GameSystem {
 
     public int InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        if (TestWeaponId == 0 && typeof(T1) == typeof(WeaponGameObj)) {
-            TestWeaponId = data.InstanceID;
-        }
         game.MyGameObjFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T2>(data);
         return data.InstanceID;
@@ -201,25 +191,4 @@ public class GameSystem {
     public void InstanceEntity<T>(Data data) where T : Entity, new() {
         game.MyEntityFeature.Register<T>(data);
     }
-
-    #region 测试
-
-    // 仅供测试使用 不用后删除整条测试链
-    public int TestWeaponId;
-    public void ShowWeaponPos() {
-        var wComp =  weaponSystem.GetWeaponComponent(TestWeaponId);
-        // Debug.Log(wComp.transform.position);
-    }
-
-    public void PickWeapon() {
-        MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, TestWeaponId, LayerData.WeaponLayer);
-    }
-
-    private void OpenBackpack() {
-        MyWindowFeature.Get<UIMainWindow>().MyUiMainComponent.MyButton.gameObject.SetActive(false);
-        MyWindowFeature.Get<UIBackpackWindow>().MyUibackpackComponent.MyUIBackpackWindow.gameObject.SetActive(true);
-        MyWindowFeature.Get<UIBackpackWindow>().Refresh();
-    }
-
-    #endregion
 }
