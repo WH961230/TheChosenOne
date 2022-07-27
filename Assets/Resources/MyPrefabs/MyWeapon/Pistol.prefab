@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4002870147018617675}
   - component: {fileID: 7262447879647981559}
   m_Layer: 12
-  m_Name: SceneItem_Pistol
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee4cd39ebb8b954c8b325ee44f1e8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyWeaponSign: "\u624B\u67AA"
+  MyWeaponSign: Pistol
   MyWeaponType: 1
 --- !u!1 &3993900298667723123
 GameObject:

@@ -9,5 +9,6 @@ public class WeaponGameObj : GameObj {
         MyComponent = MyObj.transform.GetComponent<WeaponComponent>();
         weaponComponent = (WeaponComponent) MyComponent;
         weaponData.MyWeaponSign = weaponComponent.MyWeaponSign;
+        weaponData.MyWeaponType = weaponComponent.MyWeaponType;
     }
 }

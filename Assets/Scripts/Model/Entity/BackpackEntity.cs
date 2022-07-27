@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class BackpackEntity : Entity {
     private BackpackData backpackData;
@@ -85,6 +84,7 @@ public class BackpackEntity : Entity {
 
     public bool PickWeapon(int id) {
         var type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(id);
+        var wepSign = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponSign(id);
         // 替换当前武器
         var curWepId = backpackData.GetCurWeapId();
 
@@ -104,22 +104,23 @@ public class BackpackEntity : Entity {
                     backpackData.RemoveMainWeapon(0);
                 }
             }
+            MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
             backpackData.SetCurWeapon(id);
             return true;
         } else if (type == WeaponType.SideWeapon) {
-
             if (curWepId != 0) {
                 var curWepType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
                 if (curWepType == WeaponType.SideWeapon) {
                     DropSideWeapon();
+                    MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
                     backpackData.SetCurWeapon(id);
                 }
             } else {
+                MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
                 backpackData.SetCurWeapon(id);
             }
             // 拿到空武器槽 放入
             backpackData.AddSideWeapon(id);
-
             return true;
         }
 
@@ -156,6 +157,10 @@ public class BackpackEntity : Entity {
         if (backpackData.RemoveMainWeapon(index)) {
             var dropPoint = GetDropPoint();
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
+            if (weapId == backpackData.GetCurWeapId()) {
+                backpackData.SetCurWeapon(0);
+                MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
+            }
             return true;
         }
 
@@ -167,6 +172,10 @@ public class BackpackEntity : Entity {
         if (backpackData.RemoveSideWeapon()) {
             var dropPoint = GetDropPoint();
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
+            if (weapId == backpackData.GetCurWeapId()) {
+                backpackData.SetCurWeapon(0);
+                MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
+            }
             return true;
         }
 
@@ -231,6 +240,17 @@ public class BackpackEntity : Entity {
     private Vector3 GetDropPoint() {
         var characterPoint = MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent().transform.position;
         return GameData.GetGround(characterPoint);
+    }
+
+    public bool GetCurWeaponType(out WeaponType type) {
+        var curId = backpackData.GetCurWeapId();
+        if (curId == 0) {
+            type = WeaponType.MainWeapon;
+            return false;
+        }
+
+        type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curId);
+        return true;
     }
 
     #endregion

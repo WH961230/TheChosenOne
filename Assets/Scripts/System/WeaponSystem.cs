@@ -42,6 +42,10 @@ public class WeaponSystem : GameSys {
         return GetWeaponComponent(id).MyWeaponType;
     }
 
+    public string GetWeaponSign(int id) {
+        return GetWeaponComponent(id).MyWeaponSign;
+    }
+
     #endregion
 
     #region 创建

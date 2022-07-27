@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterComponent : MonoBehaviour {
@@ -8,13 +8,5 @@ public class CharacterComponent : MonoBehaviour {
     public Animator AnimatorController;
 
     [Header("武器模型")] 
-    public WeaponInfo AKC;
-    public WeaponInfo AK47;
-    public WeaponInfo Pistol;
-}
-
-[Serializable]
-public struct WeaponInfo {
-    public GameObject WeaponGameObj;
-    public int WeaponId;
+    public List<GameObject> MyHoldWeapons;
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4761055211651409445}
   - component: {fileID: 4802463236013794635}
   m_Layer: 9
-  m_Name: SceneItem_Pistol
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -839,15 +839,10 @@ MonoBehaviour:
   Body: {fileID: 5988454832137893343}
   CC: {fileID: 2538798550090026928}
   AnimatorController: {fileID: 875691681780233923}
-  AKC:
-    WeaponGameObj: {fileID: 6203322830822954797}
-    WeaponId: 0
-  AK47:
-    WeaponGameObj: {fileID: 7628389573809513217}
-    WeaponId: 0
-  Pistol:
-    WeaponGameObj: {fileID: 4774957674292141995}
-    WeaponId: 0
+  MyHoldWeapons:
+  - {fileID: 7628389573809513217}
+  - {fileID: 6203322830822954797}
+  - {fileID: 4774957674292141995}
 --- !u!95 &875691681780233923
 Animator:
   serializedVersion: 3
@@ -7741,7 +7736,7 @@ GameObject:
   - component: {fileID: 6216239411398969077}
   - component: {fileID: 6266290764192610255}
   m_Layer: 9
-  m_Name: SM_Wep_Preset_B_Rifle_03_AKC
+  m_Name: AKC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8157,7 +8152,7 @@ GameObject:
   - component: {fileID: 7605815005066836313}
   - component: {fileID: 7583313658170838219}
   m_Layer: 9
-  m_Name: SM_Wep_Preset_B_Rifle_01_AK47
+  m_Name: AK47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

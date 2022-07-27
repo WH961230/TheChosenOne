@@ -35,9 +35,29 @@ public class CharacterGameObj : GameObj {
         CharacterAnimation();
     }
 
+    public void SetHoldWeaponModel(string weaponSign) {
+        foreach (var curWeap in characterComponent.MyHoldWeapons) {
+            if (curWeap.name.Equals(weaponSign)) {
+                curWeap.SetActive(true);
+            } else {
+                curWeap.SetActive(false);
+            }
+        }
+    }
+
     private void CharacterAnimation() {
-        // 当前武器不为空 播放手持武器动画c
-        characterComponent.AnimatorController.SetBool("IsWeapon", true);
+        // 当前武器不为空 播放手持武器动画 weapon 1 手枪 weapon 2 自动步枪
+        bool hasCurWeap = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
+        if (hasCurWeap) {
+            if (type == WeaponType.MainWeapon) {
+                characterComponent.AnimatorController.SetInteger("Weapon", 2);
+            } else if(type == WeaponType.SideWeapon) {
+                characterComponent.AnimatorController.SetInteger("Weapon", 1);
+            }
+            characterComponent.AnimatorController.SetBool("IsWeapon", true);
+        } else {
+            characterComponent.AnimatorController.SetBool("IsWeapon", false);
+        }
     }
 
     private void CharacterMotion() {

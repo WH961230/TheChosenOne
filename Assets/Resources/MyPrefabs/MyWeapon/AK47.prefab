@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 3868319417171666086}
   - component: {fileID: 8349993004659366056}
   m_Layer: 12
-  m_Name: SceneItem_AK47
+  m_Name: AK47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

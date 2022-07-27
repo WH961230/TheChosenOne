@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 8723122376505476104}
   - component: {fileID: 7362780085712018347}
   m_Layer: 12
-  m_Name: SceneItem_AKC
+  m_Name: AKC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
