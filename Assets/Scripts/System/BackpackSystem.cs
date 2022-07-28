@@ -41,7 +41,7 @@ public class BackpackSystem : GameSys {
 
     public int InstanceBackpack() {
         return InstanceBackpack(new BackpackData() {
-            MyName = "Character",
+            MyName = "Backpack",
             MyObj = new GameObject("backpackObj"),
             MyRootTran = GameData.CharacterRoot,
             IfInitMyObj = false,

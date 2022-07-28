@@ -26,7 +26,7 @@ public class BackpackEntity : Entity {
                 AddSceneItem(id);
                 break;
             case LayerData.WeaponLayer:
-                AddWeapon(id);
+                AddWeapon(id );
                 break;
             case LayerData.EquipmentLayer:
                 AddEquipment(id);
@@ -85,46 +85,52 @@ public class BackpackEntity : Entity {
     public bool PickWeapon(int id) {
         var type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(id);
         var wepSign = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponSign(id);
-        // 替换当前武器
         var curWepId = backpackData.GetCurWeapId();
-
+        bool haveCurWeap = curWepId != 0;
+        var curWeapType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
         if (type == WeaponType.MainWeapon) {
             // 拿到空武器槽 放入
             if (backpackData.GetEmptyMainWeaponIndex(out int outIndex)) {
                 backpackData.AddMainWeapon(outIndex, id);
             } else {
-                // 当前武器是主武器
-                if (backpackData.GetMainWeaponIndexById(curWepId, out int index)) {
-                    DropMainWeapon(index);
-                    backpackData.AddMainWeapon(index, id);
+                // 主武器满 如果当前 是主武器 移除当前主武器
+                if (curWeapType == WeaponType.MainWeapon) {
+                    if (backpackData.GetMainWeaponIndexById(curWepId, out int curIndex)) {
+                        backpackData.AddMainWeapon(curIndex, id);
+                        if (backpackData.RemoveMainWeapon(curIndex)) {
+                            DropWeapon(curWepId);
+                        }
+                    }
                 } else {
-                    // 当前武器不是主武器，这时候替换第一个武器
+                    // 主武器满 如果当前 不是主武器 移除第一个主武器
                     backpackData.AddMainWeapon(0, id);
-                    DropMainWeapon(0);
-                    backpackData.RemoveMainWeapon(0);
+                    if (backpackData.RemoveMainWeapon(0)) {
+                        DropWeapon(curWepId);
+                    }
                 }
             }
-            MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
-            backpackData.SetCurWeapon(id);
-            return true;
         } else if (type == WeaponType.SideWeapon) {
-            if (curWepId != 0) {
-                var curWepType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
-                if (curWepType == WeaponType.SideWeapon) {
-                    DropSideWeapon();
-                    MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
-                    backpackData.SetCurWeapon(id);
+            if (curWeapType == WeaponType.SideWeapon) {
+                if (backpackData.RemoveSideWeapon()) {
+                    var dropPoint = GetDropPoint();
+                    MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWepId).Drop(dropPoint);
                 }
-            } else {
-                MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
-                backpackData.SetCurWeapon(id);
             }
             // 拿到空武器槽 放入
             backpackData.AddSideWeapon(id);
-            return true;
+        }
+
+        if (!haveCurWeap) {
+            MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
+            backpackData.SetCurWeapon(id);
         }
 
         return false;
+    }
+
+    private void DropWeapon(int curWepId) {
+        var dropPoint = GetDropPoint();
+        MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWepId).Drop(dropPoint);
     }
 
     public bool PickEquipment(int id) {
@@ -158,7 +164,6 @@ public class BackpackEntity : Entity {
             var dropPoint = GetDropPoint();
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
-                backpackData.SetCurWeapon(0);
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
             }
             return true;
@@ -173,7 +178,6 @@ public class BackpackEntity : Entity {
             var dropPoint = GetDropPoint();
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
-                backpackData.SetCurWeapon(0);
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
             }
             return true;
@@ -199,6 +203,13 @@ public class BackpackEntity : Entity {
 
     public bool SetBackpackLevel(int level) {
         return backpackData.SetSceneItemLevel(level);
+    }
+
+    public void SetCurMainWeapon(int index) {
+        var wId = backpackData.GetMainWeaponIds()[index];
+        if (wId != 0) {
+            backpackData.SetCurWeapon(wId);
+        }
     }
 
     #endregion

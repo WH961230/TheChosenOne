@@ -40,6 +40,7 @@ public class UIBackpackWindow : Window {
         closeBtn.onClick.AddListener(() => {
             openBtn.gameObject.SetActive(true);
             window.gameObject.SetActive(false);
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
         });
 
         var mainWeapon = MyUibackpackComponent.MyUIBackpackMainWeaponImages;
@@ -122,7 +123,7 @@ public class UIBackpackWindow : Window {
         }
     }
 
-    public void Refresh() {
+    private void Refresh() {
         RefreshEquipment();
         RefreshWeapon();
         RefreshSceneItem();

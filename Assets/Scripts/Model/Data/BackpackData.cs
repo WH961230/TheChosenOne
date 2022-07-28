@@ -92,6 +92,21 @@ public class BackpackData : Data {
 
     #region 查
 
+    public bool HaveWeapon() {
+        if (GetCurWeapId() != 0) {
+            return true;
+        }
+
+        var mainIds = GetMainWeaponIds();
+        for (int i = 0; i < mainIds.Length; i++) {
+            if (mainIds[i] != 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     public int GetCurWeapId() {
         return MyCurrentWeapon;
     }
