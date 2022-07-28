@@ -87,37 +87,51 @@ public class BackpackEntity : Entity {
         var wepSign = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponSign(id);
         var curWepId = backpackData.GetCurWeapId();
         bool haveCurWeap = curWepId != 0;
-        var curWeapType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
         if (type == WeaponType.MainWeapon) {
             // 拿到空武器槽 放入
             if (backpackData.GetEmptyMainWeaponIndex(out int outIndex)) {
-                backpackData.AddMainWeapon(outIndex, id);
+                if (!backpackData.AddMainWeapon(outIndex, id)) {
+                    return false;
+                }
             } else {
-                // 主武器满 如果当前 是主武器 移除当前主武器
-                if (curWeapType == WeaponType.MainWeapon) {
-                    if (backpackData.GetMainWeaponIndexById(curWepId, out int curIndex)) {
-                        backpackData.AddMainWeapon(curIndex, id);
-                        if (backpackData.RemoveMainWeapon(curIndex)) {
+                if (haveCurWeap) {
+                    var curWeapType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
+                    // 主武器满 如果当前 是主武器 移除当前主武器
+                    if (curWeapType == WeaponType.MainWeapon) {
+                        if (backpackData.GetMainWeaponIndexById(curWepId, out int curIndex)) {
+                            if (!backpackData.AddMainWeapon(curIndex, id)) {
+                                return false;
+                            }
+                            if (backpackData.RemoveMainWeapon(curIndex)) {
+                                DropWeapon(curWepId);
+                            }
+                        }
+                    } else {
+                        // 主武器满 如果当前 不是主武器 移除第一个主武器
+                        if (!backpackData.AddMainWeapon(0, id)) {
+                            return false;
+                        }
+                        if (backpackData.RemoveMainWeapon(0)) {
                             DropWeapon(curWepId);
                         }
-                    }
-                } else {
-                    // 主武器满 如果当前 不是主武器 移除第一个主武器
-                    backpackData.AddMainWeapon(0, id);
-                    if (backpackData.RemoveMainWeapon(0)) {
-                        DropWeapon(curWepId);
                     }
                 }
             }
         } else if (type == WeaponType.SideWeapon) {
-            if (curWeapType == WeaponType.SideWeapon) {
-                if (backpackData.RemoveSideWeapon()) {
-                    var dropPoint = GetDropPoint();
-                    MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWepId).Drop(dropPoint);
+            if (haveCurWeap) {
+                var curWeapType = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curWepId);
+                if (curWeapType == WeaponType.SideWeapon) {
+                    if (backpackData.RemoveSideWeapon()) {
+                        var dropPoint = GetDropPoint();
+                        MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWepId).Drop(dropPoint);
+                    }
                 }
             }
+
             // 拿到空武器槽 放入
-            backpackData.AddSideWeapon(id);
+            if (!backpackData.AddSideWeapon(id)) {
+                return false;
+            }
         }
 
         if (!haveCurWeap) {
@@ -125,7 +139,7 @@ public class BackpackEntity : Entity {
             backpackData.SetCurWeapon(id);
         }
 
-        return false;
+        return true;
     }
 
     private void DropWeapon(int curWepId) {

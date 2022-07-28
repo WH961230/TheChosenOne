@@ -15,27 +15,178 @@ MonoBehaviour:
   MySceneBuildingOfficialPrefabInfoList:
   - {fileID: 3520882674228991320, guid: 033d7ed67fa7e864992231d41a81a175, type: 3}
   - {fileID: 4742465846034646472, guid: d10cfb00c99dd434a9a028ad40253210, type: 3}
+  - {fileID: 2198250847901194019, guid: b6404da42add4fd4fb078655f0ffea67, type: 3}
+  - {fileID: 3440617848441473840, guid: 516635dd47ed28e4c961a1ed5182779f, type: 3}
+  - {fileID: 7468431558266707456, guid: 34e09e57e29cd8646b9ab40cd1f28bc0, type: 3}
+  - {fileID: 5286810309448198356, guid: 70bbbdca9ba3aab48aada814d19a3e13, type: 3}
+  - {fileID: 8829445424773049018, guid: b3b8c2a1c606e4e4f99e44d56cb7c451, type: 3}
+  - {fileID: 505785056566248736, guid: 8def3cf46c6d60d4f93d4c910ec18c3c, type: 3}
+  - {fileID: 7024770849480542963, guid: 9fb704eb3335ec2438f61c70a02937b2, type: 3}
+  - {fileID: 2067157625040801776, guid: 2157f6be07b57e44a9390a4c149a82a1, type: 3}
+  - {fileID: 4497199644851881627, guid: 03f2c0b4b790d544b9f93a3e392209bb, type: 3}
+  - {fileID: 257301684890928109, guid: 459933e1a10ed07488cdb602c7dbfe9a, type: 3}
+  - {fileID: 2408158272904706789, guid: 317be566cc3701944ac6c6efbf9d8e0f, type: 3}
+  - {fileID: 4019330009665894932, guid: c23ee926b1959c647b6746c44642e43e, type: 3}
+  - {fileID: 1325971482726605847, guid: 76cad30b4a123c141b138e223af345ff, type: 3}
+  - {fileID: 7146028464166407694, guid: c66201bcce76e7b4cb0fe61c9f66a029, type: 3}
+  - {fileID: 1121121449990199547, guid: 97e2d59a49767ba4da2d134b9c76536a, type: 3}
+  - {fileID: 8097063943835586002, guid: 7dd125fddba52df449f20fced201d80d, type: 3}
+  - {fileID: 4173385307302649231, guid: f299e915a228f8e4e8489704593fb40a, type: 3}
+  - {fileID: 8715436030121577815, guid: 182016ede1b4a034d8ce534f93ea294c, type: 3}
+  - {fileID: 693087528084958649, guid: 55e9e5f369c64a444b553c620af3d04f, type: 3}
+  - {fileID: 3521503359383342087, guid: e4aa5b155b53b7a44a2a3fc2ec9738a9, type: 3}
+  - {fileID: 3508788463072801266, guid: aa5133e2f320b804396fd2cb9554a526, type: 3}
+  - {fileID: 7945452888117888393, guid: 05f14b62188565640bf0e9d92e710071, type: 3}
+  - {fileID: 4132428320086259232, guid: 4d978f48d588f724184d7806efb34f05, type: 3}
+  - {fileID: 816057215944112835, guid: f40fb121894b9e04c874f52692da20fa, type: 3}
+  - {fileID: 7265141526169855774, guid: 9499f73a45c4f1049b89db7b79063784, type: 3}
   MySceneBuildingOfficialInfoList:
+  - Sign: FX_Dust_Blowing_Soft_Large_01 (2)
+    Point: {x: -28.61, y: 2.1, z: -28.46}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: FX_Dust_Blowing_Soft_Large_01 (1)
+    Point: {x: 23.9, y: 2.1, z: 6.2}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Mountain_02
+    Point: {x: 47.3, y: 0.2551207, z: 4.845366}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Rock_Archway_01
+    Point: {x: -26.5, y: 0.15279457, z: 9.6}
+    Quaternion: {x: -0, y: 0.25144282, z: -0, w: 0.9678722}
+  - Sign: SM_Env_Ground_Oasis_01
+    Point: {x: 19.18, y: 0.428549, z: 30.33}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Bush_Group_03
+    Point: {x: 10.668426, y: 0.10141998, z: 18.563988}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Mountain_07
+    Point: {x: 27.222347, y: 0.53379667, z: -33.3}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Rock_06
+    Point: {x: -3.1974502, y: 0.44000834, z: 6.5456343}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Plant_Tall_01
+    Point: {x: -25.46, y: 0.22071256, z: 7.83}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Prop_Slatbox_01
+    Point: {x: -14.843766, y: 0.3729863, z: -13.215473}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: FX_Dust_Blowing_Soft_Large_01
+    Point: {x: 9.6, y: 2.1, z: -49.5}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Pebbles_04
+    Point: {x: -22.511559, y: 0.40498492, z: 11.612587}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: FX_Smoke_01
+    Point: {x: 6.4, y: 9.874744, z: 44.51}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Road_Lights_01
+    Point: {x: 12.38, y: 0.072448604, z: -0.16}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: FX_Smoke_Huge_02
+    Point: {x: 46.72, y: 7.66, z: 4.11}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Cactus_03
+    Point: {x: 7.5653768, y: 0.46559876, z: 17.16253}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Pebbles_02
+    Point: {x: -3.7972388, y: 0.5868956, z: 3.6164694}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Mountain_02
+    Point: {x: -10.18861, y: 0.034802504, z: -51.5}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Generic_Tree_04
+    Point: {x: -0.29678464, y: 0.649506, z: 1.3273122}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Generic_TreeStump_01
+    Point: {x: 5.1254797, y: 0.5680263, z: -0.398634}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Prop_Powerpole_03
+    Point: {x: -31.917194, y: 0.35947216, z: -9.253927}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Mountain_05
+    Point: {x: 51.8, y: 0.4163559, z: 36.7}
+    Quaternion: {x: -0, y: 0.17479303, z: -0, w: 0.9846052}
+  - Sign: SM_Generic_TreeDead_01
+    Point: {x: -6.0962873, y: 0.381576, z: -22.12479}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Mountain_01
+    Point: {x: 6.66, y: -0.14, z: 43.7}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Rock_Flat_02
+    Point: {x: -23.82, y: 0.3626866, z: 18.77}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: SM_Env_Road_01
+    Point: {x: -36.3, y: 0.5, z: 18.77}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: 0, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: 20.25, y: 0, z: -20.100002}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (8)
+    Point: {x: 6.093645, y: 0.32848972, z: -15.808323}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (4)
+    Point: {x: -23.88, y: 0.33202654, z: -26.13}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (9)
+    Point: {x: -20.884396, y: 0.41066945, z: -22.256525}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: -20.25, y: 0, z: -20.100002}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Room (2)
+    Point: {x: 16.82, y: 0.07467086, z: -5.39}
+    Quaternion: {x: -0, y: -0.03983162, z: -0, w: 0.9992064}
   - Sign: Room
     Point: {x: -17.168602, y: 0.07467086, z: -10.079406}
     Quaternion: {x: -0, y: -0.29608303, z: -0, w: 0.9551622}
   - Sign: Floor
     Point: {x: 20.25, y: 0, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (3)
+    Point: {x: 14.01885, y: 0.32891148, z: -9.387484}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Large_01 (2)
+    Point: {x: 8.204163, y: 0.29259744, z: -16.751795}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (11)
+    Point: {x: -14.507322, y: 0.44552472, z: 14.511131}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: 0, y: 0, z: 19.8}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Large_01
+    Point: {x: -16.728363, y: 0.51894194, z: 16.00928}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: 20.25, y: 0, z: 19.8}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Large_01 (1)
+    Point: {x: 24.2, y: 0.17245369, z: 27.5}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (10)
+    Point: {x: 7.1556377, y: 0.3478266, z: 14.31942}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (1)
+    Point: {x: 13.687585, y: 0.38931784, z: -2.6550205}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (6)
+    Point: {x: -16.714619, y: 0.33577898, z: -5.6075}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (2)
+    Point: {x: 19.777103, y: 0.25368637, z: -8.995905}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Large_01 (4)
+    Point: {x: -23.76376, y: 0.5423138, z: -23.784683}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Room (1)
+    Point: {x: -13.7, y: 0.07467086, z: 20.17}
+    Quaternion: {x: -0, y: -0.11177644, z: -0, w: 0.9937334}
+  - Sign: Tree_Small_01 (7)
+    Point: {x: -13.161779, y: 0.31037265, z: -11.209915}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: 0, y: 0, z: -20.1}
@@ -45,4 +196,13 @@ MonoBehaviour:
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   - Sign: Floor
     Point: {x: -20.25, y: 0, z: 19.8}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01
+    Point: {x: 19.457735, y: 0.41186646, z: -2.0576806}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Small_01 (5)
+    Point: {x: -21.661674, y: 0.17495917, z: -9.125598}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Sign: Tree_Large_01 (3)
+    Point: {x: 9.191593, y: 0.20445995, z: 16.41259}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
