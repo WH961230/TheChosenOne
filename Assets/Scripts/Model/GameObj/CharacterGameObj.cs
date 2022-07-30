@@ -7,6 +7,8 @@ public class CharacterGameObj : GameObj {
     private float jumpTimer = -1; // 跳跃参数
     private bool isStartGravity = false; // 延迟一帧执行重力，否则初始化位置有问题 会被拉回到原点坐标
     private bool isAim = false;
+    private bool isLerpCharacterCameraFOV = false;
+    private bool isLerpWeaponCameraFOV = false;
     private Vector3 moveVector = Vector3.zero; // 移动向量
     private CharacterComponent characterComponent;
 
@@ -38,9 +40,21 @@ public class CharacterGameObj : GameObj {
         CharacterWeaponAction();
     }
 
+    private float weaponCameraFOVTarget;
+    private float characterCameraFOVTarget;
     private void CharacterWeaponAction() {
         if (MyGame.MyGameSystem.MyInputSystem.GetMouseButtonDown(1)) {
             Aim();
+        }
+
+        if (isLerpCharacterCameraFOV) {
+            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
+            characterCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(characterCameraComponent.MyCamera.fieldOfView, characterCameraFOVTarget, Time.deltaTime * 5); 
+        }
+
+        if (isLerpWeaponCameraFOV) {
+            var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraComponent();
+            weaponCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(weaponCameraComponent.MyCamera.fieldOfView, weaponCameraFOVTarget, Time.deltaTime * 5);
         }
     }
 
@@ -58,8 +72,8 @@ public class CharacterGameObj : GameObj {
             SetCharacterMeshActive(true);
 
             // 调整 CharacterCamera FOV 为 配置【相机默认】 FOV
-            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
-            characterCameraComponent.MyCamera.fieldOfView = SOData.MySOCameraSetting.CharacterCameraDefaultFOV;
+            characterCameraFOVTarget = SOData.MySOCameraSetting.CharacterCameraDefaultFOV;
+            isLerpCharacterCameraFOV = true;
 
             // 隐藏开镜武器模型
             curWeapGameObj.MyData.MyObj.SetActive(false);
@@ -73,8 +87,8 @@ public class CharacterGameObj : GameObj {
             SetHoldWeaponModel("");
 
             // 调整 CharacterCamera 【开镜 FOV】
-            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
-            characterCameraComponent.MyCamera.fieldOfView = SOData.MySOCameraSetting.CharacterCameraAimFOV;
+            characterCameraFOVTarget = SOData.MySOCameraSetting.CharacterCameraAimFOV;
+            isLerpCharacterCameraFOV = true;
 
             // 显示开镜武器模型 setActive 并至【开镜配置位置】
             curWeapGameObj.MyData.MyObj.SetActive(true);
@@ -85,7 +99,13 @@ public class CharacterGameObj : GameObj {
             weaponCameraGameObj.MyData.MyObj.transform.position = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimPoint;
 
             // 调整 WeaponCamera 【开镜 FOV】 并至【开镜位置】
-            weaponCameraComponent.MyCamera.fieldOfView = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimFOV;
+            weaponCameraFOVTarget = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimFOV;
+            isLerpWeaponCameraFOV = true;
+
+            // 设置武器开镜旋转
+            curWeapComponent.MyWeaponRotation.SetTargetRotation();
+            curWeapComponent.MyWeaponPosition.SetTargetPosition();
+
             isAim = true;
         }
     }
