@@ -1,4 +1,6 @@
-﻿public class UIMainWindow : Window {
+﻿using UnityEngine;
+
+public class UIMainWindow : Window {
     public UIMainComponent MyUiMainComponent;
     private UIMainGameObj uiMainGameObj;
 
@@ -8,6 +10,8 @@
         uiMainGameObj = MyGame.MyGameObjFeature.Get<UIMainGameObj>(data.InstanceID);
         MyUiMainComponent = uiMainGameObj.MyData.MyObj.transform.GetComponent<UIMainComponent>();
 
+        Cursor.visible = false;
+        
         // 默认界面开启
         Open();
         MyUiMainComponent.MyButton.onClick.AddListener(() => {

@@ -16,33 +16,43 @@ public class CameraSystem : GameSys {
         base.Clear();
     }
 
-    public void InstanceCamera(CameraType cameraType) {
-        if (GameData.MainCamera != 0 && cameraType == CameraType.MainCamera) {
-            LogSystem.PrintE("主相机重复创建");
-        }
+    #region 增
 
-        if (GameData.MainCharacterCamera != 0 && cameraType == CameraType.MainCharacterCamera) {
-            LogSystem.PrintE("玩家相机重复创建");
-        }
+    public int InstanceCamera(CameraType cameraType) {
+        if (TryGetCameraObj(cameraType, out GameObject cameraObj)) {
+            string name = "";
+            bool isDefaultClose = false;
+            // 赋值全局相机参数
+            if (cameraType == CameraType.MainCamera) {
+                name = "MainCamera";
+            } else if (cameraType == CameraType.MainCharacterCamera) {
+                name = "MainCharacterCamera";
+            } else if (cameraType == CameraType.WeaponCamera) {
+                name = "WeaponCamera";
+                isDefaultClose = true;
+            }
 
-        if (TryGetCamera(cameraType, out GameObject cameraObj)) {
-            var instanceId = InstanceCamera(new CameraData() {
-                MyName = "Camera",
+            return InstanceCamera(new CameraData() {
+                MyName = name,
                 MyObj = Object.Instantiate(cameraObj),
                 MyRootTran = GameData.CameraRoot,
                 MyCameraType = cameraType,
+                IsDefaultClose = isDefaultClose,
             });
-
-            // 赋值全局相机参数
-            if (cameraType == CameraType.MainCamera) {
-                GameData.MainCamera = instanceId;
-            } else if (cameraType == CameraType.MainCharacterCamera) {
-                GameData.MainCharacterCamera = instanceId;
-            }
         }
+
+        return 0;
     }
 
-    private bool TryGetCamera(CameraType cameraType, out GameObject camera) {
+    private int InstanceCamera(CameraData cameraData) {
+        return gameSystem.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
+    }
+
+    #endregion
+
+    #region 查
+
+    private bool TryGetCameraObj(CameraType cameraType, out GameObject camera) {
         foreach (var info in SOData.MySOCameraSetting.CameraInfos) {
             if (info.MyCameraType == cameraType) {
                 camera = info.MyCameraObj;
@@ -54,7 +64,21 @@ public class CameraSystem : GameSys {
         return false;
     }
 
-    private int InstanceCamera(CameraData cameraData) {
-        return gameSystem.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
+    public CameraGameObj GetCameraGameObj(int id) {
+        return MyGameSystem.MyGameObjFeature.Get<CameraGameObj>(id);
     }
+
+    public CameraComponent GetCameraComponent(int id) {
+        return GetCameraGameObj(id).GetComponent<CameraComponent>();
+    }
+
+    public CameraGameObj GetWeaponCameraGameObj() {
+        return GetCameraGameObj(GameData.WeaponCameraId);
+    }
+
+    public CameraComponent GetWeaponCameraComponent() {
+        return GetWeaponCameraGameObj().GetComponent<CameraComponent>();
+    }
+
+    #endregion
 }

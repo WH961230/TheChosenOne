@@ -6,7 +6,6 @@ public class CharacterSystem : GameSys {
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
         this.gameSystem = gameSystem;
-        gameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera);
     }
 
     public override void Update() {
@@ -74,6 +73,7 @@ public class CharacterSystem : GameSys {
 
     public int InstanceCharacter(bool isMainCharacter) {
         var backpackId = gameSystem.MyBackpackSystem.InstanceBackpack();
+        var characterCameraId = gameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera);
         return InstanceCharacter(new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(SOData.MySOCharacter.GetCharacterPrefab()),
@@ -82,6 +82,7 @@ public class CharacterSystem : GameSys {
             MyTranInfo = new TranInfo() {
                 MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
             },
+            CameraInstanceId = characterCameraId,
             BackpackInstanceId = backpackId, // 背包
             IsMainCharacter = isMainCharacter,
         });

@@ -20,5 +20,10 @@ MonoBehaviour:
   - MyCameraObj: {fileID: 7883465774961350612, guid: 133bc48295abe084bae6b2dfad4694d0,
       type: 3}
     MyCameraType: 1
+  - MyCameraObj: {fileID: 3132440346912960445, guid: 1d28966e799a5c4488ba25e974fc0eed,
+      type: 3}
+    MyCameraType: 2
   CameraTraceSpeed: 100
   LookTargetOffsetPosition: {x: 0, y: 0.8, z: 0}
+  CharacterCameraDefaultFOV: 60
+  CharacterCameraAimFOV: 40

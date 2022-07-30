@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: SOSceneItemSetting
   m_EditorClassIdentifier: 
   MySceneItemMapInfo:
-  - Point: {x: -6.3441815, y: 0.37756735, z: -15.6790285}
+  - Point: {x: 0, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -3.6259596, y: 0.4253642, z: -13.269913}
+  - Point: {x: -3.150305, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -3.78145, y: 0.36882687, z: -8.7565565}
+  - Point: {x: -9.450915, y: 0.5, z: -5.500431}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -11.001793, y: 0.13439865, z: -1.1266435}
+  - Point: {x: -9.450915, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -10.005647, y: 0.047311533, z: -4.9432197}
+  - Point: {x: -3.150305, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -4.4472675, y: 0.46819782, z: -0.89307535}
+  - Point: {x: -6.3006105, y: 0.5, z: -2.7502155}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -3.150305, y: 0.5, z: -5.500431}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -9.450915, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MySceneItemParameterInfo:
   - SceneItemPrefab: {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0,

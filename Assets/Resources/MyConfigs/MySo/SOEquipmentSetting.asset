@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: SOEquipmentSetting
   m_EditorClassIdentifier: 
   MyEquipmentMapInfo:
-  - Point: {x: 0.54797584, y: 0.42091846, z: -7.536197}
+  - Point: {x: -6.3006105, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -7.078856, y: 0.3296987, z: -2.1954415}
+  - Point: {x: 0, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -1.3200226, y: 0.076298095, z: -10.623276}
+  - Point: {x: 0, y: 0.5, z: -5.500431}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -11.722369, y: 0.28856474, z: -13.873168}
+  - Point: {x: -9.450915, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MyEquipmentParameterInfo:
   - Prefab: {fileID: 1136465837782449927, guid: dfd9ab7d258639548893b6fb578aea7b,

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class UIBackpackWindow : Window {
     public UIBackpackComponent MyUibackpackComponent;
@@ -7,6 +6,8 @@ public class UIBackpackWindow : Window {
     private CharacterData MyMainCharacterData {
         get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData(); }
     }
+
+    private bool IsOpenBackpackWindow;
 
     public override void Init(Game game, Data data) {
         base.Init(game, data);
@@ -21,28 +22,47 @@ public class UIBackpackWindow : Window {
         base.Clear();
     }
 
+    public override void Update() {
+        base.Update();
+        if (MyGame.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Tab)) {
+            var window = MyUibackpackComponent.MyUIBackpackWindow;
+            if (IsOpenBackpackWindow) {
+                var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+                openBtn.gameObject.SetActive(true);
+                window.gameObject.SetActive(false);
+                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
+                IsOpenBackpackWindow = false;
+            } else {
+                var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+                window.gameObject.SetActive(true);
+                openBtn.gameObject.SetActive(false);
+                Refresh();
+                IsOpenBackpackWindow = true;
+            }
+        }
+    }
+
     #region 监听
 
     private void AddButtonListener() {
         var window = MyUibackpackComponent.MyUIBackpackWindow;
         window.gameObject.SetActive(false);
-
         var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
         openBtn.gameObject.SetActive(true);
         openBtn.onClick.AddListener(() => {
             window.gameObject.SetActive(true);
             openBtn.gameObject.SetActive(false);
             Refresh();
+            IsOpenBackpackWindow = true;
         });
-
         var closeBtn = MyUibackpackComponent.MyUIBackpackCloseBtn;
         // 关闭界面
         closeBtn.onClick.AddListener(() => {
             openBtn.gameObject.SetActive(true);
             window.gameObject.SetActive(false);
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
+            IsOpenBackpackWindow = false;
         });
-
         var mainWeapon = MyUibackpackComponent.MyUIBackpackMainWeaponImages;
         for (int i = 0; i < mainWeapon.Length; i++) {
             int ii = i;
@@ -57,7 +77,6 @@ public class UIBackpackWindow : Window {
             DropSideWeapon();
             RefreshWeapon();
         });
-
         var equipment = MyUibackpackComponent.MyUIBackpackEquipmentImages;
         for (int i = 0; i < equipment.Length; i++) {
             int ii = i;
@@ -104,7 +123,7 @@ public class UIBackpackWindow : Window {
         var bpId = MyMainCharacterData.BackpackInstanceId;
         return MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
     }
-    
+
     #endregion
 
     #region 刷新
@@ -133,7 +152,6 @@ public class UIBackpackWindow : Window {
         var backpackEntity = GetBackpackEntity();
         var ids = backpackEntity.GetSceneItemIds(); // 物品
         var level = backpackEntity.GetSceneItemIdsLevel(); // 容量
-
         if (ids.Count > level.Length) {
             LogSystem.PrintE("物品数量大于容量！");
         }
@@ -143,10 +161,10 @@ public class UIBackpackWindow : Window {
             if (ids.Count > i) {
                 var id = ids[i];
                 sprite = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MyBackpackSprite;
-
             } else {
                 sprite = null;
             }
+
             MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
         }
     }

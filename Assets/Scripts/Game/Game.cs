@@ -96,6 +96,9 @@ public class Game : MonoBehaviour {
         GameData.CharacterRoot = new GameObject("CharacterRoot").transform;
         GameData.CharacterRoot.SetParent(gameRoot);
 
+        GameData.WeaponRoot = new GameObject("WeaponRoot").transform;
+        GameData.WeaponRoot.SetParent(gameRoot);
+
         GameData.AudioRoot = new GameObject("AudioRoot").transform;
         GameData.AudioRoot.SetParent(gameRoot);
 

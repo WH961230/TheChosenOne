@@ -3,18 +3,17 @@
 public static class GameData {
     public static Transform UIRoot;
     public static Transform CharacterRoot;
+    public static Transform WeaponRoot;
     public static Transform AudioRoot;
     public static Transform EnvironmentRoot;
     public static Transform ItemRoot;
     public static Transform CameraRoot;
     public static Transform LightRoot;
 
-    public static int MainCamera = 0;
-    public static int MainCharacterCamera = 0;
-
     public static Light MainLight;
 
     public static int MainCharacterId = 0;
+    public static int WeaponCameraId = 0;
 
     #region 通用方法
 

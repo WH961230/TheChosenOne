@@ -21,7 +21,7 @@ public class WeaponSystem : GameSys {
         base.LateUpdate();
     }
 
-    #region 获取
+    #region 查
 
     public WeaponGameObj GetWeaponGameObj(int id) {
         return MyGameSystem.MyGameObjFeature.Get<WeaponGameObj>(id);
@@ -48,7 +48,7 @@ public class WeaponSystem : GameSys {
 
     #endregion
 
-    #region 创建
+    #region 增
 
     public void InstanceWeapon() {
         var weaponMapInfo = SOData.MySOWeaponSetting.MyWeaponMapInfo;
@@ -56,18 +56,24 @@ public class WeaponSystem : GameSys {
             return;
         }
 
+        if (GameData.WeaponCameraId == 0) {
+            GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
+        }
+
         var weaponParameterInfo = SOData.MySOWeaponSetting.MyWeaponParameterInfo;
         foreach (var weapon in weaponMapInfo) {
             var rand = Random.Range(0, weaponParameterInfo.Count);
+            var tempInfo = weaponParameterInfo[rand];
             InstanceWeapon(new WeaponData() {
                 MyName = "Weapon",
                 MyRootTran = GameData.ItemRoot,
-                MyObj = Object.Instantiate(weaponParameterInfo[rand].Prefab),
+                MyObj = Object.Instantiate(tempInfo.Prefab),
                 MySprite = weaponParameterInfo[rand].Picture,
                 MyTranInfo = new TranInfo() {
                     MyPos = weapon.Point, MyRot = weapon.Quaternion,
                 },
-                IsWindowPrefab = false,
+                WeaponCameraAimPoint = tempInfo.WeaponCameraAimPoint,
+                WeaponCameraAimFOV = tempInfo.WeaponCameraAimFOV,
                 IfInitMyObj = true,
             });
         }

@@ -4,7 +4,7 @@ public class Data : IData {
     // 基本参数
     public string MyName;
     public bool IfInitMyObj = true; // 是否加载期间使用初始化位置信息 默认使用
-    public bool IsWindowPrefab; // 是否是界面物体
+    public bool IsDefaultClose; // 是否默认关闭
 
     public GameObject MyObj; // 使用资源池的方式加载
     private MonoBehaviour MyComponent; // 组件

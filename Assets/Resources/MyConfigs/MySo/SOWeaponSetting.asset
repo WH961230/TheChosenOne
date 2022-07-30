@@ -12,26 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfb2bea279c1dd41aea43951eede1a6, type: 3}
   m_Name: SOWeaponSetting
   m_EditorClassIdentifier: 
+  WeaponAimModelPoint: {x: 0, y: -100, z: 0}
   MyWeaponMapInfo:
-  - Point: {x: -0.21892528, y: 0.31846368, z: -14.315628}
+  - Point: {x: -9.450915, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -3.9866407, y: 0.56105876, z: -3.388463}
+  - Point: {x: -6.30061, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -7.5681586, y: 0.3156364, z: -12.747857}
+  - Point: {x: 0, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -13.571798, y: 0.3192897, z: -5.720832}
+  - Point: {x: 0, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -11.164907, y: 0.13208468, z: -10.414871}
+  - Point: {x: -6.3006105, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -1.9463106, y: 0.5652755, z: -5.883581}
+  - Point: {x: -3.150305, y: 0.5, z: -8.250647}
+    Quaternion: {x: -0, y: -0, z: -0, w: 1}
+  - Point: {x: -3.150305, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MyWeaponParameterInfo:
   - Prefab: {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667,
       type: 3}
     Picture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
+    WeaponCameraAimPoint: {x: 0, y: -99.836, z: -0.292}
+    WeaponCameraAimFOV: 40
   - Prefab: {fileID: 8786019937070736618, guid: f3fd987ddbcba0544950f92af866c889,
       type: 3}
     Picture: {fileID: 21300000, guid: 78d523d7664f69d46b06a79678875e39, type: 3}
+    WeaponCameraAimPoint: {x: 0, y: -99.837, z: -0.292}
+    WeaponCameraAimFOV: 40
   - Prefab: {fileID: 3993783960709859755, guid: adf35aa8fdc75e942a8196ab10dc73cc,
       type: 3}
     Picture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
+    WeaponCameraAimPoint: {x: 0, y: -99.914, z: -0.292}
+    WeaponCameraAimFOV: 40

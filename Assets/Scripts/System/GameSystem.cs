@@ -174,7 +174,6 @@ public class GameSystem {
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        data.IsWindowPrefab = true;
         game.MyGameObjFeature.Register<T2>(data);
         game.MyWindowFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T3>(data);

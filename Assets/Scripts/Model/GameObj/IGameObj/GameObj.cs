@@ -18,6 +18,10 @@ public class GameObj : IGameObj {
             MyObj.transform.localPosition = MyData.MyTranInfo.MyPos;
             MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
         }
+
+        if (data.IsDefaultClose) {
+            Hide();
+        }
     }
 
     public virtual void Display() {

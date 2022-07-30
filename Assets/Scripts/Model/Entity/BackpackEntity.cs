@@ -137,6 +137,8 @@ public class BackpackEntity : Entity {
         if (!haveCurWeap) {
             MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
             backpackData.SetCurWeapon(id);
+            // 刷新玩家界面
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
         }
 
         return true;
@@ -179,6 +181,7 @@ public class BackpackEntity : Entity {
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
+                backpackData.SetCurWeapon(0);
             }
             return true;
         }
@@ -193,6 +196,7 @@ public class BackpackEntity : Entity {
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
+                backpackData.SetCurWeapon(0);
             }
             return true;
         }
@@ -276,6 +280,10 @@ public class BackpackEntity : Entity {
 
         type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(curId);
         return true;
+    }
+
+    public int GetCurWeaponId() {
+        return backpackData.GetCurWeapId();
     }
 
     #endregion

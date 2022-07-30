@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Net;
+using UnityEngine;
 
 public class CharacterGameObj : GameObj {
     private float moveSpeed = 0.0f; // 移动速度
     private float yRotate = 0.0f; // 视角参数
     private float jumpTimer = -1; // 跳跃参数
     private bool isStartGravity = false; // 延迟一帧执行重力，否则初始化位置有问题 会被拉回到原点坐标
+    private bool isAim = false;
     private Vector3 moveVector = Vector3.zero; // 移动向量
     private CharacterComponent characterComponent;
 
@@ -33,6 +35,66 @@ public class CharacterGameObj : GameObj {
         base.Update();
         CharacterMotion();
         CharacterAnimation();
+        CharacterWeaponAction();
+    }
+
+    private void CharacterWeaponAction() {
+        if (MyGame.MyGameSystem.MyInputSystem.GetMouseButtonDown(1)) {
+            Aim();
+        }
+    }
+
+    private void Aim() {
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWeapId);
+        var curWeapComponent = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(curWeapId);
+
+        var weaponCameraGameObj = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraGameObj();
+        var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraComponent();
+
+        if (isAim) {
+            // 开启角色模型
+            SetHoldWeaponModel(curWeapComponent.MyWeaponSign);
+            SetCharacterMeshActive(true);
+
+            // 调整 CharacterCamera FOV 为 配置【相机默认】 FOV
+            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
+            characterCameraComponent.MyCamera.fieldOfView = SOData.MySOCameraSetting.CharacterCameraDefaultFOV;
+
+            // 隐藏开镜武器模型
+            curWeapGameObj.MyData.MyObj.SetActive(false);
+
+            // 隐藏 WeaponCamera
+            weaponCameraGameObj.MyData.MyObj.SetActive(false);
+            isAim = false;
+        } else {
+            // 隐藏角色模型
+            SetCharacterMeshActive(false);
+            SetHoldWeaponModel("");
+
+            // 调整 CharacterCamera 【开镜 FOV】
+            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
+            characterCameraComponent.MyCamera.fieldOfView = SOData.MySOCameraSetting.CharacterCameraAimFOV;
+
+            // 显示开镜武器模型 setActive 并至【开镜配置位置】
+            curWeapGameObj.MyData.MyObj.SetActive(true);
+            curWeapGameObj.MyData.MyObj.transform.position = SOData.MySOWeaponSetting.WeaponAimModelPoint;
+
+            // 显示 WeaponCamera
+            weaponCameraGameObj.MyData.MyObj.SetActive(true);
+            weaponCameraGameObj.MyData.MyObj.transform.position = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimPoint;
+
+            // 调整 WeaponCamera 【开镜 FOV】 并至【开镜位置】
+            weaponCameraComponent.MyCamera.fieldOfView = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimFOV;
+            isAim = true;
+        }
+    }
+
+    private void SetCharacterMeshActive(bool isShow) {
+        characterComponent.CharacterSkinMeshRenderer.enabled = isShow;
+        foreach (var temp in characterComponent.CharacterMeshRenderers) {
+            temp.enabled = isShow;
+        }
     }
 
     public void SetHoldWeaponModel(string weaponSign) {

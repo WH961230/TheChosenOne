@@ -32,4 +32,8 @@ public class InputSystem : GameSys {
     public float GetAxis(string name) {
         return Input.GetAxis(name);
     }
+
+    public bool GetMouseButtonDown(int type) {
+        return Input.GetMouseButtonDown(type);
+    }
 }
