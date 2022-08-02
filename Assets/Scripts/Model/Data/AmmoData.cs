@@ -1,0 +1,3 @@
+﻿public class AmmoData : Data {
+    
+}

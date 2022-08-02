@@ -42,7 +42,7 @@ public class ItemSystem : GameSys {
 
     #region 创建
 
-    public void InstanceSceneItem() {
+    public void InstanceMapSceneItem() {
         var mapInfo = SOData.MySOSceneItemSetting.MySceneItemMapInfo;
         var parameterInfo = SOData.MySOSceneItemSetting.MySceneItemParameterInfo;
         foreach (var item in mapInfo) {
@@ -61,8 +61,22 @@ public class ItemSystem : GameSys {
         }
     }
 
-    private void InstanceSceneItem(SceneItemData sceneItemData) {
-        gameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
+    public int InstanceSceneItem() {
+        // InstanceSceneItem(new SceneItemData() {
+        //     MyName = obj.SceneItemPrefab.name,
+        //     MyObj = Object.Instantiate(obj.SceneItemPrefab),
+        //     MyBackpackSprite = obj.SceneItemPicture,
+        //     MyRootTran = GameData.ItemRoot,
+        //     MyTranInfo = new TranInfo() {
+        //         MyPos = item.Point,
+        //         MyRot = item.Quaternion,
+        //     }
+        // });
+        return 0;
+    }
+
+    private int InstanceSceneItem(SceneItemData sceneItemData) {
+        return gameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
     }
 
     #endregion

@@ -25,13 +25,13 @@ public class UIMainWindow : Window {
             MyGame.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
 
             // 加载场景可拾取物体
-            MyGame.MyGameSystem.MyItemSystem.InstanceSceneItem();
+            MyGame.MyGameSystem.MyItemSystem.InstanceMapSceneItem();
 
             // 加载武器
-            MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
+            // MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
 
             // 加载装备
-            MyGame.MyGameSystem.MyEquipmentSystem.InstanceEquipment();
+            // MyGame.MyGameSystem.MyEquipmentSystem.InstanceEquipment();
 
             // 读取玩家生成点 创建主玩家
             if (GameData.MainCharacterId == 0) {

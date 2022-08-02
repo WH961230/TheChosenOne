@@ -25,7 +25,8 @@ public class BackpackData : Data {
     private const int MySceneItemConsumeNum_level_4 = 4;
     private int[] MySceneItemConsumeIds_level_4 = new int[MySceneItemConsumeNum_level_4];
 
-    private List<int> MySceneItemConsumeIds = new List<int>();
+    private List<int> MySceneItemConsumeIds = new List<int>(); // 当前的消耗品
+    private Dictionary<int, int> MySceneItemConsumeNumDic = new Dictionary<int, int>();
 
     // 装备
     private const int MySceneItemEquipmentNum = 4;
@@ -35,9 +36,9 @@ public class BackpackData : Data {
 
     #region 增
 
-    public bool AddSceneItem(SceneItemType type, int sceneItemId) {
+    public bool AddSceneItem(SceneItemType type, int sceneItemId, int num) {
         switch (type) {
-            case SceneItemType.Consume:
+            case SceneItemType.CONSUME:
                 // 判断物体 进行叠加
                 MySceneItemConsumeIds.Add(sceneItemId);
                 return true;
@@ -184,7 +185,7 @@ public class BackpackData : Data {
 
     public bool RemoveSceneItem(SceneItemType type, int id) {
         switch (type) {
-            case SceneItemType.Consume:
+            case SceneItemType.CONSUME:
                 // 判断物体 进行叠加
                 MySceneItemConsumeIds.Remove(id);
                 return true;

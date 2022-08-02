@@ -2,6 +2,12 @@
 
 public class SceneItemComponent : MonoBehaviour {
     public string SceneItemSign;
-    public int MySceneItemCurNum;
+    public int MySceneItemNum;
     public SceneItemType MySceneItemType;
+}
+
+public enum SceneItemType {
+    CONSUME,
+    WEAPON,
+    EQUIPMENT,
 }

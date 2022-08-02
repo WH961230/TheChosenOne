@@ -33,3 +33,12 @@ MonoBehaviour:
   - SceneItemPrefab: {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0,
       type: 3}
     SceneItemPicture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
+  - SceneItemPrefab: {fileID: 8420692640167452473, guid: 55d7385eba4a4dd48af9d27cd6207b41,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
+  - SceneItemPrefab: {fileID: 8785083490705422332, guid: 1e60eba9344941949b1b3f9a79c02481,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: 78d523d7664f69d46b06a79678875e39, type: 3}
+  - SceneItemPrefab: {fileID: 1035453857694594206, guid: f5cb2063f83d2b74ca77154a4efc01ee,
+      type: 3}
+    SceneItemPicture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}

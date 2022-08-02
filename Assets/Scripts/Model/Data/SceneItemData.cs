@@ -6,7 +6,3 @@ public class SceneItemData : Data {
     public Sprite MyBackpackSprite;
     public SceneItemType MySceneItemType;
 }
-
-public enum SceneItemType {
-    Consume,
-}

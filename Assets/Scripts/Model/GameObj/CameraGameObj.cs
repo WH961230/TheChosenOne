@@ -56,25 +56,12 @@ public class CameraGameObj : GameObj {
         RaycastHit hit;
 
         // 打射线
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerData.SceneItemLayerMask | LayerData.WeaponLayerMask | LayerData.EquipmentLayerMask)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerData.SceneItemLayerMask)) {
             var id = hit.collider.gameObject.GetInstanceID();
-            var layer = hit.collider.gameObject.layer;
-
-            string name = "";
-            switch (layer) {
-                case LayerData.SceneItemLayer:
-                    name = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MySceneItemSign;
-                    break;
-                case LayerData.WeaponLayer:
-                    name = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MyWeaponSign;
-                    break;
-                case LayerData.EquipmentLayer:
-                    name = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySign;
-                    break;
-            }
-
+            string name = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MySceneItemSign;
+            var num = MyGame.MyGameSystem.MyItemSystem.GetSceneItemComponent(id).MySceneItemNum;
             if (inputSystem.GetKeyDown(KeyCode.F)) {
-                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, layer);
+                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, id, num);
             }
 
             // 提示 UI

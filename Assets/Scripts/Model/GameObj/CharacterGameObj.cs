@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public class CharacterGameObj : GameObj {
@@ -47,6 +48,10 @@ public class CharacterGameObj : GameObj {
             Aim();
         }
 
+        if (MyGame.MyGameSystem.MyInputSystem.GetMouseButtonDown(0)) {
+            Fire();
+        }
+
         if (isLerpCharacterCameraFOV) {
             var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
             characterCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(characterCameraComponent.MyCamera.fieldOfView, characterCameraFOVTarget, Time.deltaTime * 5); 
@@ -58,13 +63,23 @@ public class CharacterGameObj : GameObj {
         }
     }
 
+    private void Fire() {
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        if (curWeapId == 0) {
+            return;
+        }
+        //
+    }
+
     private void Aim() {
         var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        if (curWeapId == 0) {
+            return;
+        }
+
         var curWeapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWeapId);
         var curWeapComponent = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(curWeapId);
-
         var weaponCameraGameObj = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraGameObj();
-        var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraComponent();
 
         if (isAim) {
             // 开启角色模型

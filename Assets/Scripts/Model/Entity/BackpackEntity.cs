@@ -20,22 +20,28 @@ public class BackpackEntity : Entity {
 
     #region 增
 
-    private void MsgAdd(int id, int layer) {
-        switch (layer) {
-            case LayerData.SceneItemLayer:
-                AddSceneItem(id);
+    private void MsgAdd(int id, int num) {
+        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemComponent(id).MySceneItemType;
+        switch (type) {
+            case SceneItemType.CONSUME:
+                // 创建消耗品
+                var sceneid = MyGame.MyGameSystem.MyItemSystem.InstanceSceneItem(); 
+                AddSceneItem(sceneid, num);
                 break;
-            case LayerData.WeaponLayer:
-                AddWeapon(id );
+            case SceneItemType.WEAPON:
+                // 创建武器
+                var weaponid = MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
+                AddWeapon(id);
                 break;
-            case LayerData.EquipmentLayer:
+            case SceneItemType.EQUIPMENT:
+                // 创建装备
                 AddEquipment(id);
                 break;
         }
     }
 
-    private bool AddSceneItem(int id) {
-        if (PickSceneItem(id)) {
+    private bool AddSceneItem(int id, int num) {
+        if (PickSceneItem(id, num)) {
             LogSystem.Print($"拾取物品成功 发送物品隐藏消息 Id : {id}");
             MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id).Hide();
             return true;
@@ -73,16 +79,16 @@ public class BackpackEntity : Entity {
         return false;
     }
 
-    public bool PickSceneItem(int id) {
+    private bool PickSceneItem(int id, int num) {
         var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
-        if (backpackData.AddSceneItem(type, id)) {
+        if (backpackData.AddSceneItem(type, id, num)) {
             return true;
         }
 
         return false;
     }
 
-    public bool PickWeapon(int id) {
+    private bool PickWeapon(int id) {
         var type = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponType(id);
         var wepSign = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponSign(id);
         var curWepId = backpackData.GetCurWeapId();

@@ -50,10 +50,10 @@ public class WeaponSystem : GameSys {
 
     #region 增
 
-    public void InstanceWeapon() {
+    public int InstanceMapWeapon() {
         var weaponMapInfo = SOData.MySOWeaponSetting.MyWeaponMapInfo;
         if (weaponMapInfo.Count <= 0) {
-            return;
+            return 0;
         }
 
         if (GameData.WeaponCameraId == 0) {
@@ -77,6 +77,24 @@ public class WeaponSystem : GameSys {
                 IfInitMyObj = true,
             });
         }
+
+        return 0;
+    }
+
+    public int InstanceWeapon() {
+        // InstanceWeapon(new WeaponData() {
+        //     MyName = "Weapon",
+        //     MyRootTran = GameData.ItemRoot,
+        //     MyObj = Object.Instantiate(tempInfo.Prefab),
+        //     MySprite = weaponParameterInfo[rand].Picture,
+        //     MyTranInfo = new TranInfo() {
+        //         MyPos = weapon.Point, MyRot = weapon.Quaternion,
+        //     },
+        //     WeaponCameraAimPoint = tempInfo.WeaponCameraAimPoint,
+        //     WeaponCameraAimFOV = tempInfo.WeaponCameraAimFOV,
+        //     IfInitMyObj = true,
+        // });
+        return 0;
     }
 
     private int InstanceWeapon(WeaponData weaponData) {
