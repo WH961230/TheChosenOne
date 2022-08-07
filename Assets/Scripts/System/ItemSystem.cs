@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 
 public class ItemSystem : GameSys {
-    private GameSystem gameSystem;
-
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
-        this.gameSystem = gameSystem;
     }
 
     public override void Update() {
@@ -19,11 +16,11 @@ public class ItemSystem : GameSys {
     #region 获取
 
     public SceneItemGameObj GetSceneItemGameObj(int id) { // 物体
-        return gameSystem.MyGameObjFeature.Get<SceneItemGameObj>(id);
+        return MyGameSystem.MyGameObjFeature.Get<SceneItemGameObj>(id);
     }
 
     public SceneItemEntity GetSceneItemEntity(int id) { // 实体
-        return gameSystem.MyEntityFeature.Get<SceneItemEntity>(id);
+        return MyGameSystem.MyEntityFeature.Get<SceneItemEntity>(id);
     }
 
     public SceneItemComponent GetSceneItemComponent(int id) { // 实体 - 组件
@@ -34,10 +31,6 @@ public class ItemSystem : GameSys {
         return GetSceneItemEntity(id).GetData<SceneItemData>();
     }
 
-    public SceneItemType GetSceneItemType(int id) {
-        return GetSceneItemComponent(id).MySceneItemType;
-    }
-
     #endregion
 
     #region 创建
@@ -46,37 +39,31 @@ public class ItemSystem : GameSys {
         var mapInfo = SOData.MySOSceneItemSetting.MySceneItemMapInfo;
         var parameterInfo = SOData.MySOSceneItemSetting.MySceneItemParameterInfo;
         foreach (var item in mapInfo) {
-            var index = Random.Range(0, parameterInfo.Count);
-            var obj = parameterInfo[index];
+            int tempSceneItemId = 0;
+            if (item.MySceneItemType == SceneItemType.CONSUME) {
+                tempSceneItemId = MyGameSystem.MyConsumeSystem.InstanceConsume();
+            } else if (item.MySceneItemType == SceneItemType.EQUIPMENT) {
+                tempSceneItemId = MyGameSystem.MyEquipmentSystem.InstanceEquipment();
+            } else if (item.MySceneItemType == SceneItemType.WEAPON) {
+                tempSceneItemId = MyGameSystem.MyWeaponSystem.InstanceWeapon();
+            }
+
+            var obj = parameterInfo[Random.Range(0, parameterInfo.Count)];
             InstanceSceneItem(new SceneItemData() {
                 MyName = obj.SceneItemPrefab.name,
                 MyObj = Object.Instantiate(obj.SceneItemPrefab),
-                MyBackpackSprite = obj.SceneItemPicture,
+                MySceneItemId = tempSceneItemId,
                 MyRootTran = GameData.ItemRoot,
                 MyTranInfo = new TranInfo() {
-                    MyPos = item.Point,
-                    MyRot = item.Quaternion,
-                }
+                    MyPos = item.Point, MyRot = item.Quaternion,
+                },
+                MySceneItemType = item.MySceneItemType,
             });
         }
     }
 
-    public int InstanceSceneItem() {
-        // InstanceSceneItem(new SceneItemData() {
-        //     MyName = obj.SceneItemPrefab.name,
-        //     MyObj = Object.Instantiate(obj.SceneItemPrefab),
-        //     MyBackpackSprite = obj.SceneItemPicture,
-        //     MyRootTran = GameData.ItemRoot,
-        //     MyTranInfo = new TranInfo() {
-        //         MyPos = item.Point,
-        //         MyRot = item.Quaternion,
-        //     }
-        // });
-        return 0;
-    }
-
     private int InstanceSceneItem(SceneItemData sceneItemData) {
-        return gameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
+        return MyGameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
     }
 
     #endregion

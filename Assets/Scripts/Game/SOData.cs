@@ -11,6 +11,7 @@ public static class SOData {
     public static SOAudioMainSetting MySOAudioMainSetting;
     public static SOWeaponSetting MySOWeaponSetting;
     public static SOEquipmentSetting MySOEquipmentSetting;
+    public static SOConsumeSetting MyConsumeSetting;
     public static void Init() {
         //初始化配置
         MySOGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);
@@ -23,5 +24,6 @@ public static class SOData {
         MySOAudioMainSetting = Resources.Load<SOAudioMainSetting>(PathData.SOAudioMainSettingPath);
         MySOWeaponSetting = Resources.Load<SOWeaponSetting>(PathData.SOWeaponSettingPath);
         MySOEquipmentSetting = Resources.Load<SOEquipmentSetting>(PathData.SOEquipmentSettingPath);
+        MyConsumeSetting = Resources.Load<SOConsumeSetting>(PathData.SOConsumeSettingPath);
     }
 }

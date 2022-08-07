@@ -4,8 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/SOEquipmentSetting")]
 public class SOEquipmentSetting : ScriptableObject {
-    public List<EquipmentMapInfo> MyEquipmentMapInfo;
-    public List<EquipmentParameterInfo> MyEquipmentParameterInfo;
+    public List<EquipmentMapInfo> MyEquipmentMapInfo; // 装备地图信息
+    public List<EquipmentParameterInfo> MyEquipmentParameterInfo; // 装备信息
 }
 
 [Serializable]

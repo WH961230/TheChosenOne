@@ -88,6 +88,14 @@ public class GameSystem {
             return animatorSystem;
         }
     }
+    
+    private ConsumeSystem consumeSystem = new ConsumeSystem();
+
+    public ConsumeSystem MyConsumeSystem {
+        get {
+            return consumeSystem;
+        }
+    }
 
     public List<GameSys> systems = new List<GameSys>();
 
@@ -114,6 +122,7 @@ public class GameSystem {
         animatorSystem.Init(this);
         equipmentSystem.Init(this);
         uISystem.Init(this);
+        consumeSystem.Init(this);
     }
 
     public void Update() {
@@ -128,6 +137,7 @@ public class GameSystem {
         animatorSystem.Update();
         equipmentSystem.Update();
         uISystem.Update();
+        consumeSystem.Update();
     }
 
     public void FixedUpdate() {
@@ -142,6 +152,7 @@ public class GameSystem {
         animatorSystem.FixedUpdate();
         equipmentSystem.FixedUpdate();
         uISystem.FixedUpdate();
+        consumeSystem.FixedUpdate();
     }
 
     public void LateUpdate() {
@@ -156,6 +167,7 @@ public class GameSystem {
         animatorSystem.LateUpdate();
         equipmentSystem.LateUpdate(); 
         uISystem.LateUpdate();
+        consumeSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -170,6 +182,7 @@ public class GameSystem {
         animatorSystem.Clear();
         equipmentSystem.Clear();
         uISystem.Clear();
+        consumeSystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {

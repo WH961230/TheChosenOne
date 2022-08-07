@@ -5,8 +5,7 @@ using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "SO/SOWeaponSetting")]
 public class SOWeaponSetting : ScriptableObject {
-    public Vector3 WeaponAimModelPoint; // 角色开镜模型位置
-    public List<WeaponMapInfo> MyWeaponMapInfo;
+    [Header("角色开镜模型位置")] public Vector3 WeaponAimModelPoint; // 角色开镜模型位置
     public List<WeaponParameterInfo> MyWeaponParameterInfo;
 }
 

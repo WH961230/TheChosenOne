@@ -74,6 +74,9 @@ public class CharacterSystem : GameSys {
     public int InstanceCharacter(bool isMainCharacter) {
         var backpackId = gameSystem.MyBackpackSystem.InstanceBackpack();
         var characterCameraId = gameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera);
+        if (GameData.WeaponCameraId == 0) {
+            GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
+        }
         return InstanceCharacter(new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(SOData.MySOCharacter.GetCharacterPrefab()),

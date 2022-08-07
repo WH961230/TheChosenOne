@@ -50,51 +50,46 @@ public class WeaponSystem : GameSys {
 
     #region 增
 
-    public int InstanceMapWeapon() {
-        var weaponMapInfo = SOData.MySOWeaponSetting.MyWeaponMapInfo;
-        if (weaponMapInfo.Count <= 0) {
-            return 0;
-        }
-
-        if (GameData.WeaponCameraId == 0) {
-            GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
-        }
-
-        var weaponParameterInfo = SOData.MySOWeaponSetting.MyWeaponParameterInfo;
-        foreach (var weapon in weaponMapInfo) {
-            var rand = Random.Range(0, weaponParameterInfo.Count);
-            var tempInfo = weaponParameterInfo[rand];
-            InstanceWeapon(new WeaponData() {
-                MyName = "Weapon",
-                MyRootTran = GameData.ItemRoot,
-                MyObj = Object.Instantiate(tempInfo.Prefab),
-                MySprite = weaponParameterInfo[rand].Picture,
-                MyTranInfo = new TranInfo() {
-                    MyPos = weapon.Point, MyRot = weapon.Quaternion,
-                },
-                WeaponCameraAimPoint = tempInfo.WeaponCameraAimPoint,
-                WeaponCameraAimFOV = tempInfo.WeaponCameraAimFOV,
-                IfInitMyObj = true,
-            });
-        }
-
-        return 0;
-    }
+    // public void InstanceMapWeapon() {
+    //     var weaponMapInfo = SOData.MySOWeaponSetting.MyWeaponMapInfo;
+    //     if (weaponMapInfo.Count <= 0) {
+    //         return;
+    //     }
+    //
+    //     if (GameData.WeaponCameraId == 0) {
+    //         GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
+    //     }
+    //
+    //     var weaponParameterInfo = SOData.MySOWeaponSetting.MyWeaponParameterInfo;
+    //     foreach (var weapon in weaponMapInfo) {
+    //         var rand = Random.Range(0, weaponParameterInfo.Count);
+    //         var tempInfo = weaponParameterInfo[rand];
+    //         InstanceWeapon(new WeaponData() {
+    //             MyName = "Weapon",
+    //             MyRootTran = GameData.ItemRoot,
+    //             MyObj = Object.Instantiate(tempInfo.Prefab),
+    //             MySprite = weaponParameterInfo[rand].Picture,
+    //             MyTranInfo = new TranInfo() {
+    //                 MyPos = weapon.Point, MyRot = weapon.Quaternion,
+    //             },
+    //             WeaponCameraAimPoint = tempInfo.WeaponCameraAimPoint,
+    //             WeaponCameraAimFOV = tempInfo.WeaponCameraAimFOV,
+    //             IfInitMyObj = true,
+    //         });
+    //     }
+    // }
 
     public int InstanceWeapon() {
-        // InstanceWeapon(new WeaponData() {
-        //     MyName = "Weapon",
-        //     MyRootTran = GameData.ItemRoot,
-        //     MyObj = Object.Instantiate(tempInfo.Prefab),
-        //     MySprite = weaponParameterInfo[rand].Picture,
-        //     MyTranInfo = new TranInfo() {
-        //         MyPos = weapon.Point, MyRot = weapon.Quaternion,
-        //     },
-        //     WeaponCameraAimPoint = tempInfo.WeaponCameraAimPoint,
-        //     WeaponCameraAimFOV = tempInfo.WeaponCameraAimFOV,
-        //     IfInitMyObj = true,
-        // });
-        return 0;
+        int index = Random.Range(0, SOData.MySOWeaponSetting.MyWeaponParameterInfo.Count);
+        var param = SOData.MySOWeaponSetting.MyWeaponParameterInfo[index];
+        return InstanceWeapon(new WeaponData() {
+            MyName = "Weapon",
+            MyObj = UnityEngine.Object.Instantiate(param.Prefab),
+            IsDefaultClose = true,
+            MyRootTran = GameData.WeaponRoot,
+            WeaponCameraAimPoint = param.WeaponCameraAimPoint,
+            WeaponCameraAimFOV = param.WeaponCameraAimFOV,
+        });
     }
 
     private int InstanceWeapon(WeaponData weaponData) {

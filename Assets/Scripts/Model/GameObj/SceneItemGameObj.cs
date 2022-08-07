@@ -10,6 +10,7 @@ public class SceneItemGameObj : GameObj {
         MyComponent = MyObj.transform.GetComponent<SceneItemComponent>();
         sceneItemComponent = (SceneItemComponent) MyComponent;
         sceneitemData.MySceneItemSign = sceneItemComponent.SceneItemSign;
+        sceneitemData.MySceneItemNum = sceneItemComponent.MySceneItemNum;
     }
 
     public override void Hide() {

@@ -1,97 +1,104 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class BackpackData : Data {
 
-    #region 数据
+    #region 消耗品
 
-    // 当前武器
-    public int MyCurrentWeapon = 0;
+    private Dictionary<int, int> MyConsumeInfoDic = new Dictionary<int, int>();
 
-    // 主武器
-    private const int MyWeaponMaxNum = 2;
-    private int[] MyMainWeaponIds = new int[MyWeaponMaxNum];
+    public void AddConsume(int id, int num) {
+        if (MyConsumeInfoDic.TryGetValue(id, out int tempNum)) {
+            tempNum += num;
+            MyConsumeInfoDic[id] = tempNum;
+        } else {
+            MyConsumeInfoDic.Add(id, num);
+        }
+    }
 
-    // 副武器
-    private int MySideWeaponId;
-
-    // 消耗物品 包含 1投掷物 2能量饮料 3子弹 4其他等 有数量下标
-    private int MySceneItemConsumeCurrentLevel = 0;
-    private const int MySceneItemConsumeNum_level_1 = 1;
-    private int[] MySceneItemConsumeIds_level_1 = new int[MySceneItemConsumeNum_level_1];
-    private const int MySceneItemConsumeNum_level_2 = 2;
-    private int[] MySceneItemConsumeIds_level_2 = new int[MySceneItemConsumeNum_level_2];
-    private const int MySceneItemConsumeNum_level_3 = 3;
-    private int[] MySceneItemConsumeIds_level_3 = new int[MySceneItemConsumeNum_level_3];
-    private const int MySceneItemConsumeNum_level_4 = 4;
-    private int[] MySceneItemConsumeIds_level_4 = new int[MySceneItemConsumeNum_level_4];
-
-    private List<int> MySceneItemConsumeIds = new List<int>(); // 当前的消耗品
-    private Dictionary<int, int> MySceneItemConsumeNumDic = new Dictionary<int, int>();
-
-    // 装备
-    private const int MySceneItemEquipmentNum = 4;
-    private int[] MySceneItemEquipmentIds = new int[MySceneItemEquipmentNum]; // 1、头盔 2、防弹衣 3、背包
-
-    #endregion
-
-    #region 增
-
-    public bool AddSceneItem(SceneItemType type, int sceneItemId, int num) {
-        switch (type) {
-            case SceneItemType.CONSUME:
-                // 判断物体 进行叠加
-                MySceneItemConsumeIds.Add(sceneItemId);
-                return true;
+    public bool RemoveConsume(int id) {
+        if (MyConsumeInfoDic.ContainsKey(id)) {
+            MyConsumeInfoDic.Remove(id);
+            return true;
         }
 
         return false;
     }
 
+    public bool Consume(int id) {
+        if(MyConsumeInfoDic.TryGetValue(id, out int num)){
+            if (num <= 0) {
+                return false;
+            }
+            num--;
+            MyConsumeInfoDic[id] = num;
+            return true;
+        }
+
+        return false;
+    }
+
+    public List<int> GetConsumeIds() {
+        return MyConsumeInfoDic.Keys.ToList();
+    }
+
+    public int GetConsumeNum(int id) {
+        return MyConsumeInfoDic[id];
+    }
+
+    #endregion
+
+    #region 武器
+
+    private int[] MyMainWeaponIds = new int[2];
+
+    // 添加主武器
     public bool AddMainWeapon(int index, int id) {
         MyMainWeaponIds[index] = id;
         return true;
     }
+
+    // 移除主武器
+    public bool RemoveMainWeapon(int index) {
+        MyMainWeaponIds[index] = 0;
+        return true;
+    }
+
+    public int[] GetMainWeaponIds() {
+        return MyMainWeaponIds;
+    }
+    
+    public int GetMainWeaponId(int index) {
+        return MyMainWeaponIds[index];
+    }
+
+    //副武器
+
+    private int MySideWeaponId;
 
     public bool AddSideWeapon(int id) {
         MySideWeaponId = id;
         return true;
     }
 
-    public bool AddEquipment(EquipmentType type, int id) {
-        switch (type) {
-            case EquipmentType.Helmet:
-                MySceneItemEquipmentIds[0] = id;
-                return true;
-            case EquipmentType.Armour:
-                MySceneItemEquipmentIds[1] = id;
-                return true;
-            case EquipmentType.Backpack:
-                MySceneItemEquipmentIds[2] = id;
-                // 设置背包 level
-                
-                return true;
-        }
-
-        return false;
-    }
-
-    #endregion
-
-    #region 改
-
-    public bool SetSceneItemLevel(int level) {
-        MySceneItemConsumeCurrentLevel = level;
+    public bool RemoveSideWeapon() {
+        MySideWeaponId = 0;
         return true;
     }
 
-    public bool SetCurWeapon(int id) {
-        MyCurrentWeapon = id;
+    public int GetSideWeaponId() {
+        return MySideWeaponId;
+    }
+
+    private int MyCurWeapId = 0; // 当前武器
+    public bool SetCurWeapId(int id) {
+        MyCurWeapId = id;
         return true;
     }
 
-    #endregion
-
-    #region 查
+    public int GetCurWeapId() {
+        return MyCurWeapId;
+    }
 
     public bool HaveWeapon() {
         if (GetCurWeapId() != 0) {
@@ -106,53 +113,6 @@ public class BackpackData : Data {
         }
 
         return false;
-    }
-    
-    public int GetCurWeapId() {
-        return MyCurrentWeapon;
-    }
-
-    public int[] GetMainWeaponIds() {
-        return MyMainWeaponIds;
-    }
-
-    public int GetMainWeaponId(int index) {
-        return MyMainWeaponIds[index];
-    }
-
-    public int GetSideWeaponId() {
-        return MySideWeaponId;
-    }
-
-    public List<int> GetSceneItemIds() {
-        return MySceneItemConsumeIds;
-    }
-
-    public int GetSceneItemId(int index) {
-        return MySceneItemConsumeIds[index];
-    }
-
-    public int[] GetSceneItemIdsLevel() {
-        switch (MySceneItemConsumeCurrentLevel) {
-            case 1:
-                return MySceneItemConsumeIds_level_1;
-            case 2:
-                return MySceneItemConsumeIds_level_2;
-            case 3:
-                return MySceneItemConsumeIds_level_3;
-            case 4:
-                return MySceneItemConsumeIds_level_4;
-            default:
-                return MySceneItemConsumeIds_level_1;
-        }
-    }
-
-    public int[] GetEquipmentIds() {
-        return MySceneItemEquipmentIds;
-    }
-
-    public int GetEquipmentId(int index) {
-        return MySceneItemEquipmentIds[index];
     }
 
     public bool GetEmptyMainWeaponIndex(out int outIndex) {
@@ -181,32 +141,48 @@ public class BackpackData : Data {
 
     #endregion
 
-    #region 删
+    #region 装备
 
-    public bool RemoveSceneItem(SceneItemType type, int id) {
+    private int MyCurEquipLevel = 0;
+    private int[] MyEquipIds = new int[4];
+
+    public bool AddEquipment(EquipmentType type, int id) {
         switch (type) {
-            case SceneItemType.CONSUME:
-                // 判断物体 进行叠加
-                MySceneItemConsumeIds.Remove(id);
+            case EquipmentType.Helmet:
+                MyEquipIds[0] = id;
+                return true;
+            case EquipmentType.Armour:
+                MyEquipIds[1] = id;
+                return true;
+            case EquipmentType.Backpack:
+                MyEquipIds[2] = id;
+                // 设置背包 level
                 return true;
         }
 
         return false;
     }
 
-    public bool RemoveMainWeapon(int index) {
-        MyMainWeaponIds[index] = 0;
+    public bool RemoveEquip(int index) {
+        MyEquipIds[index] = 0;
         return true;
     }
 
-    public bool RemoveSideWeapon() {
-        MySideWeaponId = 0;
+    public bool SetCurBackpackLevel(int level) {
+        MyCurEquipLevel = level;
         return true;
     }
 
-    public bool RemoveEquipment(int index) {
-        MySceneItemEquipmentIds[index] = 0;
-        return true;
+    public int GetCurBackpackLevel() {
+        return MyCurEquipLevel;
+    }
+
+    public int[] GetEquipIds() {
+        return MyEquipIds;
+    }
+
+    public int GetEquipId(int index) {
+        return MyEquipIds[index];
     }
 
     #endregion

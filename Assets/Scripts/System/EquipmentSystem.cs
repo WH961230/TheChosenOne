@@ -51,7 +51,7 @@ public class EquipmentSystem : GameSys {
 
     #region 创建
 
-    public void InstanceEquipment() {
+    public void InstanceMapEquipment() {
         var mapInfo = SOData.MySOEquipmentSetting.MyEquipmentMapInfo;
         if (mapInfo.Count < 0) {
             return;
@@ -64,9 +64,10 @@ public class EquipmentSystem : GameSys {
 
         foreach (var info in mapInfo) {
             var rand = UnityEngine.Random.Range(0, parameterInfo.Count);
+            var go = SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[rand].Prefab;
             InstanceEquipment(new EquipmentData() {
                 MyName = "Equipment",
-                MyObj = Object.Instantiate(SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[rand].Prefab),
+                MyObj = Object.Instantiate(go),
                 MyRootTran = GameData.ItemRoot,
                 MySprite = SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[rand].Picture,
                 MyTranInfo = new TranInfo() {
@@ -75,6 +76,15 @@ public class EquipmentSystem : GameSys {
                 }
             });
         }
+    }
+
+    public int InstanceEquipment() {
+        var index = UnityEngine.Random.Range(0, SOData.MySOEquipmentSetting.MyEquipmentParameterInfo.Count);
+        return InstanceEquipment(new EquipmentData() {
+            MyName = "Equipment",
+            MyObj = UnityEngine.Object.Instantiate(SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[index].Prefab),
+            IsDefaultClose = true,
+        });
     }
 
     private int InstanceEquipment(EquipmentData data) {

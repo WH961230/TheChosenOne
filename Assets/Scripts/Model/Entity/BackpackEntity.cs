@@ -6,7 +6,7 @@ public class BackpackEntity : Entity {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.backpackData = (BackpackData)data;
-        MyGame.MyGameMessageCenter.Register<int, int>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
+        MyGame.MyGameMessageCenter.Register<SceneItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
     }
 
     public override void Update() {
@@ -14,47 +14,41 @@ public class BackpackEntity : Entity {
     }
 
     public override void Clear() {
-        MyGame.MyGameMessageCenter.UnRegister<int, int>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
+        MyGame.MyGameMessageCenter.UnRegister<SceneItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
         base.Clear();
     }
 
     #region 增
 
-    private void MsgAdd(int id, int num) {
-        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemComponent(id).MySceneItemType;
-        switch (type) {
+    private void MsgAdd(SceneItemData sceneItemData) {
+        switch (sceneItemData.MySceneItemType) {
             case SceneItemType.CONSUME:
                 // 创建消耗品
-                var sceneid = MyGame.MyGameSystem.MyItemSystem.InstanceSceneItem(); 
-                AddSceneItem(sceneid, num);
+                AddConsume(sceneItemData.MySceneItemId, sceneItemData.MySceneItemNum);
+                sceneItemData.MyObj.gameObject.SetActive(false);
                 break;
             case SceneItemType.WEAPON:
                 // 创建武器
-                var weaponid = MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
-                AddWeapon(id);
+                if (AddWeapon(sceneItemData.MySceneItemId)) {
+                    sceneItemData.MyObj.gameObject.SetActive(false);
+                }
                 break;
             case SceneItemType.EQUIPMENT:
                 // 创建装备
-                AddEquipment(id);
+                if (AddEquip(sceneItemData.MySceneItemId)) {
+                    sceneItemData.MyObj.gameObject.SetActive(false);
+                }
                 break;
         }
     }
 
-    private bool AddSceneItem(int id, int num) {
-        if (PickSceneItem(id, num)) {
-            LogSystem.Print($"拾取物品成功 发送物品隐藏消息 Id : {id}");
-            MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id).Hide();
-            return true;
-        }
-
-        LogSystem.Print($"拾取物品失败 Id : {id}");
-        return false;
+    private void AddConsume(int id, int num) {
+        backpackData.AddConsume(id, num);
     }
 
     private bool AddWeapon(int id) {
         if (PickWeapon(id)) {
-            LogSystem.Print($"拾取武器成功 发送武器隐藏消息 Id : {id}");
-            MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(id).Hide();
+            LogSystem.Print($"拾取武器成功 Id : {id}");
             return true;
         }
 
@@ -62,9 +56,9 @@ public class BackpackEntity : Entity {
         return false;
     }
 
-    private bool AddEquipment(int id) {
+    private bool AddEquip(int id) {
         if (PickEquipment(id)) {
-            LogSystem.Print($"拾取装备成功 发送装备隐藏消息 Id : {id}");
+            LogSystem.Print($"拾取装备成功 Id : {id}");
             MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(id).Hide();
 
             var level = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentComponent(id).MyEquipmentLevel;
@@ -76,15 +70,6 @@ public class BackpackEntity : Entity {
         }
 
         LogSystem.Print($"拾取装备失败 Id : {id}");
-        return false;
-    }
-
-    private bool PickSceneItem(int id, int num) {
-        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
-        if (backpackData.AddSceneItem(type, id, num)) {
-            return true;
-        }
-
         return false;
     }
 
@@ -142,7 +127,7 @@ public class BackpackEntity : Entity {
 
         if (!haveCurWeap) {
             MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel(wepSign);
-            backpackData.SetCurWeapon(id);
+            backpackData.SetCurWeapId(id);
             // 刷新玩家界面
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
         }
@@ -169,13 +154,13 @@ public class BackpackEntity : Entity {
     #region 删
 
     public bool DropSceneItem(int index) {
-        var id = backpackData.GetSceneItemId(index);
-        var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
-        if (backpackData.RemoveSceneItem(type, id)) {
-            var dropPoint = GetDropPoint();
-            MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id).Drop(dropPoint);
-            return true;
-        }
+        // var id = backpackData.GetSceneItemId(index);
+        // var type = MyGame.MyGameSystem.MyItemSystem.GetSceneItemType(id);
+        // if (backpackData.RemoveSceneItem(type, id)) {
+        //     var dropPoint = GetDropPoint();
+        //     MyGame.MyGameSystem.MyItemSystem.GetSceneItemGameObj(id).Drop(dropPoint);
+        //     return true;
+        // }
 
         return false;
     }
@@ -187,7 +172,7 @@ public class BackpackEntity : Entity {
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
-                backpackData.SetCurWeapon(0);
+                backpackData.SetCurWeapId(0);
             }
             return true;
         }
@@ -202,7 +187,7 @@ public class BackpackEntity : Entity {
             MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId).Drop(dropPoint);
             if (weapId == backpackData.GetCurWeapId()) {
                 MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterGameObj().SetHoldWeaponModel("");
-                backpackData.SetCurWeapon(0);
+                backpackData.SetCurWeapId(0);
             }
             return true;
         }
@@ -212,7 +197,7 @@ public class BackpackEntity : Entity {
 
     public bool DropEquipment(int index) {
         var equipmentId = GetEquipmentId(index);
-        if (backpackData.RemoveEquipment(index)) {
+        if (backpackData.RemoveEquip(index)) {
             var dropPoint = GetDropPoint();
             MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentGameObj(equipmentId).Drop(dropPoint);
             return true;
@@ -226,13 +211,13 @@ public class BackpackEntity : Entity {
     #region 改
 
     public bool SetBackpackLevel(int level) {
-        return backpackData.SetSceneItemLevel(level);
+        return backpackData.SetCurBackpackLevel(level);
     }
 
     public void SetCurMainWeapon(int index) {
         var wId = backpackData.GetMainWeaponIds()[index];
         if (wId != 0) {
-            backpackData.SetCurWeapon(wId);
+            backpackData.SetCurWeapId(wId);
         }
     }
 
@@ -253,23 +238,23 @@ public class BackpackEntity : Entity {
     }
 
     public int[] GetEquipmentIds() {
-        return backpackData.GetEquipmentIds();
+        return backpackData.GetEquipIds();
     }
 
     public int GetEquipmentId(int index) {
-        return backpackData.GetEquipmentIds()[index];
+        return backpackData.GetEquipIds()[index];
     }
 
-    public int[] GetSceneItemIdsLevel() {
-        return backpackData.GetSceneItemIdsLevel();
+    public int GetEquipmentLevel() {
+        return backpackData.GetCurBackpackLevel();
     }
 
     public List<int> GetSceneItemIds() {
-        return backpackData.GetSceneItemIds();
+        return backpackData.GetConsumeIds();
     }
 
     public int GetSceneItemId(int index) {
-        return backpackData.GetSceneItemIds()[index];
+        return backpackData.GetConsumeIds()[index];
     }
 
     private Vector3 GetDropPoint() {

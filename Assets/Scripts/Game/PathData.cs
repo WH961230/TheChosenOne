@@ -29,4 +29,5 @@
     public const string SOAudioMainSettingPath = "MyConfigs/MySO/SOAudioMainSetting";
     public const string SOWeaponSettingPath = "MyConfigs/MySO/SOWeaponSetting";
     public const string SOEquipmentSettingPath = "MyConfigs/MySO/SOEquipmentSetting";
+    public const string SOConsumeSettingPath = "MyConfigs/MySO/SOConsumeSetting";
 }

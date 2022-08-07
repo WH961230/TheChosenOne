@@ -151,12 +151,12 @@ public class UIBackpackWindow : Window {
     private void RefreshSceneItem() {
         var backpackEntity = GetBackpackEntity();
         var ids = backpackEntity.GetSceneItemIds(); // 物品
-        var level = backpackEntity.GetSceneItemIdsLevel(); // 容量
-        if (ids.Count > level.Length) {
+        var level = backpackEntity.GetEquipmentLevel(); // 容量
+        if (ids.Count > level) {
             LogSystem.PrintE("物品数量大于容量！");
         }
 
-        for (int i = 0; i < level.Length; i++) {
+        for (int i = 0; i < level; i++) {
             Sprite sprite;
             if (ids.Count > i) {
                 var id = ids[i];
