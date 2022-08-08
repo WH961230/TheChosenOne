@@ -10,80 +10,75 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94fbd2a4c729bfa41b8dc42c67accc87, type: 3}
-  m_Name: SOSceneItemSetting
+  m_Name: SOItemSetting
   m_EditorClassIdentifier: 
-  MySceneItemMapInfo:
+  MyMapInfo:
   - Point: {x: 0, y: 0.5, z: -5.500431}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: 0, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: -6.3006105, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: -9.450915, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 1
   - Point: {x: -6.30061, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 1
   - Point: {x: -9.450915, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: -3.150305, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 1
   - Point: {x: 0, y: 0.5, z: -11.000862}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: 0, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: -9.450915, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 1
   - Point: {x: -3.150305, y: 0.5, z: -5.500431}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: -3.150305, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 1
   - Point: {x: -6.3006105, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: -9.450915, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: -6.3006105, y: 0.5, z: -8.250647}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: 0, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: -3.150305, y: 0.5, z: 0}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 2
   - Point: {x: -9.450915, y: 0.5, z: -5.500431}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
+    MyItemType: 0
   - Point: {x: -3.150305, y: 0.5, z: -2.7502155}
     Quaternion: {x: -0, y: -0, z: -0, w: 1}
-    MySceneItemType: 1
-  MySceneItemParameterInfo:
-  - SceneItemPrefab: {fileID: 7537875856147219498, guid: 74f2c278e0805d643bc6aca6cd7150b0,
+    MyItemType: 1
+  MyWeaponItemInfo:
+  - MyItemPrefab: {fileID: 8420692640167452473, guid: 55d7385eba4a4dd48af9d27cd6207b41,
       type: 3}
-    SceneItemPicture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
-  - SceneItemPrefab: {fileID: 8420692640167452473, guid: 55d7385eba4a4dd48af9d27cd6207b41,
+    MyItemPicture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
+  MyConsumeItemInfo:
+  - MyItemPrefab: {fileID: 7537875856147219498, guid: bd3deec1650d9fe4085d246ccf9813a4,
       type: 3}
-    SceneItemPicture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
-  - SceneItemPrefab: {fileID: 8785083490705422332, guid: 1e60eba9344941949b1b3f9a79c02481,
+    MyItemPicture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
+  MyEquipmentItemInfo:
+  - MyItemPrefab: {fileID: 1136465837782449927, guid: 82098c4d70e2d3f409d205865b036e5d,
       type: 3}
-    SceneItemPicture: {fileID: 21300000, guid: 78d523d7664f69d46b06a79678875e39, type: 3}
-  - SceneItemPrefab: {fileID: 1035453857694594206, guid: f5cb2063f83d2b74ca77154a4efc01ee,
-      type: 3}
-    SceneItemPicture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
-  MySceneItemSettings:
-  - {fileID: 11400000, guid: 4aa06d8196cb53c4f81c39ce0e6bdce0, type: 2}
-  - {fileID: 11400000, guid: f42bfbf2d9cf6b04dab751bcf686c6e6, type: 2}
-  - {fileID: 11400000, guid: 66ba64de75726eb4f86de50e1f1172d1, type: 2}
+    MyItemPicture: {fileID: 21300000, guid: 499c00f3fc5a3f5409c0a8ff0da56c3c, type: 3}

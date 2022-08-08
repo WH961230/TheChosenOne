@@ -22,16 +22,10 @@ public class UIMainWindow : Window {
             MyGame.MyGameSystem.MyEnvironmentSystem.InstanceLight();
 
             // 加载建筑、地面
-            MyGame.MyGameSystem.MyEnvironmentSystem.InstanceEnvironment();
+            MyGame.MyGameSystem.MyEnvironmentSystem.InstanceMapBuilding();
 
             // 加载场景可拾取物体
-            MyGame.MyGameSystem.MyItemSystem.InstanceMapSceneItem();
-
-            // 加载武器
-            // MyGame.MyGameSystem.MyWeaponSystem.InstanceWeapon();
-
-            // 加载装备
-            // MyGame.MyGameSystem.MyEquipmentSystem.InstanceEquipment();
+            MyGame.MyGameSystem.MyItemSystem.InstanceMapItem();
 
             // 读取玩家生成点 创建主玩家
             if (GameData.MainCharacterId == 0) {

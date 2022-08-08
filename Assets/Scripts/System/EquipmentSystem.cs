@@ -78,17 +78,20 @@ public class EquipmentSystem : GameSys {
         }
     }
 
-    public int InstanceEquipment() {
+    public EquipmentData InstanceEquipment() {
         var index = UnityEngine.Random.Range(0, SOData.MySOEquipmentSetting.MyEquipmentParameterInfo.Count);
-        return InstanceEquipment(new EquipmentData() {
+        var equipmentData = new EquipmentData() {
             MyName = "Equipment",
             MyObj = UnityEngine.Object.Instantiate(SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[index].Prefab),
             IsDefaultClose = true,
-        });
+            MyRootTran = GameData.EquipmentRoot,
+        };
+        InstanceEquipment(equipmentData);
+        return equipmentData;
     }
 
-    private int InstanceEquipment(EquipmentData data) {
-        return MyGameSystem.InstanceGameObj<EquipmentGameObj, EquipmentEntity>(data);
+    private void InstanceEquipment(EquipmentData data) {
+        MyGameSystem.InstanceGameObj<EquipmentGameObj, EquipmentEntity>(data);
     }
 
     #endregion

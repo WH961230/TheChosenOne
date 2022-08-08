@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-
-public class SceneItemEntity : Entity {
-    private SceneItemData sceneitemData;
+﻿public class BuildingEntity : Entity {
+    private BuildingData buildingData;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
-        this.sceneitemData = (SceneItemData)data;
+        this.buildingData = (BuildingData)data;
     }
 
     public override void Update() {

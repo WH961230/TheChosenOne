@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8420692640167452471}
   - component: {fileID: 8420692640167452470}
   m_Layer: 9
-  m_Name: AK47
+  m_Name: ItemAK47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,9 +189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197fcc790e069604b824f7ae895466fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneItemSign: AK47
-  MySceneItemNum: 1
-  MySceneItemType: 1
+  MyItemId: 0
+  MyItemSign: 
+  MyItemNum: 0
 --- !u!1 &8420745139080363771
 GameObject:
   m_ObjectHideFlags: 0

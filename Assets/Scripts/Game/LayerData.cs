@@ -1,8 +1,8 @@
 ﻿public static class LayerData {
     public const int CharacterLayer = 8;
     public const int CharacterLayerMask = 1 << 8;
-    public const int SceneItemLayer = 9;
-    public const int SceneItemLayerMask = 1 << 9;
+    public const int ItemLayer = 9;
+    public const int ItemLayerMask = 1 << 9;
     public const int SceneBuildingLayer = 10;
     public const int SceneBuildingLayerMask = 1 << 10;
     public const int VehicleLayer = 11;

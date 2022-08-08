@@ -26,13 +26,12 @@ public class EnvironmentSystem : GameSys {
         });
     }
 
-    public void InstanceEnvironment() {
-        List<SceneBuildingInfo> tempList = null;
-        tempList = SOData.MySOSceneBuildingSetting.GetSceneBuildingInfoList();
-        foreach (var item in tempList) {
-            InstanceSceneBuilding(new SceneBuildingData() {
+    public void InstanceMapBuilding() {
+        List<BuildingInfo> buildingMapInfoList = SOData.MySoBuildingSetting.MyBuildingMapInfoList;
+        foreach (var item in buildingMapInfoList) {
+            InstanceBuilding(new BuildingData() {
                 MyName = item.Sign,
-                MyObj = Object.Instantiate(SOData.MySOSceneBuildingSetting.GetSceneBuildingBySign(item.Sign)),
+                MyObj = Object.Instantiate(SOData.MySoBuildingSetting.GetBuildingBySign(item.Sign)),
                 MyRootTran = GameData.EnvironmentRoot,
                 MyTranInfo = new TranInfo() {
                     MyPos = item.Point,
@@ -42,8 +41,8 @@ public class EnvironmentSystem : GameSys {
         }
     }
 
-    private void InstanceSceneBuilding(SceneBuildingData sceneBuildingData) {
-        MyGameSystem.InstanceGameObj<SceneBuildingGameObj, SceneBuildingEntity>(sceneBuildingData);
+    private void InstanceBuilding(BuildingData buildingData) {
+        MyGameSystem.InstanceGameObj<BuildingGameObj, BuildingEntity>(buildingData);
     }
 
     private void InstanceLight(LightData lightData) {

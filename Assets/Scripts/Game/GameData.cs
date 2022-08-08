@@ -4,6 +4,8 @@ public static class GameData {
     public static Transform UIRoot;
     public static Transform CharacterRoot;
     public static Transform WeaponRoot;
+    public static Transform ConsumeRoot;
+    public static Transform EquipmentRoot;
     public static Transform AudioRoot;
     public static Transform EnvironmentRoot;
     public static Transform ItemRoot;

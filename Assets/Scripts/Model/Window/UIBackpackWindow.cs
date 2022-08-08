@@ -160,7 +160,7 @@ public class UIBackpackWindow : Window {
             Sprite sprite;
             if (ids.Count > i) {
                 var id = ids[i];
-                sprite = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id).MyBackpackSprite;
+                sprite = MyGame.MyGameSystem.MyItemSystem.GetItemData(id).MyBackpackSprite;
             } else {
                 sprite = null;
             }

@@ -115,14 +115,14 @@ public class GameSystem {
         itemSystem.Init(this);
         cameraSystem.Init(this);
         characterSystem.Init(this);
+        equipmentSystem.Init(this);
         weaponSystem.Init(this);
+        consumeSystem.Init(this);
         inputSystem.Init(this);
         audioSystem.Init(this);
         backpackSystem.Init(this);
         animatorSystem.Init(this);
-        equipmentSystem.Init(this);
         uISystem.Init(this);
-        consumeSystem.Init(this);
     }
 
     public void Update() {
@@ -130,14 +130,14 @@ public class GameSystem {
         itemSystem.Update();
         cameraSystem.Update();
         characterSystem.Update();
+        equipmentSystem.Update();
         weaponSystem.Update();
+        consumeSystem.Update();
         inputSystem.Update();
         audioSystem.Update();
         backpackSystem.Update();
         animatorSystem.Update();
-        equipmentSystem.Update();
         uISystem.Update();
-        consumeSystem.Update();
     }
 
     public void FixedUpdate() {
@@ -145,14 +145,14 @@ public class GameSystem {
         itemSystem.FixedUpdate();
         cameraSystem.FixedUpdate();
         characterSystem.FixedUpdate();
+        equipmentSystem.FixedUpdate();
         weaponSystem.FixedUpdate();
+        consumeSystem.FixedUpdate();
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
         backpackSystem.FixedUpdate();
         animatorSystem.FixedUpdate();
-        equipmentSystem.FixedUpdate();
         uISystem.FixedUpdate();
-        consumeSystem.FixedUpdate();
     }
 
     public void LateUpdate() {
@@ -160,14 +160,14 @@ public class GameSystem {
         itemSystem.LateUpdate();
         cameraSystem.LateUpdate();
         characterSystem.LateUpdate();
+        equipmentSystem.LateUpdate();
         weaponSystem.LateUpdate();
+        consumeSystem.LateUpdate();
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
         backpackSystem.LateUpdate();
         animatorSystem.LateUpdate();
-        equipmentSystem.LateUpdate(); 
         uISystem.LateUpdate();
-        consumeSystem.LateUpdate();
     }
 
     public void Clear() {
@@ -175,14 +175,14 @@ public class GameSystem {
         itemSystem.Clear();
         cameraSystem.Clear();
         characterSystem.Clear();
+        equipmentSystem.Clear();
         weaponSystem.Clear();
+        consumeSystem.Clear();
         inputSystem.Clear();
         audioSystem.Clear();
         backpackSystem.Clear();
         animatorSystem.Clear();
-        equipmentSystem.Clear();
         uISystem.Clear();
-        consumeSystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {

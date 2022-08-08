@@ -15,55 +15,86 @@ public class ItemSystem : GameSys {
 
     #region 获取
 
-    public SceneItemGameObj GetSceneItemGameObj(int id) { // 物体
-        return MyGameSystem.MyGameObjFeature.Get<SceneItemGameObj>(id);
+    public ItemGameObj GetItemGameObj(int id) { // 物体
+        return MyGameSystem.MyGameObjFeature.Get<ItemGameObj>(id);
     }
 
-    public SceneItemEntity GetSceneItemEntity(int id) { // 实体
-        return MyGameSystem.MyEntityFeature.Get<SceneItemEntity>(id);
+    public ItemEntity GetItemEntity(int id) { // 实体
+        return MyGameSystem.MyEntityFeature.Get<ItemEntity>(id);
     }
 
-    public SceneItemComponent GetSceneItemComponent(int id) { // 实体 - 组件
-        return GetSceneItemGameObj(id).GetComponent<SceneItemComponent>();
+    public ItemComponent GetItemComponent(int id) { // 实体 - 组件
+        return GetItemGameObj(id).GetComponent<ItemComponent>();
     }
 
-    public SceneItemData GetSceneItemData(int id) { // 组件 - 数据
-        return GetSceneItemEntity(id).GetData<SceneItemData>();
+    public ItemData GetItemData(int id) { // 组件 - 数据
+        return GetItemEntity(id).GetData<ItemData>();
     }
 
     #endregion
 
     #region 创建
 
-    public void InstanceMapSceneItem() {
-        var mapInfo = SOData.MySOSceneItemSetting.MySceneItemMapInfo;
-        var parameterInfo = SOData.MySOSceneItemSetting.MySceneItemParameterInfo;
-        foreach (var item in mapInfo) {
-            int tempSceneItemId = 0;
-            if (item.MySceneItemType == SceneItemType.CONSUME) {
-                tempSceneItemId = MyGameSystem.MyConsumeSystem.InstanceConsume();
-            } else if (item.MySceneItemType == SceneItemType.EQUIPMENT) {
-                tempSceneItemId = MyGameSystem.MyEquipmentSystem.InstanceEquipment();
-            } else if (item.MySceneItemType == SceneItemType.WEAPON) {
-                tempSceneItemId = MyGameSystem.MyWeaponSystem.InstanceWeapon();
+    /// <summary>
+    /// 创建地图物品
+    /// </summary>
+    public void InstanceMapItem() {
+        foreach (var item in SOData.MySOItemSetting.MyMapInfo) {
+            var templateInfo = SOData.MySOItemSetting.GetItemInfoByType(item.MyItemType);
+            var obj = templateInfo[Random.Range(0, templateInfo.Count)];
+            if (InstanceItemByItemType(item.MyItemType, out int id, out string itemSign)) {
+                InstanceItem(new ItemData() {
+                    MyName = obj.MyItemPrefab.name,
+                    MyObj = Object.Instantiate(obj.MyItemPrefab),
+                    MyItemId = id,
+                    MyRootTran = GameData.ItemRoot,
+                    MyTranInfo = new TranInfo() {
+                        MyPos = item.Point, MyRot = item.Quaternion,
+                    },
+                    MyItemType = item.MyItemType,
+                    MyItemSign = itemSign,
+                });
             }
-
-            var obj = parameterInfo[Random.Range(0, parameterInfo.Count)];
-            InstanceSceneItem(new SceneItemData() {
-                MyName = obj.SceneItemPrefab.name,
-                MyObj = Object.Instantiate(obj.SceneItemPrefab),
-                MySceneItemId = tempSceneItemId,
-                MyRootTran = GameData.ItemRoot,
-                MyTranInfo = new TranInfo() {
-                    MyPos = item.Point, MyRot = item.Quaternion,
-                },
-                MySceneItemType = item.MySceneItemType,
-            });
         }
     }
 
-    private int InstanceSceneItem(SceneItemData sceneItemData) {
-        return MyGameSystem.InstanceGameObj<SceneItemGameObj, SceneItemEntity>(sceneItemData);
+    /// <summary>
+    /// 根据物品类型创建物品
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns>物品 id</returns>
+    private bool InstanceItemByItemType(ItemType type, out int id, out string itemSign) {
+        Data data;
+        switch (type) {
+            case ItemType.CONSUME:
+                data = MyGameSystem.MyConsumeSystem.InstanceConsume();
+                id = data.InstanceID;
+                itemSign = data.MyName;
+                return true;
+            case ItemType.EQUIPMENT:
+                data = MyGameSystem.MyEquipmentSystem.InstanceEquipment();
+                id = data.InstanceID;
+                itemSign = data.MyName;
+                return true;
+            case ItemType.WEAPON:
+                data = MyGameSystem.MyWeaponSystem.InstanceWeapon();
+                id = data.InstanceID;
+                itemSign = data.MyName;
+                return true;
+        }
+
+        id = default;
+        itemSign = default;
+        return false;
+    }
+
+    /// <summary>
+    /// 实例化物品
+    /// </summary>
+    /// <param name="itemData"></param>
+    /// <returns>物品 id</returns>
+    private int InstanceItem(ItemData itemData) {
+        return MyGameSystem.InstanceGameObj<ItemGameObj, ItemEntity>(itemData);
     }
 
     #endregion

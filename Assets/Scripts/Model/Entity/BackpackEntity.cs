@@ -6,7 +6,7 @@ public class BackpackEntity : Entity {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         this.backpackData = (BackpackData)data;
-        MyGame.MyGameMessageCenter.Register<SceneItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
+        MyGame.MyGameMessageCenter.Register<ItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
     }
 
     public override void Update() {
@@ -14,29 +14,29 @@ public class BackpackEntity : Entity {
     }
 
     public override void Clear() {
-        MyGame.MyGameMessageCenter.UnRegister<SceneItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
+        MyGame.MyGameMessageCenter.UnRegister<ItemData>(GameMessageConstants.BACKPACKSYSTEM_ADD, MsgAdd);
         base.Clear();
     }
 
     #region 增
 
-    private void MsgAdd(SceneItemData sceneItemData) {
-        switch (sceneItemData.MySceneItemType) {
-            case SceneItemType.CONSUME:
+    private void MsgAdd(ItemData itemData) {
+        switch (itemData.MyItemType) {
+            case ItemType.CONSUME:
                 // 创建消耗品
-                AddConsume(sceneItemData.MySceneItemId, sceneItemData.MySceneItemNum);
-                sceneItemData.MyObj.gameObject.SetActive(false);
+                AddConsume(itemData.MyItemId, itemData.MyItemNum);
+                itemData.MyObj.gameObject.SetActive(false);
                 break;
-            case SceneItemType.WEAPON:
+            case ItemType.WEAPON:
                 // 创建武器
-                if (AddWeapon(sceneItemData.MySceneItemId)) {
-                    sceneItemData.MyObj.gameObject.SetActive(false);
+                if (AddWeapon(itemData.MyItemId)) {
+                    itemData.MyObj.gameObject.SetActive(false);
                 }
                 break;
-            case SceneItemType.EQUIPMENT:
+            case ItemType.EQUIPMENT:
                 // 创建装备
-                if (AddEquip(sceneItemData.MySceneItemId)) {
-                    sceneItemData.MyObj.gameObject.SetActive(false);
+                if (AddEquip(itemData.MyItemId)) {
+                    itemData.MyObj.gameObject.SetActive(false);
                 }
                 break;
         }

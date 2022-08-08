@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 8785083490705422322}
   - component: {fileID: 8785083490705422323}
   m_Layer: 9
-  m_Name: AKC
+  m_Name: ItemAKC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

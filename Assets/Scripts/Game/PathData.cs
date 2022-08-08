@@ -21,8 +21,8 @@
 
     public const string SOGameSettingPath = "MyConfigs/MySO/SOGameSetting";
     public const string SOCharacterSettingPath = "MyConfigs/MySO/SOCharacterSetting";
-    public const string SOSceneBuildingSettingPath = "MyConfigs/MySO/SOSceneBuildingSetting";
-    public const string SOSceneItemSettingPath = "MyConfigs/MySO/SOSceneItemSetting";
+    public const string SOBuildingSettingPath = "MyConfigs/MySO/SOBuildingSetting";
+    public const string SOItemSettingPath = "MyConfigs/MySO/SOItemSetting";
     public const string SOEnvironmentSettingPath = "MyConfigs/MySO/SOEnvironmentSetting";
     public const string SOCameraSettingPath = "MyConfigs/MySO/SOCameraSetting";
     public const string SOLightSettingPath = "MyConfigs/MySO/SOLightSetting";

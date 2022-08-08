@@ -14,8 +14,8 @@ TagManager:
   - 
   - 
   - Character
-  - SceneItem
-  - SceneBuilding
+  - Item
+  - Building
   - Vehicle
   - Weapon
   - Equipment

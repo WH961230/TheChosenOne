@@ -1,35 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class SceneResourceEditor : EditorWindow {
-    private GameObject sceneItemObj;
-    private string sceneItemName;
-    private Texture sceneItemPic;
+    private GameObject itemObj;
+    private string itemName;
+    private Texture itemPic;
     
     #region 收集
 
     [MenuItem("点这里/收集/收集【场景建筑位置】到【配置】")]
-    public static void GatherSceneBuildingInfoToConfig() {
-        var sceneBuildingList = FindObjectsOfType<SceneBuildingComponent>();
-        var soSceneBuilding = Resources.Load<SOSceneBuildingSetting>(PathData.SOSceneBuildingSettingPath);
-        soSceneBuilding.MySceneBuildingOfficialInfoList.Clear();
+    public static void GatherBuildingInfoToConfig() {
+        var buildingList = FindObjectsOfType<BuildingComponent>();
+        var soBuilding = Resources.Load<SOBuildingSetting>(PathData.SOBuildingSettingPath);
+        soBuilding.MyBuildingMapInfoList.Clear();
         // 遍历场景物体到集合
-        foreach (var building in sceneBuildingList) {
-            List<SceneBuildingInfo> tempList = soSceneBuilding.MySceneBuildingOfficialInfoList;
+        foreach (var building in buildingList) {
+            List<BuildingInfo> tempList = soBuilding.MyBuildingMapInfoList;
             var pos = building.transform.position;
             var rat = building.transform.rotation;
-            tempList.Add(new SceneBuildingInfo() {
+            tempList.Add(new BuildingInfo() {
                 Sign = building.name, 
                 Point = pos, 
                 Quaternion = rat,
             });
         }
 
-        EditorUtility.SetDirty(soSceneBuilding);
+        EditorUtility.SetDirty(soBuilding);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -47,24 +45,24 @@ public class SceneResourceEditor : EditorWindow {
     }
 
     [MenuItem("点这里/收集/收集【场景物资位置】到【配置】")]
-    public static void GatherSceneItemInfoToConfig() {
+    public static void GatherItemInfoToConfig() {
         SOData.Init();
 
-        var sceneItemList = FindObjectsOfType<SceneItemComponent>();
-        SOData.MySOSceneItemSetting.MySceneItemMapInfo.Clear();
+        var itemList = FindObjectsOfType<ItemComponent>();
+        SOData.MySOItemSetting.MyMapInfo.Clear();
 
-        foreach (var item in sceneItemList) {
-            SceneItemType[] sceneItemType = Enum.GetValues(typeof(SceneItemType)) as SceneItemType[];
+        foreach (var item in itemList) {
+            ItemType[] itemType = Enum.GetValues(typeof(ItemType)) as ItemType[];
             System.Random random = new System.Random();
 
-            SOData.MySOSceneItemSetting.MySceneItemMapInfo.Add(new SceneItemMapInfo() {
+            SOData.MySOItemSetting.MyMapInfo.Add(new ItemMapInfo() {
                 Point = item.transform.position,
                 Quaternion = item.transform.rotation,
-                MySceneItemType = sceneItemType[random.Next(0, sceneItemType.Length)],
+                MyItemType = itemType[UnityEngine.Random.Range(0, itemType.Length)],
             });
         }
 
-        EditorUtility.SetDirty(SOData.MySOSceneItemSetting);
+        EditorUtility.SetDirty(SOData.MySOItemSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -93,11 +91,11 @@ public class SceneResourceEditor : EditorWindow {
     #endregion
 
     public void OnGUI() {
-        sceneItemObj = (GameObject)EditorGUILayout.ObjectField("拖入创建的物体", sceneItemObj, typeof(GameObject) , GUILayout.Width(500));
-        sceneItemPic = (Texture)EditorGUILayout.ObjectField("物体图标", sceneItemPic, typeof(GameObject), GUILayout.Width(800));
-        sceneItemName = EditorGUILayout.TextField("物体名称", GUILayout.Width(500));
+        itemObj = (GameObject)EditorGUILayout.ObjectField("拖入创建的物体", itemObj, typeof(GameObject) , GUILayout.Width(500));
+        itemPic = (Texture)EditorGUILayout.ObjectField("物体图标", itemPic, typeof(GameObject), GUILayout.Width(800));
+        itemName = EditorGUILayout.TextField("物体名称", GUILayout.Width(500));
         if (GUILayout.Button("创建场景物体到配置", GUILayout.Width(300))) {
-            Debug.Log(sceneItemObj);
+            Debug.Log(itemObj);
         }
     }
 }

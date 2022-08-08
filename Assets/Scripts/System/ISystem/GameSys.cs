@@ -15,4 +15,8 @@
 
     public virtual void LateUpdate() {
     }
+
+    public virtual int Instance() {
+        return 0;
+    }
 }

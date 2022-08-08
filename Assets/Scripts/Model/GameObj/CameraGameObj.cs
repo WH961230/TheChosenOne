@@ -56,18 +56,18 @@ public class CameraGameObj : GameObj {
         RaycastHit hit;
 
         // 打射线
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerData.SceneItemLayerMask)) {
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerData.ItemLayerMask)) {
             var id = hit.collider.gameObject.GetInstanceID();
-            var sceneItemData = MyGame.MyGameSystem.MyItemSystem.GetSceneItemData(id);
+            var itemData = MyGame.MyGameSystem.MyItemSystem.GetItemData(id);
             if (inputSystem.GetKeyDown(KeyCode.F)) {
-                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, sceneItemData);
+                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, itemData);
             }
 
             // 提示 UI
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, sceneItemData.MySceneItemSign);
+            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, itemData.MyItemSign);
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemKeycode, "拾取[F]");
 
-            LogSystem.Print("检测物体: " + sceneItemData.MySceneItemSign + " id: " + hit.collider.gameObject.GetInstanceID());
+            LogSystem.Print("检测物体: " + itemData.MyItemSign + " id: " + hit.collider.gameObject.GetInstanceID());
         } else {
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, "");
         }
