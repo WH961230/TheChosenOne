@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIBackpackComponent : MonoBehaviour {
+public class UIBackpackComponent : GameComp {
     [Header("背包按钮")]
     public Button MyUIBackpackBtn;
     [Header("背包关闭按钮")]

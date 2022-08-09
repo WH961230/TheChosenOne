@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class LightComponent : MonoBehaviour {
+public class LightComponent : GameComp {
 }

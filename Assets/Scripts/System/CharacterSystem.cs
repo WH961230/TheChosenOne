@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 
 public class CharacterSystem : GameSys {
-    private GameSystem gameSystem;
 
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
-        this.gameSystem = gameSystem;
     }
 
     public override void Update() {
@@ -71,28 +69,26 @@ public class CharacterSystem : GameSys {
 
     #region 创建
 
-    public int InstanceCharacter(bool isMainCharacter) {
-        var backpackId = gameSystem.MyBackpackSystem.InstanceBackpack();
-        var characterCameraId = gameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera);
-        if (GameData.WeaponCameraId == 0) {
-            GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
-        }
-        return InstanceCharacter(new CharacterData() {
+    public CharacterData InstanceCharacter(bool isMainCharacter) {
+        CharacterData characterData = new CharacterData() {
             MyName = "Character",
             MyObj = Object.Instantiate(SOData.MySOCharacter.GetCharacterPrefab()),
             MyRootTran = GameData.CharacterRoot,
             IfInitMyObj = false,
             MyTranInfo = new TranInfo() {
-                MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
+                MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, 
+                MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
             },
-            CameraInstanceId = characterCameraId,
-            BackpackInstanceId = backpackId, // 背包
+            CameraInstanceId = isMainCharacter ? MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera) : 0,
+            BackpackInstanceId = MyGameSystem.MyBackpackSystem.InstanceBackpack(),
             IsMainCharacter = isMainCharacter,
-        });
+        };
+        InstanceCharacter(characterData);
+        return characterData;
     }
 
-    private int InstanceCharacter(CharacterData characterData) {
-        return gameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
+    private void InstanceCharacter(CharacterData characterData) {
+        MyGameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }
 
     #endregion

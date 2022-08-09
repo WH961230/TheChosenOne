@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class ItemComponent : MonoBehaviour {
+public class ItemComponent : GameComp {
 }

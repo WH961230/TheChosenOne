@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraComponent : MonoBehaviour {
+public class CameraComponent : GameComp {
     public Camera MyCamera;
     public Transform MyCameraX;
 }

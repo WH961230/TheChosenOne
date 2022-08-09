@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class PlaneComponent : MonoBehaviour {
+public class PlaneComponent : GameComp {
 }

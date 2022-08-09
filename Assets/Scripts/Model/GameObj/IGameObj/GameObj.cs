@@ -2,7 +2,7 @@
 
 public class GameObj : IGameObj {
     public Data MyData;
-    protected MonoBehaviour MyComponent; // 组件
+    protected GameComp MyComponent; // 组件
     protected Game MyGame;
     protected GameObject MyObj;
 
@@ -10,15 +10,26 @@ public class GameObj : IGameObj {
         this.MyGame = game;
         this.MyData = data;
 
+        // 设置物体
         MyObj = data.MyObj;
         MyObj.name = this.MyData.MyName = string.Concat(this.MyData.MyName, this.MyData.InstanceID);
         MyObj.transform.SetParent(MyData.MyRootTran);
 
+        // 获取组件
+        MyComponent = MyObj.transform.GetComponent<GameComp>();
+
+        // 注册动画状态机
+        if (MyComponent && null != MyComponent.RegisterAnimator) {
+            MyGame.MyGameSystem.MyAnimatorSystem.GetEntity().RegisterAnimator(MyData.InstanceID, MyComponent.RegisterAnimator);
+        }
+
+        // 是否初始化物体位置
         if (data.IfInitMyObj) {
             MyObj.transform.localPosition = MyData.MyTranInfo.MyPos;
             MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
         }
 
+        // 是否默认关闭
         if (data.IsDefaultClose) {
             Hide();
         }
@@ -46,7 +57,7 @@ public class GameObj : IGameObj {
         return (T)MyData;
     }
 
-    public T GetComponent<T>() where T : MonoBehaviour {
+    public T GetComponent<T>() where T : GameComp {
         return (T) MyComponent;
     }
 

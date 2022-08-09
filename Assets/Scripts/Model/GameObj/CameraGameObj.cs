@@ -19,7 +19,6 @@ public class CameraGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         cameraData = (CameraData) data;
-        MyComponent = MyObj.transform.GetComponent<CameraComponent>();
         cameraComponent = (CameraComponent) MyComponent;
         cameraTran = cameraData.MyObj.transform;
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class UICharacterComponent : MonoBehaviour {
+public class UICharacterComponent : GameComp {
     public Button UIWeaponLeft;
     public Button UIWeaponRight;
 }

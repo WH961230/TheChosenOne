@@ -2,7 +2,7 @@
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class UIDebugToolComponent : MonoBehaviour {
+public class UIDebugToolComponent : GameComp {
     
     //=====================全局========================
     // Debug 工具按钮

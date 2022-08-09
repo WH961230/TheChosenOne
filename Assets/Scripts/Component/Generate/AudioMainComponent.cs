@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
 
-public class AudioMainComponent : MonoBehaviour {
+public class AudioMainComponent : GameComp {
     public AudioSource AudioSource;
 }

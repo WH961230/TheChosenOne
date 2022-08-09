@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BulletComponent : MonoBehaviour {
+public class BulletComponent : GameComp {
     public BulletType MyBulletType;
 }
 

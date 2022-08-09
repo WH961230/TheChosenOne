@@ -83,7 +83,7 @@ public class GameSystem {
 
     private AnimatorSystem animatorSystem = new AnimatorSystem();
 
-    public AnimatorSystem MyAnimaterSystem {
+    public AnimatorSystem MyAnimatorSystem {
         get {
             return animatorSystem;
         }
@@ -201,6 +201,7 @@ public class GameSystem {
     }
 
     public void InstanceEntity<T>(Data data) where T : Entity, new() {
+        data.InstanceID = data.MyObj.GetInstanceID();
         game.MyEntityFeature.Register<T>(data);
     }
 }

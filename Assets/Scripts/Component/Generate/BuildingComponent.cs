@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class BuildingComponent : MonoBehaviour {
+public class BuildingComponent : GameComp {
 }

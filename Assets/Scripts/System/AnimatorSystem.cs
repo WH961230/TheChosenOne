@@ -1,4 +1,6 @@
-﻿public class AnimatorSystem : GameSys {
+﻿using UnityEngine;
+
+public class AnimatorSystem : GameSys {
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
     }
@@ -18,4 +20,33 @@
     public override void LateUpdate() {
         base.LateUpdate();
     }
+
+
+    #region 增
+
+    public AnimatorData InstanceAnimator() {
+        AnimatorData animatorData = new AnimatorData() {
+            MyName = "Animator", 
+            MyObj = new GameObject("Animator"), 
+            MyRootTran = GameData.EntityRoot, 
+            IsDefaultClose = true,
+        };
+
+        InstanceAnimator(animatorData);
+        return animatorData;
+    }
+
+    private void InstanceAnimator(AnimatorData data) {
+        MyGameSystem.InstanceEntity<AnimatorEntity>(data);
+    }
+
+    #endregion
+
+    #region 查
+
+    public AnimatorEntity GetEntity() {
+        return MyGameSystem.MyEntityFeature.Get<AnimatorEntity>(GameData.AnimatorId);
+    }
+
+    #endregion
 }

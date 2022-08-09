@@ -24,7 +24,6 @@ public class CharacterGameObj : GameObj {
         base.Init(game, data);
         this.game = game;
         characterData = (CharacterData) data;
-        MyComponent = MyObj.transform.GetComponent<CharacterComponent>();
         characterComponent = (CharacterComponent) MyComponent;
         characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
         characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;

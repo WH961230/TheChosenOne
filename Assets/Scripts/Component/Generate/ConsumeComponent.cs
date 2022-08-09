@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class ConsumeComponent : MonoBehaviour {
+public class ConsumeComponent : GameComp {
 }

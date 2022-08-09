@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-public class BackpackComponent : MonoBehaviour {
+public class BackpackComponent : GameComp {
 }

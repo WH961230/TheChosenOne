@@ -18,6 +18,11 @@ public class UIMainWindow : Window {
             // 加载 DebugUI
             MyGame.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
 
+            // 动画状态机系统
+            if (GameData.AnimatorId == 0) {
+                GameData.AnimatorId = MyGame.MyGameSystem.MyAnimatorSystem.InstanceAnimator().InstanceID;
+            }
+
             // 加载灯光
             MyGame.MyGameSystem.MyEnvironmentSystem.InstanceLight();
 
@@ -29,7 +34,7 @@ public class UIMainWindow : Window {
 
             // 读取玩家生成点 创建主玩家
             if (GameData.MainCharacterId == 0) {
-                GameData.MainCharacterId = game.MyGameSystem.MyCharacterSystem.InstanceCharacter(true);
+                GameData.MainCharacterId = MyGame.MyGameSystem.MyCharacterSystem.InstanceCharacter(true).InstanceID;
             }
 
             // 加载角色 UI

@@ -11,11 +11,14 @@ public static class GameData {
     public static Transform ItemRoot;
     public static Transform CameraRoot;
     public static Transform LightRoot;
+    public static Transform EntityRoot;
 
     public static Light MainLight;
 
+    // 全局参数 ID
     public static int MainCharacterId = 0;
     public static int WeaponCameraId = 0;
+    public static int AnimatorId = 0;
 
     #region 通用方法
 

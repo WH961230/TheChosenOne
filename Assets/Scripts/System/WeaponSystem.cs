@@ -51,6 +51,10 @@ public class WeaponSystem : GameSys {
     #region 增
 
     public WeaponData InstanceWeapon() {
+        if (GameData.WeaponCameraId == 0) {
+            GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
+        }
+
         int index = Random.Range(0, SOData.MySOWeaponSetting.MyWeaponParameterInfo.Count);
         var param = SOData.MySOWeaponSetting.MyWeaponParameterInfo[index];
         var weaponData = new WeaponData() {
