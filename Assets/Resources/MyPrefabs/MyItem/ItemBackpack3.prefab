@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1131326546497705883}
   - component: {fileID: 1122626563232610911}
   - component: {fileID: 7572104212322028304}
-  - component: {fileID: 1136465837782449924}
+  - component: {fileID: 9069801918471037317}
   m_Layer: 9
   m_Name: ItemBackpack3
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: be3582b2e7bbc534f9e4b31d1f69facd, type: 3}
---- !u!114 &1136465837782449924
+--- !u!114 &9069801918471037317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,9 +104,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136465837782449927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fe4738dcb3bef844be54e3358d73bd7, type: 3}
+  m_Script: {fileID: 11500000, guid: 197fcc790e069604b824f7ae895466fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyEquipmentSign: "\u80CC\u5305"
-  MyEquipmentType: 2
-  MyEquipmentLevel: 1
+  RegisterAnimator: {fileID: 0}

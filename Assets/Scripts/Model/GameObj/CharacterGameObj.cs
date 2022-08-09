@@ -67,7 +67,12 @@ public class CharacterGameObj : GameObj {
         if (curWeapId == 0) {
             return;
         }
-        //
+
+        if (false) {
+            return;
+        }
+        
+        //加载子弹 从
     }
 
     private void Aim() {
