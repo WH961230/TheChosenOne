@@ -64,7 +64,8 @@ public class CharacterGameObj : GameObj {
 
     private void Fire() {
         var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
-        if (curWeapId == 0) {
+        var curWeapNull = curWeapId == 0;
+        if (curWeapNull) {
             return;
         }
 
@@ -73,6 +74,7 @@ public class CharacterGameObj : GameObj {
         }
         
         //加载子弹 从
+        MyGame.MyGameSystem.MyEffectSystem.InstanceEffect();
     }
 
     private void Aim() {

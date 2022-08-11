@@ -30,4 +30,6 @@
     public const string SOWeaponSettingPath = "MyConfigs/MySO/SOWeaponSetting";
     public const string SOEquipmentSettingPath = "MyConfigs/MySO/SOEquipmentSetting";
     public const string SOConsumeSettingPath = "MyConfigs/MySO/SOConsumeSetting";
+    public const string SOBulletSettingPath = "MyConfigs/MySO/SOBulletSetting";
+    public const string SOEffectSettingPath = "MyConfigs/MySO/SOEffectSetting";
 }

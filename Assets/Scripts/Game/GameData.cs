@@ -12,6 +12,7 @@ public static class GameData {
     public static Transform CameraRoot;
     public static Transform LightRoot;
     public static Transform EntityRoot;
+    public static Transform EffectRoot;
 
     public static Light MainLight;
 

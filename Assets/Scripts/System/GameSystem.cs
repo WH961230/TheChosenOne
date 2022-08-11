@@ -97,6 +97,22 @@ public class GameSystem {
         }
     }
 
+    private BulletSystem bulletSystem = new BulletSystem();
+
+    public BulletSystem MyBulletSystem {
+        get {
+            return bulletSystem;
+        }
+    }
+    
+    private EffectSystem effectSystem = new EffectSystem();
+
+    public EffectSystem MyEffectSystem {
+        get {
+            return effectSystem;
+        }
+    }
+
     public List<GameSys> systems = new List<GameSys>();
 
     #endregion
@@ -112,11 +128,13 @@ public class GameSystem {
     public void Init(Game game) {
         this.game = game;
         environmentSystem.Init(this);
+        effectSystem.Init(this);
         itemSystem.Init(this);
         cameraSystem.Init(this);
         characterSystem.Init(this);
         equipmentSystem.Init(this);
         weaponSystem.Init(this);
+        bulletSystem.Init(this);
         consumeSystem.Init(this);
         inputSystem.Init(this);
         audioSystem.Init(this);
@@ -127,11 +145,13 @@ public class GameSystem {
 
     public void Update() {
         environmentSystem.Update();
+        effectSystem.Update();
         itemSystem.Update();
         cameraSystem.Update();
         characterSystem.Update();
         equipmentSystem.Update();
         weaponSystem.Update();
+        bulletSystem.Update();
         consumeSystem.Update();
         inputSystem.Update();
         audioSystem.Update();
@@ -142,11 +162,13 @@ public class GameSystem {
 
     public void FixedUpdate() {
         environmentSystem.FixedUpdate();
+        effectSystem.FixedUpdate();
         itemSystem.FixedUpdate();
         cameraSystem.FixedUpdate();
         characterSystem.FixedUpdate();
         equipmentSystem.FixedUpdate();
         weaponSystem.FixedUpdate();
+        bulletSystem.FixedUpdate();
         consumeSystem.FixedUpdate();
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
@@ -157,11 +179,13 @@ public class GameSystem {
 
     public void LateUpdate() {
         environmentSystem.LateUpdate();
+        effectSystem.LateUpdate();
         itemSystem.LateUpdate();
         cameraSystem.LateUpdate();
         characterSystem.LateUpdate();
         equipmentSystem.LateUpdate();
         weaponSystem.LateUpdate();
+        bulletSystem.LateUpdate();
         consumeSystem.LateUpdate();
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
@@ -172,11 +196,13 @@ public class GameSystem {
 
     public void Clear() {
         environmentSystem.Clear();
+        effectSystem.Clear();
         itemSystem.Clear();
         cameraSystem.Clear();
         characterSystem.Clear();
         equipmentSystem.Clear();
         weaponSystem.Clear();
+        bulletSystem.Clear();
         consumeSystem.Clear();
         inputSystem.Clear();
         audioSystem.Clear();
