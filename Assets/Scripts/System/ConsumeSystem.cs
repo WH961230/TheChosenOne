@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class ConsumeSystem : GameSys {
     public override void Init(GameSystem gameSystem) {
@@ -23,12 +24,15 @@ public class ConsumeSystem : GameSys {
 
     #region 增
 
-    public ConsumeData InstanceConsume() {
+    public ConsumeData InstanceConsume(Vector3 point, Quaternion rot) {
         var index = UnityEngine.Random.Range(0, SOData.MyConsumeSetting.ConsumeParameterInfos.Count);
         var consumeData = new ConsumeData() {
             MyName = "Consume",
             MyObj = UnityEngine.Object.Instantiate(SOData.MyConsumeSetting.ConsumeParameterInfos[index].Prefab),
-            IsDefaultClose = true,
+            MyTranInfo = new TranInfo() {
+                MyPos = point,
+                MyRot = rot,
+            },
             MyRootTran = GameData.ConsumeRoot,
         };
         InstanceConsume(consumeData);
@@ -37,6 +41,22 @@ public class ConsumeSystem : GameSys {
 
     private void InstanceConsume(ConsumeData consumeData) {
         MyGameSystem.InstanceGameObj<ConsumeGameObj, ConsumeEntity>(consumeData);
+    }
+
+    #endregion
+
+    #region 查
+
+    public ConsumeGameObj GetConsumeGameObj(int id) {
+        return MyGameSystem.MyGameObjFeature.Get<ConsumeGameObj>(id);
+    }
+
+    public ConsumeComponent GetConsumeComponent(int id) {
+        return GetConsumeGameObj(id).GetComponent<ConsumeComponent>();
+    }
+
+    public ConsumeData GetConsumeData(int id) {
+        return GetConsumeGameObj(id).GetData<ConsumeData>();
     }
 
     #endregion

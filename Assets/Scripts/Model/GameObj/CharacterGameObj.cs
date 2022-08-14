@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Runtime.ExceptionServices;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterGameObj : GameObj {
@@ -69,16 +70,17 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        if (false) {
-            return;
-        }
-        
-        //加载子弹 从
-        MyGame.MyGameSystem.MyEffectSystem.InstanceEffect();
+        var weaponData = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId);
+        //加载子弹
+        MyGame.MyGameSystem.MyEffectSystem.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
+        EditorApplication.isPaused = true;
     }
 
     private void Aim() {
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        // 获取当前武器
+        // var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId)
+            .GetCurWeaponId();
         if (curWeapId == 0) {
             return;
         }
@@ -89,7 +91,6 @@ public class CharacterGameObj : GameObj {
 
         if (isAim) {
             // 开启角色模型
-            SetHoldWeaponModel(curWeapComponent.MyWeaponSign);
             SetCharacterMeshActive(true);
 
             // 调整 CharacterCamera FOV 为 配置【相机默认】 FOV
@@ -105,7 +106,6 @@ public class CharacterGameObj : GameObj {
         } else {
             // 隐藏角色模型
             SetCharacterMeshActive(false);
-            SetHoldWeaponModel("");
 
             // 调整 CharacterCamera 【开镜 FOV】
             characterCameraFOVTarget = SOData.MySOCameraSetting.CharacterCameraAimFOV;
@@ -138,6 +138,7 @@ public class CharacterGameObj : GameObj {
         }
     }
 
+    // 设置武器模型
     public void SetHoldWeaponModel(string weaponSign) {
         foreach (var curWeap in characterComponent.MyHoldWeapons) {
             if (curWeap.name.Equals(weaponSign)) {
@@ -146,6 +147,30 @@ public class CharacterGameObj : GameObj {
                 curWeap.SetActive(false);
             }
         }
+    }
+
+    /// <summary>
+    /// 装载当前武器 到角色武器挂点
+    /// </summary>
+    public void InstallCurWeapon(int weapId) {
+        if (weapId == 0) {
+            return;
+        }
+
+        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId);
+        var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
+        var weaponPlace = characterComponent.MyWeaponPlace;
+        weapGameObj.SetWeaponPlace(weaponPlace, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
+    }
+
+    public void UnInstallCurWeapon(int weapId) {
+        if (weapId == 0) {
+            return;
+        }
+
+        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId);
+        var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
+        weapGameObj.SetWeaponPlace(GameData.WeaponRoot, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
     }
 
     private void CharacterAnimation() {

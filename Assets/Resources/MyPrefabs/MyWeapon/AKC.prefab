@@ -349,8 +349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee4cd39ebb8b954c8b325ee44f1e8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RegisterAnimator: {fileID: 0}
+  MySign: AKC
   MyWeaponSign: AKC
   MyWeaponType: 0
+  MyWeaponRotation: {fileID: 0}
+  MyWeaponPosition: {fileID: 0}
 --- !u!1 &8786039059326748090
 GameObject:
   m_ObjectHideFlags: 0

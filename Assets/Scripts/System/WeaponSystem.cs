@@ -38,19 +38,12 @@ public class WeaponSystem : GameSys {
     public WeaponData GetWeaponData(int id) {
         return GetWeaponEntity(id).GetData<WeaponData>();
     }
-    public WeaponType GetWeaponType(int id) {
-        return GetWeaponComponent(id).MyWeaponType;
-    }
-
-    public string GetWeaponSign(int id) {
-        return GetWeaponComponent(id).MyWeaponSign;
-    }
 
     #endregion
 
     #region 增
 
-    public WeaponData InstanceWeapon() {
+    public WeaponData InstanceWeapon(Vector3 point, Quaternion rot) {
         if (GameData.WeaponCameraId == 0) {
             GameData.WeaponCameraId = MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.WeaponCamera);
         }
@@ -60,7 +53,10 @@ public class WeaponSystem : GameSys {
         var weaponData = new WeaponData() {
             MyName = "Weapon",
             MyObj = Object.Instantiate(param.Prefab),
-            IsDefaultClose = true,
+            MyTranInfo = new TranInfo() {
+                MyPos = point,
+                MyRot = rot,
+            },
             WeaponCameraAimPoint = param.WeaponCameraAimPoint,
             WeaponCameraAimFOV = param.WeaponCameraAimFOV,
             MyRootTran = GameData.WeaponRoot,

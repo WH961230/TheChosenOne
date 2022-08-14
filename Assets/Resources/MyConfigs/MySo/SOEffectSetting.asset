@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4f879b5374a0724cb70a60a304c4b63, type: 3}
   m_Name: SOEffectSetting
   m_EditorClassIdentifier: 
-  MyBulletFX: {fileID: 4645191556672529737, guid: 01673593e0206ea4db0fca19f08dfe45,
+  MyBulletFX: {fileID: 2203231217277922853, guid: af7b8aea7f5614d49a9f6f45ac92d98f,
     type: 3}

@@ -44,10 +44,51 @@ public class GameObj : IGameObj {
         MyObj.SetActive(false);
     }
 
-    public virtual void Drop(Vector3 point) {
-        LogSystem.Print("丢弃到玩家脚下 id: " + MyData.InstanceID);
+    /// <summary>
+    /// 装载
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="point"></param>
+    /// <param name="rot"></param>
+    /// <param name="isLocal"></param>
+    public virtual void Install(Transform root, Vector3 point, Quaternion rot, bool isLocal) {
+        LogSystem.Print("装载 id: " + MyData.InstanceID);
+        // 显示
         Display();
-        MyObj.transform.position = point;
+        // 设置父节点
+        MyObj.transform.SetParent(root);
+        // 设置位置
+        if (isLocal) {
+            MyObj.transform.localPosition = point;
+            MyObj.transform.localRotation = rot;
+        } else {
+            MyObj.transform.position = point;
+            MyObj.transform.rotation = rot;
+        }
+    }
+
+    /// <summary>
+    /// 卸载
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="point"></param>
+    /// <param name="rot"></param>
+    /// <param name="isLocal"></param>
+    public virtual void UnInstall(Transform root, Vector3 point, Quaternion rot, bool isLocal) {
+        LogSystem.Print("卸载 id: " + MyData.InstanceID);
+        // 设置父节点
+        MyObj.transform.SetParent(root);
+        // 设置位置
+        if (isLocal) {
+            MyObj.transform.localPosition = point;
+            MyObj.transform.localRotation = rot;
+        } else {
+            MyObj.transform.position = point;
+            MyObj.transform.rotation = rot;
+        }
+
+        // 隐藏
+        Hide();
     }
 
     public virtual void Clear() {

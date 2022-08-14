@@ -5,10 +5,14 @@ public class EffectSystem : GameSys {
         base.Init(gameSystem);
     }
 
-    public void InstanceEffect() {
+    public void InstanceEffect(Vector3 point, Quaternion rot) {
         EffectData data = new EffectData() {
             MyName = "Effect",
             MyObj = Object.Instantiate(SOData.MyEffectSetting.MyBulletFX),
+            MyTranInfo = new TranInfo() {
+                MyPos = point,
+                MyRot = rot,
+            },
             MyRootTran = GameData.EffectRoot,
         };
 

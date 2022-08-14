@@ -5,7 +5,7 @@
         base.Init(game, data);
         equipmentData = (EquipmentData)data;
         equipmentComponent = (EquipmentComponent) MyComponent;
-        equipmentData.MySign = equipmentComponent.MyEquipmentSign;
+        equipmentData.MySign = equipmentComponent.MySign;
         equipmentData.MyLevel = equipmentComponent.MyEquipmentLevel;
     }
 

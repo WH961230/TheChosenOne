@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe4738dcb3bef844be54e3358d73bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyEquipmentSign: "\u80CC\u5305"
+  RegisterAnimator: {fileID: 0}
+  MySign: "\u4E00\u7EA7\u5305"
   MyEquipmentType: 2
   MyEquipmentLevel: 1

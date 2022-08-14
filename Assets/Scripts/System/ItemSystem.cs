@@ -40,21 +40,7 @@ public class ItemSystem : GameSys {
     /// </summary>
     public void InstanceMapItem() {
         foreach (var item in SOData.MySOItemSetting.MyMapInfo) {
-            var templateInfo = SOData.MySOItemSetting.GetItemInfoByType(item.MyItemType);
-            var obj = templateInfo[Random.Range(0, templateInfo.Count)];
-            if (InstanceItemByItemType(item.MyItemType, out int id, out string itemSign)) {
-                InstanceItem(new ItemData() {
-                    MyName = obj.MyItemPrefab.name,
-                    MyObj = Object.Instantiate(obj.MyItemPrefab),
-                    MyItemId = id,
-                    MyRootTran = GameData.ItemRoot,
-                    MyTranInfo = new TranInfo() {
-                        MyPos = item.Point, MyRot = item.Quaternion,
-                    },
-                    MyItemType = item.MyItemType,
-                    MyItemSign = itemSign,
-                });
-            }
+            InstanceItemByItemType(item.MyItemType, item.Point, item.Quaternion);
         }
     }
 
@@ -63,39 +49,32 @@ public class ItemSystem : GameSys {
     /// </summary>
     /// <param name="type"></param>
     /// <returns>物品 id</returns>
-    private bool InstanceItemByItemType(ItemType type, out int id, out string itemSign) {
-        Data data;
+    private void InstanceItemByItemType(ItemType type, Vector3 point, Quaternion rot) {
         switch (type) {
             case ItemType.CONSUME:
-                data = MyGameSystem.MyConsumeSystem.InstanceConsume();
-                id = data.InstanceID;
-                itemSign = data.MyName;
-                return true;
+                MyGameSystem.MyConsumeSystem.InstanceConsume(point, rot);
+                return;
             case ItemType.EQUIPMENT:
-                data = MyGameSystem.MyEquipmentSystem.InstanceEquipment();
-                id = data.InstanceID;
-                itemSign = data.MyName;
-                return true;
+                MyGameSystem.MyEquipmentSystem.InstanceEquipment(point, rot);
+                return;
             case ItemType.WEAPON:
-                data = MyGameSystem.MyWeaponSystem.InstanceWeapon();
-                id = data.InstanceID;
-                itemSign = data.MyName;
-                return true;
+                MyGameSystem.MyWeaponSystem.InstanceWeapon(point, rot);
+                return;
         }
-
-        id = default;
-        itemSign = default;
-        return false;
-    }
-
-    /// <summary>
-    /// 实例化物品
-    /// </summary>
-    /// <param name="itemData"></param>
-    /// <returns>物品 id</returns>
-    private int InstanceItem(ItemData itemData) {
-        return MyGameSystem.InstanceGameObj<ItemGameObj, ItemEntity>(itemData);
     }
 
     #endregion
+
+    public string GetItemSign(int layer, int id) {
+        switch (layer) {
+            case LayerData.EquipmentLayer:
+                return MyGameSystem.MyEquipmentSystem.GetEquipmentComponent(id).MySign;
+            case LayerData.ConsumeLayer:
+                return MyGameSystem.MyConsumeSystem.GetConsumeComponent(id).MySign;
+            case LayerData.WeaponLayer:
+                return MyGameSystem.MyWeaponSystem.GetWeaponComponent(id).MySign;
+        }
+
+        return "";
+    }
 }

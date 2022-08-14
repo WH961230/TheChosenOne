@@ -434,6 +434,7 @@ Transform:
   - {fileID: 3844867998553951848}
   - {fileID: 3838385757362770710}
   - {fileID: 3838649708614634506}
+  - {fileID: 8531303405564187153}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -510,10 +511,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee4cd39ebb8b954c8b325ee44f1e8ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RegisterAnimator: {fileID: 0}
+  MySign: AK47
   MyWeaponSign: AK47
   MyWeaponType: 0
   MyWeaponRotation: {fileID: 6546857867194901627}
   MyWeaponPosition: {fileID: 8780479599498867080}
+  MyFirePos: {fileID: 8531303405564187153}
 --- !u!114 &6546857867194901627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,3 +675,33 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &7424234355853254353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8531303405564187153}
+  m_Layer: 12
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8531303405564187153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7424234355853254353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1005, z: 0.769}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3838437836059769340}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

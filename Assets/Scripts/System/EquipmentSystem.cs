@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class EquipmentSystem : GameSys {
@@ -78,12 +79,15 @@ public class EquipmentSystem : GameSys {
         }
     }
 
-    public EquipmentData InstanceEquipment() {
+    public EquipmentData InstanceEquipment(Vector3 point, Quaternion rot) {
         var index = UnityEngine.Random.Range(0, SOData.MySOEquipmentSetting.MyEquipmentParameterInfo.Count);
         var equipmentData = new EquipmentData() {
             MyName = "Equipment",
             MyObj = UnityEngine.Object.Instantiate(SOData.MySOEquipmentSetting.MyEquipmentParameterInfo[index].Prefab),
-            IsDefaultClose = true,
+            MyTranInfo = new TranInfo() {
+                MyPos = point,
+                MyRot = rot,
+            },
             MyRootTran = GameData.EquipmentRoot,
         };
         InstanceEquipment(equipmentData);

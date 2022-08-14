@@ -7,7 +7,14 @@ public class WeaponGameObj : GameObj {
         base.Init(game, data);
         weaponData = (WeaponData)data;
         weaponComponent = (WeaponComponent) MyComponent;
-        weaponData.MyWeaponSign = weaponComponent.MyWeaponSign;
+        weaponData.MyFirePos = weaponComponent.MyFirePos;
+        weaponData.MyWeaponSign = weaponComponent.MySign;
         weaponData.MyWeaponType = weaponComponent.MyWeaponType;
+    }
+
+    public void SetWeaponPlace(Transform weaponPlace, Vector3 point, Quaternion rot) {
+        weaponData.MyObj.gameObject.transform.SetParent(weaponPlace);
+        weaponData.MyObj.transform.localPosition = point;
+        weaponData.MyObj.transform.localRotation = rot;
     }
 }

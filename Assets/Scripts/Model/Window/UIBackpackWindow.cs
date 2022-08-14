@@ -89,7 +89,6 @@ public class UIBackpackWindow : Window {
         for (int i = 0; i < MyUibackpackComponent.MyUIBackpackConsumeImages.Count; i++) {
             int ii = i;
             MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.onClick.AddListener(() => {
-                DropSceneItem(ii);
                 RefreshSceneItem();
             });
         }
@@ -107,11 +106,6 @@ public class UIBackpackWindow : Window {
     private void DropSideWeapon() {
         var backpackEntity = GetBackpackEntity();
         backpackEntity.DropSideWeapon();
-    }
-
-    private void DropSceneItem(int index) {
-        var backpackEntity = GetBackpackEntity();
-        backpackEntity.DropSceneItem(index);
     }
 
     private void DropEquipment(int index) {
