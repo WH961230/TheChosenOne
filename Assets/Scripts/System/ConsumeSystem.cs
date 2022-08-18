@@ -52,11 +52,11 @@ public class ConsumeSystem : GameSys {
     }
 
     public ConsumeComponent GetConsumeComponent(int id) {
-        return GetConsumeGameObj(id).GetComponent<ConsumeComponent>();
+        return GetConsumeGameObj(id).GetComp<ConsumeComponent>();
     }
 
     public ConsumeData GetConsumeData(int id) {
-        return GetConsumeGameObj(id).GetData<ConsumeData>();
+        return GetEntity<ConsumeEntity>(id).GetData<ConsumeData>();
     }
 
     #endregion

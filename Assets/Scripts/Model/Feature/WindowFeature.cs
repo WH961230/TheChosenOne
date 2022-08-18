@@ -22,9 +22,9 @@
     }
 
     // 窗口注册 自动注入 物体注册
-    public void Register<T>(Data data) where T : IWindow, new() {
+    public void Register<T>(GameObj go) where T : IWindow, new() {
         // LogSystem.Print($"注册 Window => data.Name: {data.MyName}");
-        windowManager.Register<T>(game, data);
+        windowManager.Register<T>(game, go);
     }
 
     public void Remove<T>() where T : IWindow {

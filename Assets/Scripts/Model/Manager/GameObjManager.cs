@@ -4,11 +4,12 @@ public class GameObjManager : IManager {
     private Dictionary<int, GameObj> gameObjDict = new Dictionary<int, GameObj>();
     private List<GameObj> gameObjs = new List<GameObj>();
 
-    public void Register<T>(Game game, Data data) where T : GameObj, new() {
-        GameObj instance = new T();
+    public T Register<T>(Game game, Data data) where T : GameObj, new() {
+        T instance = new T();
         gameObjDict.Add(data.InstanceID, instance);
         gameObjs.Add(instance);
         instance.Init(game, data);
+        return instance;
     }
 
     public void Remove(int id) {
@@ -18,15 +19,6 @@ public class GameObjManager : IManager {
             gameObjDict.Remove(id);
             gameObjs.RemoveAt(index);
             instance.Clear();
-        }
-    }
-
-    public void Remove(GameObj entity) {
-        int index = Find(entity);
-        if (index != -1) {
-            gameObjDict.Remove(entity.MyData.InstanceID);
-            gameObjs.RemoveAt(index);
-            entity.Clear();
         }
     }
 

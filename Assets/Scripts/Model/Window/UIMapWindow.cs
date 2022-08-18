@@ -1,15 +1,15 @@
 ﻿public class UIMapWindow : Window {
-    private UIMapComponent uimapComponent;
-    public override void Init(Game game, Data data) {
-        var obj = game.MyGameObjFeature.Get<UIMapGameObj>(data.InstanceID).MyData.MyObj;
-        uimapComponent = obj.transform.GetComponent<UIMapComponent>();
-        uimapComponent.UIMapMaxClose.onClick.AddListener(() => {
-            uimapComponent.UIMapMax.SetActive(false);
-            uimapComponent.UIMapMin.SetActive(true);
+    private UIMapComponent MyComp;
+    public override void Init(Game game, GameObj gameObj) {
+        base.Init(game, gameObj);
+        MyComp = gameObj.GetComp<UIMapComponent>();
+        MyComp.UIMapMaxClose.onClick.AddListener(() => {
+            MyComp.UIMapMax.SetActive(false);
+            MyComp.UIMapMin.SetActive(true);
         });
-        uimapComponent.UIMapMinButton.onClick.AddListener(() => {
-            uimapComponent.UIMapMin.SetActive(false);
-            uimapComponent.UIMapMax.SetActive(true);
+        MyComp.UIMapMinButton.onClick.AddListener(() => {
+            MyComp.UIMapMin.SetActive(false);
+            MyComp.UIMapMax.SetActive(true);
         });
     }
 

@@ -1,10 +1,12 @@
 ﻿public class Window : IWindow {
-    public Data MyData;
     public Game MyGame;
+    public GameObj MyGameObj;
+    public GameComp MyComp;
 
-    public virtual void Init(Game game, Data data) {
-        this.MyData = data;
-        this.MyGame = game;
+    public virtual void Init(Game game, GameObj gameObj) {
+        MyGame = game;
+        MyGameObj = gameObj;
+        MyComp = gameObj.GetComp();
     }
 
     public virtual void Open() {

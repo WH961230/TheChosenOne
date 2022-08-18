@@ -1,10 +1,9 @@
 ﻿public class UITipWindow : Window {
-    private UITipComponent uitipComponent;
-    public override void Init(Game game, Data data) {
-        base.Init(game, data);
-        var obj = game.MyGameObjFeature.Get<UITipGameObj>(data.InstanceID).MyData.MyObj;
-        uitipComponent = obj.transform.GetComponent<UITipComponent>();
-        uitipComponent.MyTip.SetActive(false);
+    private UITipComponent MyComp;
+    public override void Init(Game game, GameObj gameObj) {
+        base.Init(game, gameObj);
+        MyComp = gameObj.GetComp<UITipComponent>();
+        MyComp.MyTip.SetActive(false);
         MyGame.MyGameMessageCenter.Register<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
     }
 
@@ -14,11 +13,11 @@
     }
 
     public override void Open() {
-        uitipComponent.MyTip.SetActive(true);
+        MyComp.MyTip.SetActive(true);
     }
 
     public override void Update() {
-        if (string.IsNullOrEmpty(uitipComponent.MyTipName.text) || string.IsNullOrEmpty(uitipComponent.MyTipKeycode.text)) {
+        if (string.IsNullOrEmpty(MyComp.MyTipName.text) || string.IsNullOrEmpty(MyComp.MyTipKeycode.text)) {
             Close();
         } else {
             Open();
@@ -26,7 +25,7 @@
     }
 
     public override void Close() {
-        uitipComponent.MyTip.SetActive(false);
+        MyComp.MyTip.SetActive(false);
     }
 
     private void MsgSetTipDescription(UITipType tipType, string description) {
@@ -36,10 +35,10 @@
     public void SetTipDescription(UITipType tipType, string description) {
         switch (tipType) {
             case UITipType.ItemNameTip:
-                uitipComponent.MyTipName.text = description;
+                MyComp.MyTipName.text = description;
                 break;
             case UITipType.ItemKeycode:
-                uitipComponent.MyTipKeycode.text = description;
+                MyComp.MyTipKeycode.text = description;
                 break;
         }
     }

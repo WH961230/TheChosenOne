@@ -4,16 +4,8 @@
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         equipmentData = (EquipmentData)data;
-        equipmentComponent = (EquipmentComponent) MyComponent;
+        equipmentComponent = (EquipmentComponent) MyComp;
         equipmentData.MySign = equipmentComponent.MySign;
         equipmentData.MyLevel = equipmentComponent.MyEquipmentLevel;
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
     }
 }

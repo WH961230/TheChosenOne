@@ -1,36 +1,35 @@
 ﻿using UnityEngine;
 
 public class GameObj : IGameObj {
-    public Data MyData;
-    protected GameComp MyComponent; // 组件
-    protected Game MyGame;
+    protected GameComp MyComp; // 组件
     protected GameObject MyObj;
+    protected Game MyGame;
 
     public virtual void Init(Game game, Data data) {
-        this.MyGame = game;
-        this.MyData = data;
+        MyGame = game;
 
-        // 设置物体
+        // 物体
         MyObj = data.MyObj;
-        MyObj.name = this.MyData.MyName = string.Concat(this.MyData.MyName, this.MyData.InstanceID);
-        MyObj.transform.SetParent(MyData.MyRootTran);
+        MyObj.transform.SetParent(data.MyRootTran);
+        MyObj.transform.localPosition = data.MyTranInfo.MyPos; // 物体位置
+        MyObj.transform.localRotation = data.MyTranInfo.MyRot;
 
-        // 获取组件
-        MyComponent = MyObj.transform.GetComponent<GameComp>();
+        MyObj.name = data.MyName = string.Concat(data.MyName, data.InstanceID);
 
-        // 注册动画状态机
-        if (MyComponent && null != MyComponent.RegisterAnimator) {
-            MyGame.MyGameSystem.MyAnimatorSystem.GetEntity().RegisterAnimator(MyData.InstanceID, MyComponent.RegisterAnimator);
-        }
+        // 组件
+        var comp = MyObj.transform.GetComponent<GameComp>();
+        MyComp = comp;
 
-        // 是否初始化物体位置
-        if (data.IfInitMyObj) {
-            MyObj.transform.localPosition = MyData.MyTranInfo.MyPos;
-            MyObj.transform.localRotation = MyData.MyTranInfo.MyRot;
+        // 动画状态机
+        if (comp && null != comp.RegisterAnimator) {
+            var entity = MyGame.MyGameSystem.MyAnimatorSystem.GetEntity<AnimatorEntity>(GameData.AnimatorId);
+            entity.RegisterAnimator(data.InstanceID, comp.RegisterAnimator);
         }
 
         // 是否默认关闭
-        if (data.IsDefaultClose) {
+        if (data.IsActive) {
+            Display();
+        } else {
             Hide();
         }
     }
@@ -40,42 +39,27 @@ public class GameObj : IGameObj {
     }
 
     public virtual void Hide() {
-        LogSystem.Print("拾取隐藏 id: " + MyData.InstanceID);
         MyObj.SetActive(false);
     }
 
-    /// <summary>
-    /// 装载
-    /// </summary>
-    /// <param name="root"></param>
-    /// <param name="point"></param>
-    /// <param name="rot"></param>
-    /// <param name="isLocal"></param>
-    public virtual void Install(Transform root, Vector3 point, Quaternion rot, bool isLocal) {
-        LogSystem.Print("装载 id: " + MyData.InstanceID);
-        // 显示
-        Display();
-        // 设置父节点
-        MyObj.transform.SetParent(root);
-        // 设置位置
-        if (isLocal) {
-            MyObj.transform.localPosition = point;
-            MyObj.transform.localRotation = rot;
+    public virtual void SetDir(Quaternion dir, bool local = false) {
+        if (local) {
+            MyObj.transform.localRotation = dir;
         } else {
-            MyObj.transform.position = point;
-            MyObj.transform.rotation = rot;
+            MyObj.transform.rotation = dir;
         }
     }
 
-    /// <summary>
-    /// 卸载
-    /// </summary>
-    /// <param name="root"></param>
-    /// <param name="point"></param>
-    /// <param name="rot"></param>
-    /// <param name="isLocal"></param>
+    public virtual void SetPos(Vector3 position, bool local = false) {
+        if (local) {
+            MyObj.transform.localPosition = position;
+        } else {
+            MyObj.transform.position = position;
+        }
+    }
+
+    // 卸载
     public virtual void UnInstall(Transform root, Vector3 point, Quaternion rot, bool isLocal) {
-        LogSystem.Print("卸载 id: " + MyData.InstanceID);
         // 设置父节点
         MyObj.transform.SetParent(root);
         // 设置位置
@@ -94,14 +78,6 @@ public class GameObj : IGameObj {
     public virtual void Clear() {
     }
 
-    public T GetData<T>() where T : Data {
-        return (T)MyData;
-    }
-
-    public T GetComponent<T>() where T : GameComp {
-        return (T) MyComponent;
-    }
-
     public virtual void Update() {
     }
 
@@ -109,5 +85,13 @@ public class GameObj : IGameObj {
     }
 
     public virtual void LateUpdate() {
+    }
+
+    public GameComp GetComp() {
+        return MyComp;
+    }
+
+    public T GetComp<T>() where T : GameComp {
+        return (T) MyComp;
     }
 }

@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 
 public class UIMainWindow : Window {
-    public UIMainComponent MyUiMainComponent;
-    private UIMainGameObj uiMainGameObj;
+    private UIMainGameObj MyGameObj;
+    private UIMainComponent MyComp;
 
-    public override void Init(Game game, Data data) {
-        base.Init(game, data);
+    public override void Init(Game game, GameObj gameObj) {
+        base.Init(game, gameObj);
         // 初始化界面
-        uiMainGameObj = MyGame.MyGameObjFeature.Get<UIMainGameObj>(data.InstanceID);
-        MyUiMainComponent = uiMainGameObj.MyData.MyObj.transform.GetComponent<UIMainComponent>();
+        MyGameObj = (UIMainGameObj)gameObj;
+        MyComp = (UIMainComponent)base.MyComp;
 
+        // 加载相机
+        MyGame.MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCamera);
+
+        // 取消鼠标可视化
         Cursor.visible = false;
-        
+
         // 默认界面开启
         Open();
-        MyUiMainComponent.MyButton.onClick.AddListener(() => {
+        MyComp.MyButton.onClick.AddListener(() => {
             // 加载 DebugUI
             MyGame.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
 
@@ -26,7 +30,7 @@ public class UIMainWindow : Window {
             // 加载灯光
             MyGame.MyGameSystem.MyEnvironmentSystem.InstanceLight();
 
-            // 加载建筑、地面
+            // 加载建筑、地面bb
             MyGame.MyGameSystem.MyEnvironmentSystem.InstanceMapBuilding();
 
             // 加载场景可拾取物体
@@ -56,18 +60,18 @@ public class UIMainWindow : Window {
             Close();
         });
 
-        MyUiMainComponent.MyButton.onClick.Invoke();
+        MyComp.MyButton.onClick.Invoke();
     }
 
     public override void Open() {
-        uiMainGameObj.Display();
+        MyGameObj.Display();
     }
 
     public override void Update() {
     }
 
     public override void Close() {
-        uiMainGameObj.Hide();
+        MyGameObj.Hide();
     }
 
     public override void Clear() {

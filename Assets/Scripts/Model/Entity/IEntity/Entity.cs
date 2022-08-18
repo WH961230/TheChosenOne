@@ -1,12 +1,8 @@
 ﻿public abstract class Entity : IEntity {
     public Data Data;
-    protected GameObjFeature gameObjFeature;
-    protected EntityFeature entityFeature;
     protected Game MyGame;
     public virtual void Init(Game game, Data data) {
         this.MyGame = game;
-        this.entityFeature = game.MyEntityFeature;
-        this.gameObjFeature = game.MyGameObjFeature;
         this.Data = data;
     }
 

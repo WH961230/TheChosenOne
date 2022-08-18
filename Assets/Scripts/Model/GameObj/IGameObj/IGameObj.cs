@@ -4,5 +4,4 @@
     void FixedUpdate();
     void LateUpdate();
     void Clear();
-    T GetData<T>() where T : Data ;
 }

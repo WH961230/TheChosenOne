@@ -21,7 +21,6 @@ public class AnimatorSystem : GameSys {
         base.LateUpdate();
     }
 
-
     #region 增
 
     public AnimatorData InstanceAnimator() {
@@ -29,7 +28,7 @@ public class AnimatorSystem : GameSys {
             MyName = "Animator", 
             MyObj = new GameObject("Animator"), 
             MyRootTran = GameData.EntityRoot, 
-            IsDefaultClose = true,
+            IsActive = false,
         };
 
         InstanceAnimator(animatorData);

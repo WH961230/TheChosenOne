@@ -19,20 +19,8 @@ public class CameraGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         cameraData = (CameraData) data;
-        cameraComponent = (CameraComponent) MyComponent;
+        cameraComponent = (CameraComponent) MyComp;
         cameraTran = cameraData.MyObj.transform;
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
     }
 
     public override void LateUpdate() {

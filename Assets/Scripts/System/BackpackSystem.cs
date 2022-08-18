@@ -28,7 +28,7 @@ public class BackpackSystem : GameSys {
     }
 
     public BackpackComponent GetBackpackComponent(int id) {
-        return GetBackpackGameObj(id).GetComponent<BackpackComponent>();
+        return GetBackpackGameObj(id).GetComp<BackpackComponent>();
     }
 
     public BackpackEntity GetBackpackEntity(int id) {
@@ -44,7 +44,6 @@ public class BackpackSystem : GameSys {
             MyName = "Backpack",
             MyObj = new GameObject("backpackObj"),
             MyRootTran = GameData.CharacterRoot,
-            IfInitMyObj = false,
         });
     }
 

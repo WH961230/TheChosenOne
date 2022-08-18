@@ -1,27 +1,12 @@
 ﻿using UnityEngine;
 
 public class CameraSystem : GameSys {
-    private GameSystem gameSystem;
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-        this.gameSystem = gameSystem;
-        InstanceCamera(CameraType.MainCamera);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
     #region 增
 
     public int InstanceCamera(CameraType cameraType) {
         if (TryGetCameraObj(cameraType, out GameObject cameraObj)) {
             string name = "";
-            bool isDefaultClose = false;
+            bool isActiveTemp= true;
             // 赋值全局相机参数
             if (cameraType == CameraType.MainCamera) {
                 name = "MainCamera";
@@ -29,7 +14,7 @@ public class CameraSystem : GameSys {
                 name = "MainCharacterCamera";
             } else if (cameraType == CameraType.WeaponCamera) {
                 name = "WeaponCamera";
-                isDefaultClose = true;
+                isActiveTemp = false;
             }
 
             return InstanceCamera(new CameraData() {
@@ -37,7 +22,7 @@ public class CameraSystem : GameSys {
                 MyObj = Object.Instantiate(cameraObj),
                 MyRootTran = GameData.CameraRoot,
                 MyCameraType = cameraType,
-                IsDefaultClose = isDefaultClose,
+                IsActive = isActiveTemp,
             });
         }
 
@@ -45,7 +30,7 @@ public class CameraSystem : GameSys {
     }
 
     private int InstanceCamera(CameraData cameraData) {
-        return gameSystem.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
+        return MyGameSystem.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
     }
 
     #endregion
@@ -69,7 +54,7 @@ public class CameraSystem : GameSys {
     }
 
     public CameraComponent GetCameraComponent(int id) {
-        return GetCameraGameObj(id).GetComponent<CameraComponent>();
+        return GetCameraGameObj(id).GetComp<CameraComponent>();
     }
 
     public CameraGameObj GetWeaponCameraGameObj() {
@@ -77,7 +62,7 @@ public class CameraSystem : GameSys {
     }
 
     public CameraComponent GetWeaponCameraComponent() {
-        return GetWeaponCameraGameObj().GetComponent<CameraComponent>();
+        return GetWeaponCameraGameObj().GetComp<CameraComponent>();
     }
 
     #endregion

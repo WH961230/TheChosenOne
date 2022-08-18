@@ -4,12 +4,4 @@
         base.Init(game, data);
         ammoData = (AmmoData)data;
     }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
-    }
 }

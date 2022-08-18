@@ -24,7 +24,7 @@ public class ItemSystem : GameSys {
     }
 
     public ItemComponent GetItemComponent(int id) { // 实体 - 组件
-        return GetItemGameObj(id).GetComponent<ItemComponent>();
+        return GetItemGameObj(id).GetComp<ItemComponent>();
     }
 
     public ItemData GetItemData(int id) { // 组件 - 数据

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class UIBackpackWindow : Window {
-    public UIBackpackComponent MyUibackpackComponent;
+    public UIBackpackComponent comp;
 
     private CharacterData MyMainCharacterData {
         get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData(); }
@@ -9,10 +9,9 @@ public class UIBackpackWindow : Window {
 
     private bool IsOpenBackpackWindow;
 
-    public override void Init(Game game, Data data) {
-        base.Init(game, data);
-        var obj = game.MyGameObjFeature.Get<UIBackpackGameObj>(data.InstanceID).MyData.MyObj;
-        MyUibackpackComponent = obj.transform.GetComponent<UIBackpackComponent>();
+    public override void Init(Game game, GameObj gameObj) {
+        base.Init(game, gameObj);
+        comp = gameObj.GetComp<UIBackpackComponent>();
         MyGame.MyGameMessageCenter.Register<int>(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH, MsgRefresh);
         AddButtonListener();
     }
@@ -25,15 +24,15 @@ public class UIBackpackWindow : Window {
     public override void Update() {
         base.Update();
         if (MyGame.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Tab)) {
-            var window = MyUibackpackComponent.MyUIBackpackWindow;
+            var window = comp.MyUIBackpackWindow;
             if (IsOpenBackpackWindow) {
-                var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+                var openBtn = comp.MyUIBackpackBtn;
                 openBtn.gameObject.SetActive(true);
                 window.gameObject.SetActive(false);
                 MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
                 IsOpenBackpackWindow = false;
             } else {
-                var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+                var openBtn = comp.MyUIBackpackBtn;
                 window.gameObject.SetActive(true);
                 openBtn.gameObject.SetActive(false);
                 Refresh();
@@ -45,9 +44,9 @@ public class UIBackpackWindow : Window {
     #region 监听
 
     private void AddButtonListener() {
-        var window = MyUibackpackComponent.MyUIBackpackWindow;
+        var window = comp.MyUIBackpackWindow;
         window.gameObject.SetActive(false);
-        var openBtn = MyUibackpackComponent.MyUIBackpackBtn;
+        var openBtn = comp.MyUIBackpackBtn;
         openBtn.gameObject.SetActive(true);
         openBtn.onClick.AddListener(() => {
             window.gameObject.SetActive(true);
@@ -55,7 +54,7 @@ public class UIBackpackWindow : Window {
             Refresh();
             IsOpenBackpackWindow = true;
         });
-        var closeBtn = MyUibackpackComponent.MyUIBackpackCloseBtn;
+        var closeBtn = comp.MyUIBackpackCloseBtn;
         // 关闭界面
         closeBtn.onClick.AddListener(() => {
             openBtn.gameObject.SetActive(true);
@@ -63,7 +62,7 @@ public class UIBackpackWindow : Window {
             MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH);
             IsOpenBackpackWindow = false;
         });
-        var mainWeapon = MyUibackpackComponent.MyUIBackpackMainWeaponImages;
+        var mainWeapon = comp.MyUIBackpackMainWeaponImages;
         for (int i = 0; i < mainWeapon.Length; i++) {
             int ii = i;
             mainWeapon[i].MyButton.onClick.AddListener(() => {
@@ -72,12 +71,12 @@ public class UIBackpackWindow : Window {
             });
         }
 
-        var sideWeapon = MyUibackpackComponent.MyUIBackpackSideWeaponImage;
+        var sideWeapon = comp.MyUIBackpackSideWeaponImage;
         sideWeapon.MyButton.onClick.AddListener(() => {
             DropSideWeapon();
             RefreshWeapon();
         });
-        var equipment = MyUibackpackComponent.MyUIBackpackEquipmentImages;
+        var equipment = comp.MyUIBackpackEquipmentImages;
         for (int i = 0; i < equipment.Length; i++) {
             int ii = i;
             equipment[i].MyButton.onClick.AddListener(() => {
@@ -86,9 +85,9 @@ public class UIBackpackWindow : Window {
             });
         }
 
-        for (int i = 0; i < MyUibackpackComponent.MyUIBackpackConsumeImages.Count; i++) {
+        for (int i = 0; i < comp.MyUIBackpackConsumeImages.Count; i++) {
             int ii = i;
-            MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.onClick.AddListener(() => {
+            comp.MyUIBackpackConsumeImages[i].MyButton.onClick.AddListener(() => {
                 RefreshSceneItem();
             });
         }
@@ -159,7 +158,7 @@ public class UIBackpackWindow : Window {
                 sprite = null;
             }
 
-            MyUibackpackComponent.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
+            comp.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
         }
     }
 
@@ -174,7 +173,7 @@ public class UIBackpackWindow : Window {
                 sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MySprite;
             }
 
-            MyUibackpackComponent.MyUIBackpackMainWeaponImages[i].MyButton.image.sprite = sprite;
+            comp.MyUIBackpackMainWeaponImages[i].MyButton.image.sprite = sprite;
         }
 
         var sideWeaponid = backpackEntity.GetSideWeaponId();
@@ -183,7 +182,7 @@ public class UIBackpackWindow : Window {
             sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(sideWeaponid).MySprite;
         }
 
-        MyUibackpackComponent.MyUIBackpackSideWeaponImage.MyButton.image.sprite = sprite;
+        comp.MyUIBackpackSideWeaponImage.MyButton.image.sprite = sprite;
     }
 
     private void RefreshEquipment() {
@@ -196,7 +195,7 @@ public class UIBackpackWindow : Window {
                 sprite = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySprite;
             }
 
-            MyUibackpackComponent.MyUIBackpackEquipmentImages[i].MyButton.image.sprite = sprite;
+            comp.MyUIBackpackEquipmentImages[i].MyButton.image.sprite = sprite;
         }
     }
 

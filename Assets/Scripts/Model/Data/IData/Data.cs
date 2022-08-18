@@ -3,13 +3,14 @@
 public class Data : IData {
     // 基本参数
     public string MyName;
-    public bool IfInitMyObj = true; // 是否加载期间使用初始化位置信息 默认使用
-    public bool IsDefaultClose; // 是否默认关闭
 
     public GameObject MyObj; // 使用资源池的方式加载
     private MonoBehaviour MyComponent; // 组件
     public Transform MyRootTran; // 父物体
     public TranInfo MyTranInfo;
+    
+    // 物体参数
+    public bool IsActive = true; // 默认激活
 
     // id
     public int InstanceID = -1;

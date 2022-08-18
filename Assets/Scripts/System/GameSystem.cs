@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-public class GameSystem {
-    #region 上级
+﻿public class GameSystem {
+    #region 全局系统
 
     private Game game;
 
@@ -112,21 +110,12 @@ public class GameSystem {
             return effectSystem;
         }
     }
-
-    public List<GameSys> systems = new List<GameSys>();
-
-    #endregion
-
-    #region 消息
-
-    public GameMessageCenter MyGameMessageCenter {
-        get { return game.MyGameMessageCenter; }
-    }
-
+    
     #endregion
 
     public void Init(Game game) {
         this.game = game;
+        animatorSystem.Init(this);
         environmentSystem.Init(this);
         effectSystem.Init(this);
         itemSystem.Init(this);
@@ -139,11 +128,11 @@ public class GameSystem {
         inputSystem.Init(this);
         audioSystem.Init(this);
         backpackSystem.Init(this);
-        animatorSystem.Init(this);
         uISystem.Init(this);
     }
 
     public void Update() {
+        animatorSystem.Update();
         environmentSystem.Update();
         effectSystem.Update();
         itemSystem.Update();
@@ -156,11 +145,11 @@ public class GameSystem {
         inputSystem.Update();
         audioSystem.Update();
         backpackSystem.Update();
-        animatorSystem.Update();
         uISystem.Update();
     }
 
     public void FixedUpdate() {
+        animatorSystem.FixedUpdate();
         environmentSystem.FixedUpdate();
         effectSystem.FixedUpdate();
         itemSystem.FixedUpdate();
@@ -173,11 +162,11 @@ public class GameSystem {
         inputSystem.FixedUpdate();
         audioSystem.FixedUpdate();
         backpackSystem.FixedUpdate();
-        animatorSystem.FixedUpdate();
         uISystem.FixedUpdate();
     }
 
     public void LateUpdate() {
+        animatorSystem.LateUpdate();
         environmentSystem.LateUpdate();
         effectSystem.LateUpdate();
         itemSystem.LateUpdate();
@@ -190,11 +179,11 @@ public class GameSystem {
         inputSystem.LateUpdate();
         audioSystem.LateUpdate();
         backpackSystem.LateUpdate();
-        animatorSystem.LateUpdate();
         uISystem.LateUpdate();
     }
 
     public void Clear() {
+        animatorSystem.Clear();
         environmentSystem.Clear();
         effectSystem.Clear();
         itemSystem.Clear();
@@ -207,22 +196,21 @@ public class GameSystem {
         inputSystem.Clear();
         audioSystem.Clear();
         backpackSystem.Clear();
-        animatorSystem.Clear();
         uISystem.Clear();
     }
 
     public int InstanceWindow<T1, T2, T3>(Data data) where T1 : IWindow, new() where T2 : GameObj, new() where T3 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        game.MyGameObjFeature.Register<T2>(data);
-        game.MyWindowFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T3>(data);
+        var go = game.MyGameObjFeature.Register<T2>(data);
+        game.MyWindowFeature.Register<T1>(go);
         return data.InstanceID;
     }
 
     public int InstanceGameObj<T1, T2>(Data data) where T1 : GameObj, new() where T2 : Entity, new() {
         data.InstanceID = data.MyObj.GetInstanceID();
-        game.MyGameObjFeature.Register<T1>(data);
         game.MyEntityFeature.Register<T2>(data);
+        game.MyGameObjFeature.Register<T1>(data);
         return data.InstanceID;
     }
 

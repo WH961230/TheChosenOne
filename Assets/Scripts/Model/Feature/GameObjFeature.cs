@@ -25,17 +25,13 @@ public class GameObjFeature : IFeature {
     }
 
     // 物体注册 自动注入 实体注册
-    public void Register<T>(Data data) where T : GameObj, new() {
+    public T Register<T>(Data data) where T : GameObj, new() {
         // LogSystem.Print($"注册 GameObj => data.Name: {data.MyName}");
-        gameObjManager.Register<T>(game, data);
+        return gameObjManager.Register<T>(game, data);
     }
 
     public void Remove(int id) {
         gameObjManager.Remove(id);
-    }
-
-    public void Remove(GameObj gameObj) {
-        gameObjManager.Remove(gameObj);
     }
 
     public T Get<T>(int id) where T : GameObj, new() {

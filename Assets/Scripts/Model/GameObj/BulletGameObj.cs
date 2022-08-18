@@ -7,8 +7,4 @@ public class BulletGameObj : GameObj {
         base.Init(game, data);
         bulletData = (BulletData)data;
     }
-
-    public override void Clear() {
-        base.Clear();
-    }
 }

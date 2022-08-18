@@ -4,26 +4,6 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class EquipmentSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void LateUpdate() {
-        base.LateUpdate();
-    }
-
     #region 获取
 
     
@@ -33,11 +13,11 @@ public class EquipmentSystem : GameSys {
     }
 
     public EquipmentComponent GetEquipmentComponent(int id) {
-        return GetEquipmentGameObj(id).GetComponent<EquipmentComponent>();
+        return GetEquipmentGameObj(id).GetComp<EquipmentComponent>();
     }
 
     public EquipmentType GetEquipmentType(int id) {
-        return GetEquipmentGameObj(id).GetComponent<EquipmentComponent>().MyEquipmentType;
+        return GetEquipmentGameObj(id).GetComp<EquipmentComponent>().MyEquipmentType;
     }
 
     public EquipmentEntity GetEquipmentEntity(int id) {

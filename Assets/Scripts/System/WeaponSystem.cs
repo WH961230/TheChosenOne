@@ -1,26 +1,6 @@
 ﻿using UnityEngine;
 
 public class WeaponSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void LateUpdate() {
-        base.LateUpdate();
-    }
-
     #region 查
 
     public WeaponGameObj GetWeaponGameObj(int id) {
@@ -28,7 +8,7 @@ public class WeaponSystem : GameSys {
     }
 
     public WeaponComponent GetWeaponComponent(int id) {
-        return GetWeaponGameObj(id).GetComponent<WeaponComponent>();
+        return GetWeaponGameObj(id).GetComp<WeaponComponent>();
     }
 
     public WeaponEntity GetWeaponEntity(int id) {

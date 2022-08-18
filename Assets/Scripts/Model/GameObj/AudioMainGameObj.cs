@@ -15,12 +15,4 @@
         audioMainComponent = MyObj.transform.GetComponent<AudioMainComponent>();
         audioMainComponent.AudioSource.PlayOneShot(SOData.MySOAudioMainSetting.BackMusic);
     }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
-    }
 }

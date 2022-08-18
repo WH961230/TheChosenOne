@@ -1,7 +1,13 @@
 ﻿public class GameSys : ISystem {
     protected GameSystem MyGameSystem;
+    protected GameObjFeature MyGameObjFeature;
+    protected EntityFeature MyEntityFeature;
+    protected WindowFeature MyWindowFeature;
     public virtual void Init(GameSystem gameSystem) {
-        this.MyGameSystem = gameSystem;
+        MyGameSystem = gameSystem;
+        MyGameObjFeature = gameSystem.MyGameObjFeature;
+        MyEntityFeature = gameSystem.MyEntityFeature;
+        MyWindowFeature = gameSystem.MyWindowFeature;
     }
 
     public virtual void Update() {
@@ -16,7 +22,13 @@
     public virtual void LateUpdate() {
     }
 
-    public virtual int Instance() {
-        return 0;
+    // 获取物体
+    public virtual T GetGameObj<T>(int id) where T : GameObj, new () {
+        return MyGameObjFeature.Get<T>(id);
+    }
+
+    // 获取实体
+    public virtual T GetEntity<T>(int id) where T : Entity, new() {
+        return MyEntityFeature.Get<T>(id);
     }
 }

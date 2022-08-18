@@ -7,18 +7,6 @@ public class ItemGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         sceneitemData = (ItemData) data;
-        itemComponent = (ItemComponent) MyComponent;
-    }
-
-    public override void Hide() {
-        base.Hide();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
+        itemComponent = (ItemComponent) MyComp;
     }
 }

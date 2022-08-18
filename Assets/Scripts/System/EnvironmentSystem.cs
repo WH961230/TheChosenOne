@@ -2,18 +2,6 @@
 using UnityEngine;
 
 public class EnvironmentSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
     public void InstanceLight() {
         InstanceLight(new LightData() {
             MyName = "MainLight",
@@ -22,7 +10,7 @@ public class EnvironmentSystem : GameSys {
             MyTranInfo = new TranInfo() {
                 MyPos = SOData.MySOLightSetting.MainLightInfo.position,
                 MyRot = SOData.MySOLightSetting.MainLightInfo.rotation,
-            },
+            }
         });
     }
 

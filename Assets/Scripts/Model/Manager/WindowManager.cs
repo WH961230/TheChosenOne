@@ -5,20 +5,12 @@ public class WindowManager {
     private Dictionary<System.Type, IWindow> windowDict = new Dictionary<Type, IWindow>();
     private List<IWindow> windows = new List<IWindow>();
 
-    public void Register<T>(Game game, Data data) where T : IWindow, new() {
+    public void Register<T>(Game game, GameObj go) where T : IWindow, new() {
         if (Find<T>() == -1) {
             IWindow instance = new T();
             windowDict.Add(typeof(T), instance);
             windows.Add(instance);
-            instance.Init(game, data);
-        }
-    }
-
-    public void Register(IWindow window, Game game, Data data) {
-        if (Find(window) == -1) {
-            windowDict.Add(window.GetType(), window);
-            windows.Add(window);
-            window.Init(game, data);
+            instance.Init(game, go);
         }
     }
 

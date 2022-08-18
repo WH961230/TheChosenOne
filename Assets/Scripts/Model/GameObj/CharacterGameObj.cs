@@ -25,13 +25,9 @@ public class CharacterGameObj : GameObj {
         base.Init(game, data);
         this.game = game;
         characterData = (CharacterData) data;
-        characterComponent = (CharacterComponent) MyComponent;
-        characterComponent.Body.transform.localPosition = MyData.MyTranInfo.MyPos;
-        characterComponent.Body.transform.localRotation = MyData.MyTranInfo.MyRot;
-    }
-
-    public override void Clear() {
-        base.Clear();
+        characterComponent = (CharacterComponent) MyComp;
+        characterComponent.Body.transform.localPosition = data.MyTranInfo.MyPos;
+        characterComponent.Body.transform.localRotation = data.MyTranInfo.MyRot;
     }
 
     public override void Update() {
@@ -70,7 +66,9 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weaponData = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId);
+        var weapEntity = MyGame.MyGameSystem.MyWeaponSystem.GetEntity<WeaponEntity>(curWeapId);
+        var weaponData = weapEntity.GetData<WeaponData>();
+
         //加载子弹
         MyGame.MyGameSystem.MyEffectSystem.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
         EditorApplication.isPaused = true;
@@ -78,16 +76,15 @@ public class CharacterGameObj : GameObj {
 
     private void Aim() {
         // 获取当前武器
-        // var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId)
-            .GetCurWeaponId();
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
         if (curWeapId == 0) {
             return;
         }
 
-        var curWeapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(curWeapId);
-        var curWeapComponent = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(curWeapId);
-        var weaponCameraGameObj = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraGameObj();
+        var curWeapGO = MyGame.MyGameSystem.MyWeaponSystem.GetGameObj<WeaponGameObj>(curWeapId);
+        var curWeapComp = curWeapGO.GetComp<WeaponComponent>();
+        var curWeapData = MyGame.MyGameSystem.MyWeaponSystem.GetEntity<WeaponEntity>(curWeapId).GetData<WeaponData>();
+        var weapCamGO = MyGame.MyGameSystem.MyCameraSystem.GetGameObj<WeaponGameObj>(GameData.WeaponCameraId);
 
         if (isAim) {
             // 开启角色模型
@@ -97,11 +94,9 @@ public class CharacterGameObj : GameObj {
             characterCameraFOVTarget = SOData.MySOCameraSetting.CharacterCameraDefaultFOV;
             isLerpCharacterCameraFOV = true;
 
-            // 隐藏开镜武器模型
-            curWeapGameObj.MyData.MyObj.SetActive(false);
+            curWeapGO.Hide();// 隐藏开镜武器模型
+            weapCamGO.Hide();// 隐藏 WeaponCamera
 
-            // 隐藏 WeaponCamera
-            weaponCameraGameObj.MyData.MyObj.SetActive(false);
             isAim = false;
         } else {
             // 隐藏角色模型
@@ -112,20 +107,20 @@ public class CharacterGameObj : GameObj {
             isLerpCharacterCameraFOV = true;
 
             // 显示开镜武器模型 setActive 并至【开镜配置位置】
-            curWeapGameObj.MyData.MyObj.SetActive(true);
-            curWeapGameObj.MyData.MyObj.transform.position = SOData.MySOWeaponSetting.WeaponAimModelPoint;
+            curWeapGO.Display();
+            curWeapGO.SetPos(SOData.MySOWeaponSetting.WeaponAimModelPoint);
 
             // 显示 WeaponCamera
-            weaponCameraGameObj.MyData.MyObj.SetActive(true);
-            weaponCameraGameObj.MyData.MyObj.transform.position = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimPoint;
+            weapCamGO.Display();
+            weapCamGO.SetPos(curWeapData.WeaponCameraAimPoint);
 
             // 调整 WeaponCamera 【开镜 FOV】 并至【开镜位置】
-            weaponCameraFOVTarget = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(curWeapId).WeaponCameraAimFOV;
+            weaponCameraFOVTarget = curWeapData.WeaponCameraAimFOV;
             isLerpWeaponCameraFOV = true;
 
             // 设置武器开镜旋转
-            curWeapComponent.MyWeaponRotation.SetTargetRotation();
-            curWeapComponent.MyWeaponPosition.SetTargetPosition();
+            curWeapComp.MyWeaponRotation.SetTargetRotation();
+            curWeapComp.MyWeaponPosition.SetTargetPosition();
 
             isAim = true;
         }
@@ -157,7 +152,7 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId);
+        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetGameObj<WeaponGameObj>(weapId);
         var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
         var weaponPlace = characterComponent.MyWeaponPlace;
         weapGameObj.SetWeaponPlace(weaponPlace, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);

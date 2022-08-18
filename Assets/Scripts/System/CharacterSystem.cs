@@ -21,7 +21,7 @@ public class CharacterSystem : GameSys {
     }
 
     public CharacterComponent GetCharacterComponent(int id) {
-        return GetCharacterGameObj(id).GetComponent<CharacterComponent>();
+        return GetCharacterGameObj(id).GetComp<CharacterComponent>();
     }
 
     public CharacterEntity GetCharacterEntity(int id) {
@@ -46,7 +46,7 @@ public class CharacterSystem : GameSys {
             return null;
         }
 
-        return GetMainCharacterGameObj().GetComponent<CharacterComponent>();
+        return GetMainCharacterGameObj().GetComp<CharacterComponent>();
     }
 
     public CharacterEntity GetMainCharacterEntity() {
@@ -74,7 +74,6 @@ public class CharacterSystem : GameSys {
             MyName = "Character",
             MyObj = Object.Instantiate(SOData.MySOCharacter.GetCharacterPrefab()),
             MyRootTran = GameData.CharacterRoot,
-            IfInitMyObj = false,
             MyTranInfo = new TranInfo() {
                 MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, 
                 MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,

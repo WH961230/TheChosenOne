@@ -4,12 +4,4 @@
         base.Init(game, data);
         uicharacterData = (UICharacterData)data;
     }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void Update() {
-        base.Update();
-    }
 }
