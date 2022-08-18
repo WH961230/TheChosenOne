@@ -24,7 +24,7 @@ public class EntityManager : IManager {
     public void Remove(Entity entity) {
         int index = Find(entity);
         if (index != -1) {
-            entityDict.Remove(entity.Data.InstanceID);
+            entityDict.Remove(entity.MyData.InstanceID);
             entitys.RemoveAt(index);
             entity.Clear();
         }

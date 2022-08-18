@@ -23,12 +23,12 @@
     }
 
     // 获取物体
-    public virtual T GetGameObj<T>(int id) where T : GameObj, new () {
+    protected virtual T GetGameObj<T>(int id) where T : GameObj, new () {
         return MyGameObjFeature.Get<T>(id);
     }
 
     // 获取实体
-    public virtual T GetEntity<T>(int id) where T : Entity, new() {
+    protected virtual T GetEntity<T>(int id) where T : Entity, new() {
         return MyEntityFeature.Get<T>(id);
     }
 }

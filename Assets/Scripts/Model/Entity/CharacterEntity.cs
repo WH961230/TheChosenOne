@@ -6,11 +6,7 @@
         this.characterData = (CharacterData)data;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
+    public CharacterData GetData() {
+        return base.GetData() as CharacterData;
     }
 }

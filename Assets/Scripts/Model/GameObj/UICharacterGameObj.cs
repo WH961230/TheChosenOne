@@ -4,4 +4,8 @@
         base.Init(game, data);
         uicharacterData = (UICharacterData)data;
     }
+
+    public UICharacterComponent GetComp() {
+        return base.GetComp() as UICharacterComponent;
+    }
 }

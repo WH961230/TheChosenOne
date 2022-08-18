@@ -4,4 +4,8 @@
         base.Init(game, data);
         uitipData = (UITipData)data;
     }
+
+    public UITipComponent GetComp() {
+        return base.GetComp() as UITipComponent;
+    }
 }

@@ -17,4 +17,8 @@ public class WeaponGameObj : GameObj {
         weaponData.MyObj.transform.localPosition = point;
         weaponData.MyObj.transform.localRotation = rot;
     }
+
+    public WeaponComponent GetComp() {
+        return base.GetComp() as WeaponComponent;
+    }
 }

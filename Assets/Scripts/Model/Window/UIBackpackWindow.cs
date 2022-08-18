@@ -4,14 +4,15 @@ public class UIBackpackWindow : Window {
     public UIBackpackComponent comp;
 
     private CharacterData MyMainCharacterData {
-        get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData(); }
+        get { return MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData(); }
     }
 
     private bool IsOpenBackpackWindow;
 
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
-        comp = gameObj.GetComp<UIBackpackComponent>();
+        var tempGO = (UIBackpackGameObj)gameObj;
+        comp = tempGO.GetComp();
         MyGame.MyGameMessageCenter.Register<int>(GameMessageConstants.UISYSTEM_UIBACKPACK_REFRESH, MsgRefresh);
         AddButtonListener();
     }
@@ -114,7 +115,7 @@ public class UIBackpackWindow : Window {
 
     private BackpackEntity GetBackpackEntity() {
         var bpId = MyMainCharacterData.BackpackInstanceId;
-        return MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(bpId);
+        return MyGame.MyGameSystem.MyBackpackSystem.GetEntity(bpId);
     }
 
     #endregion

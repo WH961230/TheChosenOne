@@ -22,7 +22,7 @@ public class GameObj : IGameObj {
 
         // 动画状态机
         if (comp && null != comp.RegisterAnimator) {
-            var entity = MyGame.MyGameSystem.MyAnimatorSystem.GetEntity<AnimatorEntity>(GameData.AnimatorId);
+            var entity = MyGame.MyGameSystem.MyAnimatorSystem.GetEntity();
             entity.RegisterAnimator(data.InstanceID, comp.RegisterAnimator);
         }
 
@@ -87,11 +87,7 @@ public class GameObj : IGameObj {
     public virtual void LateUpdate() {
     }
 
-    public GameComp GetComp() {
+    protected GameComp GetComp() {
         return MyComp;
-    }
-
-    public T GetComp<T>() where T : GameComp {
-        return (T) MyComp;
     }
 }

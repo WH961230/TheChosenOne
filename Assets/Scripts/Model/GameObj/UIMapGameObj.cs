@@ -4,4 +4,8 @@
         base.Init(game, data);
         uimapData = (UIMapData)data;
     }
+
+    public UIMapComponent GetComp() {
+        return base.GetComp() as UIMapComponent;
+    }
 }

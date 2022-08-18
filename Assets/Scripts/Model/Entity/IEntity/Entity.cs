@@ -1,9 +1,9 @@
 ﻿public abstract class Entity : IEntity {
-    public Data Data;
+    public Data MyData;
     protected Game MyGame;
     public virtual void Init(Game game, Data data) {
         this.MyGame = game;
-        this.Data = data;
+        this.MyData = data;
     }
 
     public virtual void Update() {
@@ -18,7 +18,7 @@
     public virtual void Clear() {
     }
 
-    public T GetData<T>() where T : Data {
-        return (T)Data;
+    protected Data GetData() {
+        return MyData;
     }
 }

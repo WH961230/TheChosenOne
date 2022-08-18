@@ -4,13 +4,15 @@ public class UICharacterWindow : Window {
     private UICharacterComponent MyComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
-        MyComp = MyGameObj.GetComp<UICharacterComponent>();
+        var tempGO = (UICharacterGameObj)gameObj;
+        MyComp = tempGO.GetComp();
+        var playerData = MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData();
         MyComp.UIWeaponLeft.onClick.AddListener(() => {
-            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId);
+            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(0);
         });
         MyComp.UIWeaponRight.onClick.AddListener(() => {
-            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId);
+            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(1);
         });
         MyGame.MyGameMessageCenter.Register(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH, MsgRefresh);
@@ -31,7 +33,8 @@ public class UICharacterWindow : Window {
     }
 
     private void RefreshWeapon() {
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity<BackpackEntity>(MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterData().BackpackInstanceId);
+        var playerData = MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData();
+        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
         var mainWeaponIds = backpackEntity.GetMainWeaponIds();
         Sprite sprite = null;
         for (int i = 0; i < mainWeaponIds.Length; i++) {
@@ -51,14 +54,5 @@ public class UICharacterWindow : Window {
                 }
             }
         }
-    }
-
-    public override void Open() {
-    }
-
-    public override void Update() {
-    }
-
-    public override void Close() {
     }
 }

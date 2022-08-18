@@ -5,7 +5,8 @@ public class UIDebugToolWindow : Window {
 
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
-        comp = gameObj.GetComp<UIDebugToolComponent>();
+        var tempGO = (UIDebugToolGameObj)gameObj;
+        comp = tempGO.GetComp();
 
         comp.MyDebugToolFunctionWin.SetActive(false);
         comp.MyDebugToolCloseBtn.gameObject.SetActive(false);
@@ -40,21 +41,9 @@ public class UIDebugToolWindow : Window {
         });
 
         comp.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
-            var characterPos =  MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent().transform.position;
+            var characterPos =  MyGame.MyGameSystem.MyCharacterSystem.GetGO(GameData.MainCharacterId).GetComp().transform.position;
             var tempObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             tempObj.transform.position = GameData.GetGround(characterPos);
         });
-    }
-
-    public override void Open() {
-    }
-
-    public override void Update() {
-    }
-
-    public override void Close() {
-    }
-
-    public override void Clear() {
     }
 }

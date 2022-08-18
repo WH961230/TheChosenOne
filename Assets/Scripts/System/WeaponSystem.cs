@@ -8,7 +8,7 @@ public class WeaponSystem : GameSys {
     }
 
     public WeaponComponent GetWeaponComponent(int id) {
-        return GetWeaponGameObj(id).GetComp<WeaponComponent>();
+        return GetWeaponGameObj(id).GetComp() as WeaponComponent;
     }
 
     public WeaponEntity GetWeaponEntity(int id) {
@@ -16,7 +16,15 @@ public class WeaponSystem : GameSys {
     }
 
     public WeaponData GetWeaponData(int id) {
-        return GetWeaponEntity(id).GetData<WeaponData>();
+        return GetWeaponEntity(id).GetData() as WeaponData;
+    }
+
+    public WeaponGameObj GetGO(int id) {
+        return GetGameObj<WeaponGameObj>(id);
+    }
+
+    public WeaponEntity GetEntity(int id) {
+        return GetEntity<WeaponEntity>(id);
     }
 
     #endregion

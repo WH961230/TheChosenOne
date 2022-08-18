@@ -14,7 +14,7 @@ public class CameraGameObj : GameObj {
     private CameraComponent cameraComponent;
 
     private CharacterComponent MyMainCharacterComponent {
-        get { return MyGame.MyGameSystem.MyCharacterSystem.GetMainCharacterComponent(); }
+        get { return MyGame.MyGameSystem.MyCharacterSystem.GetGO(GameData.MainCharacterId).GetComp(); }
     }
     public override void Init(Game game, Data data) {
         base.Init(game, data);
@@ -108,5 +108,9 @@ public class CameraGameObj : GameObj {
                 }
             }
         }
+    }
+
+    public CameraComponent GetComp() {
+        return base.GetComp() as CameraComponent;
     }
 }

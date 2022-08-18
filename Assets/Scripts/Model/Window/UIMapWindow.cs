@@ -2,7 +2,8 @@
     private UIMapComponent MyComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
-        MyComp = gameObj.GetComp<UIMapComponent>();
+        var tempGO = (UIMapGameObj)gameObj;
+        MyComp = tempGO.GetComp();
         MyComp.UIMapMaxClose.onClick.AddListener(() => {
             MyComp.UIMapMax.SetActive(false);
             MyComp.UIMapMin.SetActive(true);

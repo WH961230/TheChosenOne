@@ -49,20 +49,8 @@ public class CameraSystem : GameSys {
         return false;
     }
 
-    public CameraGameObj GetCameraGameObj(int id) {
-        return MyGameSystem.MyGameObjFeature.Get<CameraGameObj>(id);
-    }
-
-    public CameraComponent GetCameraComponent(int id) {
-        return GetCameraGameObj(id).GetComp<CameraComponent>();
-    }
-
-    public CameraGameObj GetWeaponCameraGameObj() {
-        return GetCameraGameObj(GameData.WeaponCameraId);
-    }
-
-    public CameraComponent GetWeaponCameraComponent() {
-        return GetWeaponCameraGameObj().GetComp<CameraComponent>();
+    public CameraGameObj GetGO(int id) {
+        return GetGameObj<CameraGameObj>(id);
     }
 
     #endregion

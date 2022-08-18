@@ -49,25 +49,25 @@ public class CharacterGameObj : GameObj {
         }
 
         if (isLerpCharacterCameraFOV) {
-            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetCameraComponent(characterData.CameraInstanceId);
+            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetGO(characterData.CameraInstanceId).GetComp();
             characterCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(characterCameraComponent.MyCamera.fieldOfView, characterCameraFOVTarget, Time.deltaTime * 5); 
         }
 
         if (isLerpWeaponCameraFOV) {
-            var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetWeaponCameraComponent();
+            var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetGO(GameData.WeaponCameraId).GetComp();
             weaponCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(weaponCameraComponent.MyCamera.fieldOfView, weaponCameraFOVTarget, Time.deltaTime * 5);
         }
     }
 
     private void Fire() {
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
         var curWeapNull = curWeapId == 0;
         if (curWeapNull) {
             return;
         }
 
-        var weapEntity = MyGame.MyGameSystem.MyWeaponSystem.GetEntity<WeaponEntity>(curWeapId);
-        var weaponData = weapEntity.GetData<WeaponData>();
+        var weapEntity = MyGame.MyGameSystem.MyWeaponSystem.GetEntity(curWeapId);
+        var weaponData = weapEntity.GetData();
 
         //加载子弹
         MyGame.MyGameSystem.MyEffectSystem.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
@@ -76,15 +76,15 @@ public class CharacterGameObj : GameObj {
 
     private void Aim() {
         // 获取当前武器
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
         if (curWeapId == 0) {
             return;
         }
 
-        var curWeapGO = MyGame.MyGameSystem.MyWeaponSystem.GetGameObj<WeaponGameObj>(curWeapId);
-        var curWeapComp = curWeapGO.GetComp<WeaponComponent>();
-        var curWeapData = MyGame.MyGameSystem.MyWeaponSystem.GetEntity<WeaponEntity>(curWeapId).GetData<WeaponData>();
-        var weapCamGO = MyGame.MyGameSystem.MyCameraSystem.GetGameObj<WeaponGameObj>(GameData.WeaponCameraId);
+        var curWeapGO = MyGame.MyGameSystem.MyWeaponSystem.GetGO(curWeapId);
+        var curWeapComp = curWeapGO.GetComp();
+        var curWeapData = MyGame.MyGameSystem.MyWeaponSystem.GetEntity(curWeapId).GetData();
+        var weapCamGO = MyGame.MyGameSystem.MyCameraSystem.GetGO(GameData.WeaponCameraId);
 
         if (isAim) {
             // 开启角色模型
@@ -152,7 +152,7 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetGameObj<WeaponGameObj>(weapId);
+        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetGO(weapId);
         var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
         var weaponPlace = characterComponent.MyWeaponPlace;
         weapGameObj.SetWeaponPlace(weaponPlace, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
@@ -170,7 +170,7 @@ public class CharacterGameObj : GameObj {
 
     private void CharacterAnimation() {
         // 当前武器不为空 播放手持武器动画 weapon 1 手枪 weapon 2 自动步枪
-        bool hasCurWeap = MyGame.MyGameSystem.MyBackpackSystem.GetBackpackEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
+        bool hasCurWeap = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
         if (hasCurWeap) {
             if (type == WeaponType.MainWeapon) {
                 characterComponent.AnimatorController.SetInteger("Weapon", 2);
@@ -353,5 +353,9 @@ public class CharacterGameObj : GameObj {
         }
 
         return moveVector;
+    }
+
+    public CharacterComponent GetComp() {
+        return base.GetComp() as CharacterComponent;
     }
 }

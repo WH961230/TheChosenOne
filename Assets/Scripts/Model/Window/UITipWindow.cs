@@ -2,7 +2,8 @@
     private UITipComponent MyComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
-        MyComp = gameObj.GetComp<UITipComponent>();
+        var tempGO = (UITipGameObj)gameObj;
+        MyComp = tempGO.GetComp();
         MyComp.MyTip.SetActive(false);
         MyGame.MyGameMessageCenter.Register<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
     }
