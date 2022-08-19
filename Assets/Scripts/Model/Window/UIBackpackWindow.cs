@@ -4,7 +4,7 @@ public class UIBackpackWindow : Window {
     public UIBackpackComponent comp;
 
     private CharacterData MyMainCharacterData {
-        get { return MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData(); }
+        get { return MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData(); }
     }
 
     private bool IsOpenBackpackWindow;
@@ -24,7 +24,7 @@ public class UIBackpackWindow : Window {
 
     public override void Update() {
         base.Update();
-        if (MyGame.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Tab)) {
+        if (MyGS.InputS.GetKeyDown(KeyCode.Tab)) {
             var window = comp.MyUIBackpackWindow;
             if (IsOpenBackpackWindow) {
                 var openBtn = comp.MyUIBackpackBtn;
@@ -115,7 +115,7 @@ public class UIBackpackWindow : Window {
 
     private BackpackEntity GetBackpackEntity() {
         var bpId = MyMainCharacterData.BackpackInstanceId;
-        return MyGame.MyGameSystem.MyBackpackSystem.GetEntity(bpId);
+        return MyGS.BackpackS.GetEntity(bpId);
     }
 
     #endregion
@@ -154,12 +154,12 @@ public class UIBackpackWindow : Window {
             Sprite sprite;
             if (ids.Count > i) {
                 var id = ids[i];
-                sprite = MyGame.MyGameSystem.MyItemSystem.GetItemData(id).MyBackpackSprite;
+                // sprite = MyGS.MyItemSystem.GetItemData(id).MyBackpackSprite;
             } else {
                 sprite = null;
             }
 
-            comp.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
+            // comp.MyUIBackpackConsumeImages[i].MyButton.image.sprite = sprite;
         }
     }
 
@@ -171,7 +171,7 @@ public class UIBackpackWindow : Window {
             sprite = null;
             var id = mainWeaponIds[i];
             if (id != 0) {
-                sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(id).MySprite;
+                sprite = MyGS.WeapS.GetEntity(id).GetData().MySprite;
             }
 
             comp.MyUIBackpackMainWeaponImages[i].MyButton.image.sprite = sprite;
@@ -180,7 +180,7 @@ public class UIBackpackWindow : Window {
         var sideWeaponid = backpackEntity.GetSideWeaponId();
         sprite = null;
         if (sideWeaponid != 0) {
-            sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(sideWeaponid).MySprite;
+            sprite = MyGS.WeapS.GetEntity(sideWeaponid).GetData().MySprite;
         }
 
         comp.MyUIBackpackSideWeaponImage.MyButton.image.sprite = sprite;
@@ -193,7 +193,7 @@ public class UIBackpackWindow : Window {
             var id = ids[i];
             Sprite sprite = null;
             if (id != 0) {
-                sprite = MyGame.MyGameSystem.MyEquipmentSystem.GetEquipmentData(id).MySprite;
+                sprite = MyGS.EquipmentS.GetEtity(id).GetData().MySprite;
             }
 
             comp.MyUIBackpackEquipmentImages[i].MyButton.image.sprite = sprite;

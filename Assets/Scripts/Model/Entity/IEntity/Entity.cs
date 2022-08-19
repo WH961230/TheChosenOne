@@ -1,9 +1,11 @@
 ﻿public abstract class Entity : IEntity {
     public Data MyData;
     protected Game MyGame;
+    protected GameSystem MyGS;
     public virtual void Init(Game game, Data data) {
-        this.MyGame = game;
-        this.MyData = data;
+        MyGame = game;
+        MyGS = game.MyGameSystem;
+        MyData = data;
     }
 
     public virtual void Update() {

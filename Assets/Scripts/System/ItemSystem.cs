@@ -1,37 +1,6 @@
 ﻿using UnityEngine;
 
 public class ItemSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    #region 获取
-
-    public ItemGameObj GetItemGameObj(int id) { // 物体
-        return MyGameSystem.MyGameObjFeature.Get<ItemGameObj>(id);
-    }
-
-    public ItemEntity GetItemEntity(int id) { // 实体
-        return MyGameSystem.MyEntityFeature.Get<ItemEntity>(id);
-    }
-
-    public ItemComponent GetItemComponent(int id) { // 实体 - 组件
-        return GetItemGameObj(id).GetComp<ItemComponent>();
-    }
-
-    public ItemData GetItemData(int id) { // 组件 - 数据
-        return GetItemEntity(id).GetData<ItemData>();
-    }
-
-    #endregion
 
     #region 创建
 
@@ -52,13 +21,13 @@ public class ItemSystem : GameSys {
     private void InstanceItemByItemType(ItemType type, Vector3 point, Quaternion rot) {
         switch (type) {
             case ItemType.CONSUME:
-                MyGameSystem.MyConsumeSystem.InstanceConsume(point, rot);
+                MyGS.ConsumeS.InstanceConsume(point, rot);
                 return;
             case ItemType.EQUIPMENT:
-                MyGameSystem.MyEquipmentSystem.InstanceEquipment(point, rot);
+                MyGS.EquipmentS.InstanceEquipment(point, rot);
                 return;
             case ItemType.WEAPON:
-                MyGameSystem.MyWeaponSystem.InstanceWeapon(point, rot);
+                MyGS.WeapS.InstanceWeapon(point, rot);
                 return;
         }
     }
@@ -68,11 +37,11 @@ public class ItemSystem : GameSys {
     public string GetItemSign(int layer, int id) {
         switch (layer) {
             case LayerData.EquipmentLayer:
-                return MyGameSystem.MyEquipmentSystem.GetEquipmentComponent(id).MySign;
+                return MyGS.EquipmentS.GetGO(id).GetComp().MySign;
             case LayerData.ConsumeLayer:
-                return MyGameSystem.MyConsumeSystem.GetConsumeComponent(id).MySign;
+                return MyGS.ConsumeS.GetGO(id).GetComp().MySign;
             case LayerData.WeaponLayer:
-                return MyGameSystem.MyWeaponSystem.GetWeaponComponent(id).MySign;
+                return MyGS.WeapS.GetGO(id).GetComp().MySign;
         }
 
         return "";

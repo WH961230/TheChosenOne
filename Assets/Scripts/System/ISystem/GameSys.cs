@@ -1,13 +1,13 @@
 ﻿public class GameSys : ISystem {
-    protected GameSystem MyGameSystem;
+    protected GameSystem MyGS;
     protected GameObjFeature MyGameObjFeature;
     protected EntityFeature MyEntityFeature;
     protected WindowFeature MyWindowFeature;
     public virtual void Init(GameSystem gameSystem) {
-        MyGameSystem = gameSystem;
-        MyGameObjFeature = gameSystem.MyGameObjFeature;
-        MyEntityFeature = gameSystem.MyEntityFeature;
-        MyWindowFeature = gameSystem.MyWindowFeature;
+        MyGS = gameSystem;
+        MyGameObjFeature = gameSystem.GOFeature;
+        MyEntityFeature = gameSystem.EntityFeature;
+        MyWindowFeature = gameSystem.WinFeature;
     }
 
     public virtual void Update() {

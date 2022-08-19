@@ -24,7 +24,7 @@ public class BackpackSystem : GameSys {
     }
 
     private int InstanceBackpack(BackpackData backpackData) {
-        return MyGameSystem.InstanceGameObj<BackpackGameObj, BackpackEntity>(backpackData);
+        return MyGS.InstanceGameObj<BackpackGameObj, BackpackEntity>(backpackData);
     }
 
     #endregion

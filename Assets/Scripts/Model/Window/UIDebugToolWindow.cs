@@ -27,7 +27,7 @@ public class UIDebugToolWindow : Window {
         });
 
         comp.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
-            MyGame.MyGameSystem.MyCharacterSystem.InstanceCharacter(false);
+            MyGS.CharacterS.InstanceCharacter(false);
         });
         
         comp.MyDebugToolConsoleSelectBtn.onClick.AddListener(() => {
@@ -41,7 +41,7 @@ public class UIDebugToolWindow : Window {
         });
 
         comp.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
-            var characterPos =  MyGame.MyGameSystem.MyCharacterSystem.GetGO(GameData.MainCharacterId).GetComp().transform.position;
+            var characterPos =  MyGS.CharacterS.GetGO(GameData.MainCharacterId).GetComp().transform.position;
             var tempObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             tempObj.transform.position = GameData.GetGround(characterPos);
         });

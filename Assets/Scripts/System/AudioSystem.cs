@@ -10,6 +10,6 @@ public class AudioSystem : GameSys {
     }
 
     private void InstanceAudioMain(AudioMainData audioMainData) {
-        MyGameSystem.InstanceGameObj<AudioMainGameObj, AudioMainEntity>(audioMainData);
+        MyGS.InstanceGameObj<AudioMainGameObj, AudioMainEntity>(audioMainData);
     }
 }

@@ -12,8 +12,8 @@ public class CharacterSystem : GameSys {
                 MyPos = SOData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, 
                 MyRot = SOData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
             },
-            CameraInstanceId = isMainCharacter ? MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCharacterCamera) : 0,
-            BackpackInstanceId = MyGameSystem.MyBackpackSystem.InstanceBackpack(),
+            CameraInstanceId = isMainCharacter ? MyGS.CameraS.InstanceCamera(CameraType.MainCharacterCamera) : 0,
+            BackpackInstanceId = MyGS.BackpackS.InstanceBackpack(),
             IsMainCharacter = isMainCharacter,
         };
         InstanceCharacter(characterData);
@@ -21,7 +21,7 @@ public class CharacterSystem : GameSys {
     }
 
     private void InstanceCharacter(CharacterData characterData) {
-        MyGameSystem.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
+        MyGS.InstanceGameObj<CharacterGameObj, CharacterEntity>(characterData);
     }
 
     public CharacterGameObj GetGO(int id) {

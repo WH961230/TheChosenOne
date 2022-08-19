@@ -5,11 +5,7 @@
         this.consumeData = (ConsumeData)data;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
+    public ConsumeData GetData() {
+        return base.GetData() as ConsumeData;
     }
 }

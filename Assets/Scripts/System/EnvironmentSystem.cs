@@ -30,10 +30,10 @@ public class EnvironmentSystem : GameSys {
     }
 
     private void InstanceBuilding(BuildingData buildingData) {
-        MyGameSystem.InstanceGameObj<BuildingGameObj, BuildingEntity>(buildingData);
+        MyGS.InstanceGameObj<BuildingGameObj, BuildingEntity>(buildingData);
     }
 
     private void InstanceLight(LightData lightData) {
-        MyGameSystem.InstanceGameObj<LightGameObj, LightEntity>(lightData);
+        MyGS.InstanceGameObj<LightGameObj, LightEntity>(lightData);
     }
 }

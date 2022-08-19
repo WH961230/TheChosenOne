@@ -7,6 +7,6 @@ public class ItemGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         sceneitemData = (ItemData) data;
-        itemComponent = (ItemComponent) MyComp;
+        itemComponent = (ItemComponent) Comp;
     }
 }

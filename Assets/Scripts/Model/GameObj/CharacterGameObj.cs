@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Runtime.ExceptionServices;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class CharacterGameObj : GameObj {
@@ -15,7 +13,7 @@ public class CharacterGameObj : GameObj {
     private CharacterComponent characterComponent;
 
     private InputSystem inputSystem {
-        get { return game.MyGameSystem.MyInputSystem; }
+        get { return game.MyGameSystem.InputS; }
     }
 
     private CharacterData characterData;
@@ -25,7 +23,7 @@ public class CharacterGameObj : GameObj {
         base.Init(game, data);
         this.game = game;
         characterData = (CharacterData) data;
-        characterComponent = (CharacterComponent) MyComp;
+        characterComponent = (CharacterComponent) Comp;
         characterComponent.Body.transform.localPosition = data.MyTranInfo.MyPos;
         characterComponent.Body.transform.localRotation = data.MyTranInfo.MyRot;
     }
@@ -40,51 +38,51 @@ public class CharacterGameObj : GameObj {
     private float weaponCameraFOVTarget;
     private float characterCameraFOVTarget;
     private void CharacterWeaponAction() {
-        if (MyGame.MyGameSystem.MyInputSystem.GetMouseButtonDown(1)) {
+        if (GS.InputS.GetMouseButtonDown(1)) {
             Aim();
         }
 
-        if (MyGame.MyGameSystem.MyInputSystem.GetMouseButtonDown(0)) {
+        if (GS.InputS.GetMouseButtonDown(0)) {
             Fire();
         }
 
         if (isLerpCharacterCameraFOV) {
-            var characterCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetGO(characterData.CameraInstanceId).GetComp();
+            var characterCameraComponent = GS.CameraS.GetGO(characterData.CameraInstanceId).GetComp();
             characterCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(characterCameraComponent.MyCamera.fieldOfView, characterCameraFOVTarget, Time.deltaTime * 5); 
         }
 
         if (isLerpWeaponCameraFOV) {
-            var weaponCameraComponent = MyGame.MyGameSystem.MyCameraSystem.GetGO(GameData.WeaponCameraId).GetComp();
+            var weaponCameraComponent = GS.CameraS.GetGO(GameData.WeaponCameraId).GetComp();
             weaponCameraComponent.MyCamera.fieldOfView = Mathf.Lerp(weaponCameraComponent.MyCamera.fieldOfView, weaponCameraFOVTarget, Time.deltaTime * 5);
         }
     }
 
     private void Fire() {
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapId = GS.BackpackS.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
         var curWeapNull = curWeapId == 0;
         if (curWeapNull) {
             return;
         }
 
-        var weapEntity = MyGame.MyGameSystem.MyWeaponSystem.GetEntity(curWeapId);
+        var weapEntity = GS.WeapS.GetEntity(curWeapId);
         var weaponData = weapEntity.GetData();
 
         //加载子弹
-        MyGame.MyGameSystem.MyEffectSystem.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
+        GS.EffectS.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
         EditorApplication.isPaused = true;
     }
 
     private void Aim() {
         // 获取当前武器
-        var curWeapId = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
+        var curWeapId = GS.BackpackS.GetEntity(characterData.BackpackInstanceId).GetCurWeaponId();
         if (curWeapId == 0) {
             return;
         }
 
-        var curWeapGO = MyGame.MyGameSystem.MyWeaponSystem.GetGO(curWeapId);
+        var curWeapGO = GS.WeapS.GetGO(curWeapId);
         var curWeapComp = curWeapGO.GetComp();
-        var curWeapData = MyGame.MyGameSystem.MyWeaponSystem.GetEntity(curWeapId).GetData();
-        var weapCamGO = MyGame.MyGameSystem.MyCameraSystem.GetGO(GameData.WeaponCameraId);
+        var curWeapData = GS.WeapS.GetEntity(curWeapId).GetData();
+        var weapCamGO = GS.CameraS.GetGO(GameData.WeaponCameraId);
 
         if (isAim) {
             // 开启角色模型
@@ -152,8 +150,8 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetGO(weapId);
-        var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
+        var weapGameObj = GS.WeapS.GetGO(weapId);
+        var weapComp = GS.WeapS.GetGO(weapId).GetComp();
         var weaponPlace = characterComponent.MyWeaponPlace;
         weapGameObj.SetWeaponPlace(weaponPlace, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
     }
@@ -163,14 +161,14 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weapGameObj = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponGameObj(weapId);
-        var weapComp = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponComponent(weapId);
+        var weapGameObj = GS.WeapS.GetGO(weapId);
+        var weapComp = GS.WeapS.GetGO(weapId).GetComp();
         weapGameObj.SetWeaponPlace(GameData.WeaponRoot, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
     }
 
     private void CharacterAnimation() {
         // 当前武器不为空 播放手持武器动画 weapon 1 手枪 weapon 2 自动步枪
-        bool hasCurWeap = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
+        bool hasCurWeap = GS.BackpackS.GetEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
         if (hasCurWeap) {
             if (type == WeaponType.MainWeapon) {
                 characterComponent.AnimatorController.SetInteger("Weapon", 2);
@@ -283,7 +281,7 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var inputSystem = game.MyGameSystem.MyInputSystem;
+        var inputSystem = game.MyGameSystem.InputS;
         // 获取不同的移动方向
         Vector3 dir = Vector3.zero;
         if (inputSystem.GetKey(KeyCode.W)) {
@@ -346,7 +344,7 @@ public class CharacterGameObj : GameObj {
         }
 
         // 按下跳跃键
-        if (game.MyGameSystem.MyInputSystem.GetKeyDown(KeyCode.Space)) {
+        if (game.MyGameSystem.InputS.GetKeyDown(KeyCode.Space)) {
             if (characterData.IsMainCharacter) {
                 jumpTimer = SOData.MySOCharacter.MyMoveInfo.JumpContinueTime;
             }

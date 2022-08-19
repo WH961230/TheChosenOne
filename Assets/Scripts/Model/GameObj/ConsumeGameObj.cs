@@ -4,7 +4,11 @@
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         consumeData = (ConsumeData)data;
-        consumeComponent = (ConsumeComponent) MyComp;
+        consumeComponent = (ConsumeComponent) Comp;
         consumeData.ConsumeNum = consumeComponent.ConsumeNum;
+    }
+
+    public ConsumeComponent GetComp() {
+        return base.GetComp() as ConsumeComponent;
     }
 }

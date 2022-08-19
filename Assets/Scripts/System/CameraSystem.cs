@@ -30,7 +30,7 @@ public class CameraSystem : GameSys {
     }
 
     private int InstanceCamera(CameraData cameraData) {
-        return MyGameSystem.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
+        return MyGS.InstanceGameObj<CameraGameObj, CameraEntity>(cameraData);
     }
 
     #endregion

@@ -7,19 +7,19 @@ public class CameraGameObj : GameObj {
     private Transform cameraTran;
 
     private InputSystem inputSystem {
-        get { return MyGame.MyGameSystem.MyInputSystem; }
+        get { return GS.InputS; }
     }
 
     private CameraData cameraData;
     private CameraComponent cameraComponent;
 
-    private CharacterComponent MyMainCharacterComponent {
-        get { return MyGame.MyGameSystem.MyCharacterSystem.GetGO(GameData.MainCharacterId).GetComp(); }
+    private CharacterComponent MCC {
+        get { return GS.CharacterS.GetGO(GameData.MainCharacterId).GetComp(); }
     }
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         cameraData = (CameraData) data;
-        cameraComponent = (CameraComponent) MyComp;
+        cameraComponent = (CameraComponent) Comp;
         cameraTran = cameraData.MyObj.transform;
     }
 
@@ -48,26 +48,26 @@ public class CameraGameObj : GameObj {
             var id = go.GetInstanceID();
             var layer = go.layer;
             if (inputSystem.GetKeyDown(KeyCode.F)) {
-                MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, layer, id);
+                GMC.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, layer, id);
             }
 
-            var tipSign = MyGame.MyGameSystem.MyItemSystem.GetItemSign(layer, id);
+            var tipSign = GS.ItemS.GetItemSign(layer, id);
 
             // 提示 UI
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, tipSign);
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemKeycode, "拾取[F]");
+            GMC.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, tipSign);
+            GMC.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemKeycode, "拾取[F]");
 
             LogSystem.Print("检测物体: " + tipSign + " id: " + id);
         } else {
-            MyGame.MyGameMessageCenter.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, "");
+            GMC.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, "");
         }
     }
 
     private void TraceBehaviour() {
         // 主角色主相机
         if (cameraData.MyCameraType == CameraType.MainCharacterCamera) {
-            if (null != MyMainCharacterComponent) {
-                var characterTran = MyMainCharacterComponent.transform;
+            if (null != MCC) {
+                var characterTran = MCC.transform;
 
                 // 父物体位置
                 cameraTran.position = Vector3.Lerp(cameraTran.position, characterTran.position,
@@ -80,7 +80,7 @@ public class CameraGameObj : GameObj {
                     Time.deltaTime * SOData.MySOCameraSetting.CameraTraceSpeed);
 
                 RaycastHit hit;
-                var targetTran = MyMainCharacterComponent.Head.transform;
+                var targetTran = MCC.Head.transform;
                 Ray ray = new Ray(targetTran.position,
                     (cameraComponent.MyCameraX.transform.position - targetTran.transform.position).normalized);
                 if (Physics.Raycast(ray, out hit, 3.5f, ~(1 << 8))) {
@@ -98,7 +98,7 @@ public class CameraGameObj : GameObj {
                 }
 
                 // 相机旋转
-                cameraComponent.MyCamera.transform.LookAt(MyMainCharacterComponent.Head.transform.position + SOData.MySOCameraSetting.LookTargetOffsetPosition);
+                cameraComponent.MyCamera.transform.LookAt(MCC.Head.transform.position + SOData.MySOCameraSetting.LookTargetOffsetPosition);
 
                 // 自由状态
                 if (inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt)) {

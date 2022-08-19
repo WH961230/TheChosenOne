@@ -4,8 +4,12 @@
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         equipmentData = (EquipmentData)data;
-        equipmentComponent = (EquipmentComponent) MyComp;
+        equipmentComponent = (EquipmentComponent) Comp;
         equipmentData.MySign = equipmentComponent.MySign;
         equipmentData.MyLevel = equipmentComponent.MyEquipmentLevel;
+    }
+
+    public EquipmentComponent GetComp() {
+        return base.GetComp() as EquipmentComponent;
     }
 }

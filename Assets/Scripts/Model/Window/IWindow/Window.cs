@@ -1,12 +1,13 @@
 ﻿public class Window : IWindow {
     public Game MyGame;
+    public GameSystem MyGS;
     public GameObj MyGameObj;
     public GameComp MyComp;
 
     public virtual void Init(Game game, GameObj gameObj) {
         MyGame = game;
+        MyGS = game.MyGameSystem;
         MyGameObj = gameObj;
-        MyComp = gameObj.GetComp();
     }
 
     public virtual void Open() {

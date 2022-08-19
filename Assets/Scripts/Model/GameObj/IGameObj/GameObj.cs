@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
 public class GameObj : IGameObj {
-    protected GameComp MyComp; // 组件
+    protected GameComp Comp; // 组件
     protected GameObject MyObj;
-    protected Game MyGame;
+    protected GameSystem GS;
+    protected GameMessageCenter GMC;
 
     public virtual void Init(Game game, Data data) {
-        MyGame = game;
+        GS = game.MyGameSystem;
+        GMC = game.MyGameMessageCenter;
 
         // 物体
         MyObj = data.MyObj;
@@ -18,11 +20,11 @@ public class GameObj : IGameObj {
 
         // 组件
         var comp = MyObj.transform.GetComponent<GameComp>();
-        MyComp = comp;
+        Comp = comp;
 
         // 动画状态机
         if (comp && null != comp.RegisterAnimator) {
-            var entity = MyGame.MyGameSystem.MyAnimatorSystem.GetEntity();
+            var entity = GS.AnimatorS.GetEntity();
             entity.RegisterAnimator(data.InstanceID, comp.RegisterAnimator);
         }
 
@@ -88,6 +90,6 @@ public class GameObj : IGameObj {
     }
 
     protected GameComp GetComp() {
-        return MyComp;
+        return Comp;
     }
 }

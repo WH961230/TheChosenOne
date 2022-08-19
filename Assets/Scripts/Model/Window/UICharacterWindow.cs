@@ -6,13 +6,13 @@ public class UICharacterWindow : Window {
         base.Init(game, gameObj);
         var tempGO = (UICharacterGameObj)gameObj;
         MyComp = tempGO.GetComp();
-        var playerData = MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData();
+        var playerData = MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData();
         MyComp.UIWeaponLeft.onClick.AddListener(() => {
-            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
+            var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(0);
         });
         MyComp.UIWeaponRight.onClick.AddListener(() => {
-            var bpEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
+            var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(1);
         });
         MyGame.MyGameMessageCenter.Register(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH, MsgRefresh);
@@ -33,14 +33,14 @@ public class UICharacterWindow : Window {
     }
 
     private void RefreshWeapon() {
-        var playerData = MyGame.MyGameSystem.MyCharacterSystem.GetEntity(GameData.MainCharacterId).GetData();
-        var backpackEntity = MyGame.MyGameSystem.MyBackpackSystem.GetEntity(playerData.BackpackInstanceId);
+        var playerData = MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData();
+        var backpackEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
         var mainWeaponIds = backpackEntity.GetMainWeaponIds();
         Sprite sprite = null;
         for (int i = 0; i < mainWeaponIds.Length; i++) {
             var tempId = mainWeaponIds[i];
             if (tempId != 0) {
-                sprite = MyGame.MyGameSystem.MyWeaponSystem.GetWeaponData(tempId).MySprite;
+                sprite = MyGS.WeapS.GetEntity(tempId).GetData().MySprite;
                 if (i == 0) {
                     MyComp.UIWeaponLeft.image.sprite = sprite;
                 } else if (i == 1) {

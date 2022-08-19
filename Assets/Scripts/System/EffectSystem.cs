@@ -20,6 +20,6 @@ public class EffectSystem : GameSys {
     }
 
     private void InstanceEffect(EffectData data) {
-        MyGameSystem.InstanceGameObj<EffectGameObj, EffectEntity>(data);
+        MyGS.InstanceGameObj<EffectGameObj, EffectEntity>(data);
     }
 }

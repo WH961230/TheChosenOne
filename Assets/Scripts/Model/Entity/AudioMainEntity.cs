@@ -4,12 +4,4 @@
         base.Init(game, data);
         this.audiomainData = (AudioMainData)data;
     }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
 }

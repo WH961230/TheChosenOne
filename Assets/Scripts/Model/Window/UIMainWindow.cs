@@ -11,7 +11,7 @@ public class UIMainWindow : Window {
         MyComp = (UIMainComponent)base.MyComp;
 
         // 加载相机
-        MyGame.MyGameSystem.MyCameraSystem.InstanceCamera(CameraType.MainCamera);
+        MyGS.CameraS.InstanceCamera(CameraType.MainCamera);
 
         // 取消鼠标可视化
         Cursor.visible = false;
@@ -20,41 +20,41 @@ public class UIMainWindow : Window {
         Open();
         MyComp.MyButton.onClick.AddListener(() => {
             // 加载 DebugUI
-            MyGame.MyGameSystem.MyUISystem.InstanceUIDebugToolWindow();
+            MyGS.UIS.InstanceUIDebugToolWindow();
 
             // 动画状态机系统
             if (GameData.AnimatorId == 0) {
-                GameData.AnimatorId = MyGame.MyGameSystem.MyAnimatorSystem.InstanceAnimator().InstanceID;
+                GameData.AnimatorId = MyGS.AnimatorS.InstanceAnimator().InstanceID;
             }
 
             // 加载灯光
-            MyGame.MyGameSystem.MyEnvironmentSystem.InstanceLight();
+            MyGS.EnvirS.InstanceLight();
 
             // 加载建筑、地面bb
-            MyGame.MyGameSystem.MyEnvironmentSystem.InstanceMapBuilding();
+            MyGS.EnvirS.InstanceMapBuilding();
 
             // 加载场景可拾取物体
-            MyGame.MyGameSystem.MyItemSystem.InstanceMapItem();
+            MyGS.ItemS.InstanceMapItem();
 
             // 读取玩家生成点 创建主玩家
             if (GameData.MainCharacterId == 0) {
-                GameData.MainCharacterId = MyGame.MyGameSystem.MyCharacterSystem.InstanceCharacter(true).InstanceID;
+                GameData.MainCharacterId = MyGS.CharacterS.InstanceCharacter(true).InstanceID;
             }
 
             // 加载角色 UI
-            MyGame.MyGameSystem.MyUISystem.InstanceUICharacterWindow();
+            MyGS.UIS.InstanceUICharacterWindow();
 
             // 加载地图 UI
-            MyGame.MyGameSystem.MyUISystem.InstanceUIMapWindow();
+            MyGS.UIS.InstanceUIMapWindow();
 
             // 加载背包 UI
-            MyGame.MyGameSystem.MyUISystem.InstanceUIBackpackWindow();
+            MyGS.UIS.InstanceUIBackpackWindow();
 
             // 加载贴士 UI
-            MyGame.MyGameSystem.MyUISystem.InstanceUITipWindow();
+            MyGS.UIS.InstanceUITipWindow();
 
             // 播放背景音效（替代资源）
-            game.MyGameSystem.MyAudioSystem.InstanceAudioMain();
+            game.MyGameSystem.AudioS.InstanceAudioMain();
 
             // 关闭界面
             Close();

@@ -2,26 +2,6 @@
 using UnityEngine;
 
 public class ConsumeSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void LateUpdate() {
-        base.LateUpdate();
-    }
-
     #region 增
 
     public ConsumeData InstanceConsume(Vector3 point, Quaternion rot) {
@@ -40,24 +20,16 @@ public class ConsumeSystem : GameSys {
     }
 
     private void InstanceConsume(ConsumeData consumeData) {
-        MyGameSystem.InstanceGameObj<ConsumeGameObj, ConsumeEntity>(consumeData);
+        MyGS.InstanceGameObj<ConsumeGameObj, ConsumeEntity>(consumeData);
     }
 
     #endregion
 
-    #region 查
-
-    public ConsumeGameObj GetConsumeGameObj(int id) {
-        return MyGameSystem.MyGameObjFeature.Get<ConsumeGameObj>(id);
+    public ConsumeGameObj GetGO(int id) {
+        return base.GetGameObj<ConsumeGameObj>(id);
     }
 
-    public ConsumeComponent GetConsumeComponent(int id) {
-        return GetConsumeGameObj(id).GetComp<ConsumeComponent>();
+    public ConsumeEntity GetEntity(int id) {
+        return base.GetEntity<ConsumeEntity>(id);
     }
-
-    public ConsumeData GetConsumeData(int id) {
-        return GetEntity<ConsumeEntity>(id).GetData<ConsumeData>();
-    }
-
-    #endregion
 }

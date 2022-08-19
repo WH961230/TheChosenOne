@@ -36,7 +36,7 @@ public class AnimatorSystem : GameSys {
     }
 
     private void InstanceAnimator(AnimatorData data) {
-        MyGameSystem.InstanceEntity<AnimatorEntity>(data);
+        MyGS.InstanceEntity<AnimatorEntity>(data);
     }
 
     #endregion
@@ -44,7 +44,7 @@ public class AnimatorSystem : GameSys {
     #region 查
 
     public AnimatorEntity GetEntity() {
-        return MyGameSystem.MyEntityFeature.Get<AnimatorEntity>(GameData.AnimatorId);
+        return MyGS.EntityFeature.Get<AnimatorEntity>(GameData.AnimatorId);
     }
 
     #endregion

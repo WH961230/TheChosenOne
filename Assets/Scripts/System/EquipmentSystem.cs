@@ -4,32 +4,6 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class EquipmentSystem : GameSys {
-    #region 获取
-
-    
-    // 基础
-    public EquipmentGameObj GetEquipmentGameObj(int id) {
-        return MyGameSystem.MyGameObjFeature.Get<EquipmentGameObj>(id);
-    }
-
-    public EquipmentComponent GetEquipmentComponent(int id) {
-        return GetEquipmentGameObj(id).GetComp<EquipmentComponent>();
-    }
-
-    public EquipmentType GetEquipmentType(int id) {
-        return GetEquipmentGameObj(id).GetComp<EquipmentComponent>().MyEquipmentType;
-    }
-
-    public EquipmentEntity GetEquipmentEntity(int id) {
-        return MyGameSystem.MyEntityFeature.Get<EquipmentEntity>(id);
-    }
-
-    public EquipmentData GetEquipmentData(int id) {
-        return GetEquipmentEntity(id).GetData<EquipmentData>();
-    }
-
-    #endregion
-
     #region 创建
 
     public void InstanceMapEquipment() {
@@ -75,8 +49,16 @@ public class EquipmentSystem : GameSys {
     }
 
     private void InstanceEquipment(EquipmentData data) {
-        MyGameSystem.InstanceGameObj<EquipmentGameObj, EquipmentEntity>(data);
+        MyGS.InstanceGameObj<EquipmentGameObj, EquipmentEntity>(data);
     }
 
     #endregion
+
+    public EquipmentGameObj GetGO(int id) {
+        return base.GetGameObj<EquipmentGameObj>(id);
+    }
+
+    public EquipmentEntity GetEtity(int id) {
+        return base.GetEntity<EquipmentEntity>(id);
+    }
 }

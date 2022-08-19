@@ -7,11 +7,7 @@ public class EquipmentEntity : Entity {
         this.equipmentData = (EquipmentData)data;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
+    public EquipmentData GetData() {
+        return base.GetData() as EquipmentData;
     }
 }

@@ -24,6 +24,6 @@ public class BulletSystem : GameSys {
     }
     
     private void InstanceBullet(BulletData data) {
-        MyGameSystem.InstanceGameObj<BulletGameObj, BulletEntity>(data);
+        MyGS.InstanceGameObj<BulletGameObj, BulletEntity>(data);
     }
 }

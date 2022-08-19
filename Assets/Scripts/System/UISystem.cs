@@ -7,7 +7,7 @@ public class UISystem : GameSys {
     }
 
     private void InstanceUIMainWindow() {
-        MyGameSystem.InstanceWindow<UIMainWindow, UIMainGameObj, UIMainEntity>(new UIMainData() {
+        MyGS.InstanceWindow<UIMainWindow, UIMainGameObj, UIMainEntity>(new UIMainData() {
             MyName = "MainWindow",
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UIMainPrefab),
             MyRootTran = GameData.UIRoot,
@@ -19,7 +19,7 @@ public class UISystem : GameSys {
     }
 
     public void InstanceUITipWindow() {
-        MyGameSystem.InstanceWindow<UITipWindow, UITipGameObj, UITipEntity>(new UITipData() {
+        MyGS.InstanceWindow<UITipWindow, UITipGameObj, UITipEntity>(new UITipData() {
             MyName = "TipWindow",
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UITipPrefab),
             MyRootTran = GameData.UIRoot,
@@ -27,7 +27,7 @@ public class UISystem : GameSys {
     }
 
     public void InstanceUIBackpackWindow() {
-        MyGameSystem.InstanceWindow<UIBackpackWindow, UIBackpackGameObj, UIBackpackEntity>(new UIBackpackData() {
+        MyGS.InstanceWindow<UIBackpackWindow, UIBackpackGameObj, UIBackpackEntity>(new UIBackpackData() {
             MyName = "BackpackWindow",
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UIBackpackPrefab),
             MyRootTran = GameData.UIRoot,
@@ -35,7 +35,7 @@ public class UISystem : GameSys {
     }
 
     public void InstanceUICharacterWindow() {
-        MyGameSystem.InstanceWindow<UICharacterWindow, UICharacterGameObj, UICharacterEntity>(new UICharacterData() {
+        MyGS.InstanceWindow<UICharacterWindow, UICharacterGameObj, UICharacterEntity>(new UICharacterData() {
             MyName = "CharacterWindow",
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UICharacterPrefab),
             MyRootTran = GameData.UIRoot,
@@ -47,7 +47,7 @@ public class UISystem : GameSys {
     }
 
     public void InstanceUIMapWindow() {
-        MyGameSystem.InstanceWindow<UIMapWindow, UIMapGameObj, UIMapEntity>(new UIMapData() {
+        MyGS.InstanceWindow<UIMapWindow, UIMapGameObj, UIMapEntity>(new UIMapData() {
             MyName = "MapWindow",
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UIMapPrefab),
             MyRootTran = GameData.UIRoot,
@@ -55,7 +55,7 @@ public class UISystem : GameSys {
     }
 
     public void InstanceUIDebugToolWindow() {
-        MyGameSystem.InstanceWindow<UIDebugToolWindow, UIDebugToolGameObj, UIDebugToolEntity>(new UIDebugToolData() {
+        MyGS.InstanceWindow<UIDebugToolWindow, UIDebugToolGameObj, UIDebugToolEntity>(new UIDebugToolData() {
             MyObj = Object.Instantiate(SOData.MySOGameSetting.UIDebugToolPrefab),
             MyName = "DebugToolWindow",
             MyRootTran = GameData.UIRoot,

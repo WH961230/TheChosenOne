@@ -6,7 +6,7 @@ public class WeaponGameObj : GameObj {
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         weaponData = (WeaponData)data;
-        weaponComponent = (WeaponComponent) MyComp;
+        weaponComponent = (WeaponComponent) Comp;
         weaponData.MyFirePos = weaponComponent.MyFirePos;
         weaponData.MyWeaponSign = weaponComponent.MySign;
         weaponData.MyWeaponType = weaponComponent.MyWeaponType;
