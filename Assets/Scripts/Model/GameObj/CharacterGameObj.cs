@@ -64,12 +64,11 @@ public class CharacterGameObj : GameObj {
             return;
         }
 
-        var weapEntity = GS.WeapS.GetEntity(curWeapId);
-        var weaponData = weapEntity.GetData();
+        var weaponData = GS.WeapS.GetEntity(curWeapId).GetData();
 
         //加载子弹
-        GS.EffectS.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
-        EditorApplication.isPaused = true;
+        var id = GS.EffectS.InstanceEffect(weaponData.MyFirePos.position, weaponData.MyFirePos.rotation);
+        GS.EffectS.GetEffectGO(id).SetEffect(weaponData.MyFirePos.position + weaponData.MyFirePos.forward * 10);
     }
 
     private void Aim() {
@@ -266,14 +265,6 @@ public class CharacterGameObj : GameObj {
         }
 
         isStartGravity = true;
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
-    }
-
-    public override void LateUpdate() {
-        base.LateUpdate();
     }
 
     private void MoveBehaviour() {

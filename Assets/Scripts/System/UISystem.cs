@@ -61,4 +61,12 @@ public class UISystem : GameSys {
             MyRootTran = GameData.UIRoot,
         });
     }
+
+    public UIMainGameObj GetMainGO(int id) {
+        return base.GetGameObj<UIMainGameObj>(id);
+    }
+
+    public UIMainEntity GetMainEtity(int id) {
+        return base.GetEntity<UIMainEntity>(id);
+    }
 }

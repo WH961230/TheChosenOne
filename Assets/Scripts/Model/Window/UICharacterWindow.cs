@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 
 public class UICharacterWindow : Window {
-    private UICharacterComponent MyComp;
+    private UICharacterComponent ChaComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
+
         var tempGO = (UICharacterGameObj)gameObj;
-        MyComp = tempGO.GetComp();
+
+        ChaComp = tempGO.GetComp();
+
         var playerData = MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData();
-        MyComp.UIWeaponLeft.onClick.AddListener(() => {
+
+        ChaComp.UIWeaponLeft.onClick.AddListener(() => {
             var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(0);
         });
-        MyComp.UIWeaponRight.onClick.AddListener(() => {
+
+        ChaComp.UIWeaponRight.onClick.AddListener(() => {
             var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(1);
         });
+
         MyGame.MyGameMessageCenter.Register(GameMessageConstants.UISYSTEM_UICHARACTER_REFRESH, MsgRefresh);
+
         Refresh();
     }
 
@@ -28,7 +35,7 @@ public class UICharacterWindow : Window {
         Refresh();
     }
 
-    public void Refresh() {
+    private void Refresh() {
         RefreshWeapon();
     }
 
@@ -42,15 +49,15 @@ public class UICharacterWindow : Window {
             if (tempId != 0) {
                 sprite = MyGS.WeapS.GetEntity(tempId).GetData().MySprite;
                 if (i == 0) {
-                    MyComp.UIWeaponLeft.image.sprite = sprite;
+                    ChaComp.UIWeaponLeft.image.sprite = sprite;
                 } else if (i == 1) {
-                    MyComp.UIWeaponRight.image.sprite = sprite;
+                    ChaComp.UIWeaponRight.image.sprite = sprite;
                 }
             } else {
                 if (i == 0) {
-                    MyComp.UIWeaponLeft.image.sprite = null;
+                    ChaComp.UIWeaponLeft.image.sprite = null;
                 } else if (i == 1) {
-                    MyComp.UIWeaponRight.image.sprite = null;
+                    ChaComp.UIWeaponRight.image.sprite = null;
                 }
             }
         }

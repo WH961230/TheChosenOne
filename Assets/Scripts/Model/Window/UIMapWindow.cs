@@ -1,28 +1,27 @@
 ﻿public class UIMapWindow : Window {
-    private UIMapComponent MyComp;
+    private UIMapComponent MapComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
         var tempGO = (UIMapGameObj)gameObj;
-        MyComp = tempGO.GetComp();
-        MyComp.UIMapMaxClose.onClick.AddListener(() => {
-            MyComp.UIMapMax.SetActive(false);
-            MyComp.UIMapMin.SetActive(true);
-        });
-        MyComp.UIMapMinButton.onClick.AddListener(() => {
-            MyComp.UIMapMin.SetActive(false);
-            MyComp.UIMapMax.SetActive(true);
-        });
+        MapComp = tempGO.GetComp();
+
+        RegisterEvent(MapComp.UIMapMinButton.onClick, OpenMaxMap);
+        RegisterEvent(MapComp.UIMapMaxClose.onClick, CloseMaxMap);
     }
 
-    public override void Open() {
+    public override void CloseAll() {
+        UnRegisterEvent(MapComp.UIMapMinButton.onClick, OpenMaxMap);
+        UnRegisterEvent(MapComp.UIMapMaxClose.onClick, CloseMaxMap);
+        base.CloseAll();
     }
 
-    public override void Update() {
+    private void OpenMaxMap() {
+        MapComp.UIMapMin.SetActive(false);
+        MapComp.UIMapMax.SetActive(true);
     }
 
-    public override void Close() {
-    }
-
-    public override void Clear() {
+    private void CloseMaxMap() {
+        MapComp.UIMapMax.SetActive(false);
+        MapComp.UIMapMin.SetActive(true);
     }
 }

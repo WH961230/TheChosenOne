@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
 
 public class EffectSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public void InstanceEffect(Vector3 point, Quaternion rot) {
+    public int InstanceEffect(Vector3 point, Quaternion rot) {
         EffectData data = new EffectData() {
             MyName = "Effect",
             MyObj = Object.Instantiate(SOData.MyEffectSetting.MyBulletFX),
@@ -16,10 +12,18 @@ public class EffectSystem : GameSys {
             MyRootTran = GameData.EffectRoot,
         };
 
-        InstanceEffect(data);
+        return InstanceEffect(data);
     }
 
-    private void InstanceEffect(EffectData data) {
-        MyGS.InstanceGameObj<EffectGameObj, EffectEntity>(data);
+    private int InstanceEffect(EffectData data) {
+        return MyGS.InstanceGameObj<EffectGameObj, EffectEntity>(data);
+    }
+
+    public EffectGameObj GetEffectGO(int id) {
+        return GetGameObj<EffectGameObj>(id);
+    }
+
+    public EffectEntity GetEffectEntity(int id) {
+        return GetEntity<EffectEntity>(id);
     }
 }

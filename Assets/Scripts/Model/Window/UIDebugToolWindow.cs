@@ -1,46 +1,46 @@
 ﻿using UnityEngine;
 
 public class UIDebugToolWindow : Window {
-    private UIDebugToolComponent comp;
+    private UIDebugToolComponent ToolComp;
 
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
         var tempGO = (UIDebugToolGameObj)gameObj;
-        comp = tempGO.GetComp();
+        ToolComp = tempGO.GetComp();
 
-        comp.MyDebugToolFunctionWin.SetActive(false);
-        comp.MyDebugToolCloseBtn.gameObject.SetActive(false);
-        comp.MyConsoleWin.SetActive(false);
-        comp.MyDebugToolSideBtnWin.SetActive(false);
+        ToolComp.MyDebugToolFunctionWin.SetActive(false);
+        ToolComp.MyDebugToolCloseBtn.gameObject.SetActive(false);
+        ToolComp.MyConsoleWin.SetActive(false);
+        ToolComp.MyDebugToolSideBtnWin.SetActive(false);
 
-        comp.MyDebugToolBtn.onClick.AddListener(() => {
-            comp.MyDebugToolFunctionWin.SetActive(true);
-            comp.MyConsoleWin.SetActive(false);
-            comp.MyDebugToolSideBtnWin.SetActive(true);
-            comp.MyDebugToolCloseBtn.gameObject.SetActive(true);
+        ToolComp.MyDebugToolBtn.onClick.AddListener(() => {
+            ToolComp.MyDebugToolFunctionWin.SetActive(true);
+            ToolComp.MyConsoleWin.SetActive(false);
+            ToolComp.MyDebugToolSideBtnWin.SetActive(true);
+            ToolComp.MyDebugToolCloseBtn.gameObject.SetActive(true);
         });
 
-        comp.MyDebugToolCloseBtn.onClick.AddListener(() => {
-            comp.MyDebugToolFunctionWin.SetActive(false);
-            comp.MyDebugToolCloseBtn.gameObject.SetActive(false);
-            comp.MyDebugToolSideBtnWin.SetActive(false);
+        ToolComp.MyDebugToolCloseBtn.onClick.AddListener(() => {
+            ToolComp.MyDebugToolFunctionWin.SetActive(false);
+            ToolComp.MyDebugToolCloseBtn.gameObject.SetActive(false);
+            ToolComp.MyDebugToolSideBtnWin.SetActive(false);
         });
 
-        comp.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
+        ToolComp.MyDebugToolCreateCharacterBtn.onClick.AddListener(() => {
             MyGS.CharacterS.InstanceCharacter(false);
         });
         
-        comp.MyDebugToolConsoleSelectBtn.onClick.AddListener(() => {
-            comp.MyConsoleWin.SetActive(true);
-            comp.MyDebugToolFunctionWin.SetActive(false);
+        ToolComp.MyDebugToolConsoleSelectBtn.onClick.AddListener(() => {
+            ToolComp.MyConsoleWin.SetActive(true);
+            ToolComp.MyDebugToolFunctionWin.SetActive(false);
         });
         
-        comp.MyDebugToolFunctionSelectBtn.onClick.AddListener(() => {
-            comp.MyConsoleWin.SetActive(false);
-            comp.MyDebugToolFunctionWin.SetActive(true);
+        ToolComp.MyDebugToolFunctionSelectBtn.onClick.AddListener(() => {
+            ToolComp.MyConsoleWin.SetActive(false);
+            ToolComp.MyDebugToolFunctionWin.SetActive(true);
         });
 
-        comp.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
+        ToolComp.MyDebugToolCreateCubeAtGround.onClick.AddListener(() => {
             var characterPos =  MyGS.CharacterS.GetGO(GameData.MainCharacterId).GetComp().transform.position;
             var tempObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             tempObj.transform.position = GameData.GetGround(characterPos);

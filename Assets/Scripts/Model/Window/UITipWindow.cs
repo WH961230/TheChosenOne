@@ -1,10 +1,17 @@
 ﻿public class UITipWindow : Window {
-    private UITipComponent MyComp;
+    private UITipComponent TipComp;
     public override void Init(Game game, GameObj gameObj) {
         base.Init(game, gameObj);
+
         var tempGO = (UITipGameObj)gameObj;
-        MyComp = tempGO.GetComp();
-        MyComp.MyTip.SetActive(false);
+
+        TipComp = tempGO.GetComp();
+
+        // 注册物体
+        TempGO.Add(TipComp.MyTip);
+
+        CloseAll();
+
         MyGame.MyGameMessageCenter.Register<UITipType, string>(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, MsgSetTipDescription);
     }
 
@@ -13,33 +20,25 @@
         base.Clear();
     }
 
-    public override void Open() {
-        MyComp.MyTip.SetActive(true);
-    }
-
     public override void Update() {
-        if (string.IsNullOrEmpty(MyComp.MyTipName.text) || string.IsNullOrEmpty(MyComp.MyTipKeycode.text)) {
-            Close();
+        if (string.IsNullOrEmpty(TipComp.MyTipName.text) || string.IsNullOrEmpty(TipComp.MyTipKeycode.text)) {
+            CloseAll();
         } else {
-            Open();
+            OpenAll();
         }
-    }
-
-    public override void Close() {
-        MyComp.MyTip.SetActive(false);
     }
 
     private void MsgSetTipDescription(UITipType tipType, string description) {
         SetTipDescription(tipType, description);
     }
 
-    public void SetTipDescription(UITipType tipType, string description) {
+    private void SetTipDescription(UITipType tipType, string description) {
         switch (tipType) {
             case UITipType.ItemNameTip:
-                MyComp.MyTipName.text = description;
+                TipComp.MyTipName.text = description;
                 break;
             case UITipType.ItemKeycode:
-                MyComp.MyTipKeycode.text = description;
+                TipComp.MyTipKeycode.text = description;
                 break;
         }
     }

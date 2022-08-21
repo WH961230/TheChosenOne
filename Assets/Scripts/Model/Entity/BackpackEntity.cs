@@ -125,7 +125,7 @@ public class BackpackEntity : Entity {
             }
         }
 
-        if (!curWeapNull) {
+        if (curWeapNull) {
             MyGS.CharacterS.GetGO(GameData.MainCharacterId).InstallCurWeapon(id);
             backpackData.SetCurWeapId(id);
             // 刷新玩家界面

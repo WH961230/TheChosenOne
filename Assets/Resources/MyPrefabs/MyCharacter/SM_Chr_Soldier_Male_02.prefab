@@ -867,6 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RegisterAnimator: {fileID: 875691681780233923}
+  MySign: 
   Head: {fileID: 5988782349958938445}
   Body: {fileID: 5988454832137893343}
   CC: {fileID: 2538798550090026928}
