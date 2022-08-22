@@ -13,34 +13,25 @@ MonoBehaviour:
   m_Name: SOWeaponSetting
   m_EditorClassIdentifier: 
   WeaponAimModelPoint: {x: 0, y: -100, z: 0}
-  MyWeaponMapInfo:
-  - Point: {x: -9.450915, y: 0.5, z: 0}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -6.30061, y: 0.5, z: 0}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 0, y: 0.5, z: -11.000862}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: 0, y: 0.5, z: -8.250647}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -6.3006105, y: 0.5, z: -8.250647}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -3.150305, y: 0.5, z: -8.250647}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
-  - Point: {x: -3.150305, y: 0.5, z: -2.7502155}
-    Quaternion: {x: -0, y: -0, z: -0, w: 1}
   MyWeaponParameterInfo:
   - Prefab: {fileID: 3841329127782271852, guid: 6364e968f0081e949b5f155cdbd87667,
       type: 3}
     Picture: {fileID: 21300000, guid: c4e9b1218557209409c22fe46da84214, type: 3}
     WeaponCameraAimPoint: {x: 0, y: -99.836, z: -0.292}
     WeaponCameraAimFOV: 40
+    CharaWeapPot: {x: -0.2428, y: -0.2175999, z: 0.3327001}
+    CharaWeapRot: {x: -64.58801, y: -107.592, z: 7.216001, w: 0}
   - Prefab: {fileID: 8786019937070736618, guid: f3fd987ddbcba0544950f92af866c889,
       type: 3}
     Picture: {fileID: 21300000, guid: 78d523d7664f69d46b06a79678875e39, type: 3}
     WeaponCameraAimPoint: {x: 0, y: -99.837, z: -0.292}
     WeaponCameraAimFOV: 40
+    CharaWeapPot: {x: 0, y: 0, z: 0}
+    CharaWeapRot: {x: 0, y: 0, z: 0, w: 0}
   - Prefab: {fileID: 3993783960709859755, guid: adf35aa8fdc75e942a8196ab10dc73cc,
       type: 3}
     Picture: {fileID: 21300000, guid: 0ef273af85fc2b640b01556c8fcb4240, type: 3}
     WeaponCameraAimPoint: {x: 0, y: -99.914, z: -0.292}
     WeaponCameraAimFOV: 40
+    CharaWeapPot: {x: 0, y: 0, z: 0}
+    CharaWeapRot: {x: 0, y: 0, z: 0, w: 0}

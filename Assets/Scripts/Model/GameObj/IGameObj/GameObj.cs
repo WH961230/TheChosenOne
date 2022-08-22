@@ -60,21 +60,24 @@ public class GameObj : IGameObj {
         }
     }
 
-    // 卸载
-    public virtual void UnInstall(Transform root, Vector3 point, Quaternion rot, bool isLocal) {
+    public virtual void SetChild(Transform root, Vector3 point, Vector3 rot, bool isLocal, bool isShow) {
         // 设置父节点
         MyObj.transform.SetParent(root);
+
         // 设置位置
         if (isLocal) {
             MyObj.transform.localPosition = point;
-            MyObj.transform.localRotation = rot;
+            MyObj.transform.localRotation = Quaternion.Euler(rot);
         } else {
             MyObj.transform.position = point;
-            MyObj.transform.rotation = rot;
+            MyObj.transform.rotation = Quaternion.Euler(rot);
         }
 
-        // 隐藏
-        Hide();
+        if (isShow) {
+            Display();
+        } else {
+            Hide();
+        }
     }
 
     public virtual void Clear() {

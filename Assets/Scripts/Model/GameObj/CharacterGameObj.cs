@@ -10,7 +10,7 @@ public class CharacterGameObj : GameObj {
     private bool isLerpCharacterCameraFOV = false;
     private bool isLerpWeaponCameraFOV = false;
     private Vector3 moveVector = Vector3.zero; // 移动向量
-    private CharacterComponent characterComponent;
+    private CharacterComponent charaComp;
 
     private InputSystem inputSystem {
         get { return game.MyGameSystem.InputS; }
@@ -23,9 +23,9 @@ public class CharacterGameObj : GameObj {
         base.Init(game, data);
         this.game = game;
         characterData = (CharacterData) data;
-        characterComponent = (CharacterComponent) Comp;
-        characterComponent.Body.transform.localPosition = data.MyTranInfo.MyPos;
-        characterComponent.Body.transform.localRotation = data.MyTranInfo.MyRot;
+        charaComp = (CharacterComponent) Comp;
+        charaComp.Body.transform.localPosition = data.MyTranInfo.MyPos;
+        charaComp.Body.transform.localRotation = data.MyTranInfo.MyRot;
     }
 
     public override void Update() {
@@ -44,6 +44,10 @@ public class CharacterGameObj : GameObj {
 
         if (GS.InputS.GetMouseButtonDown(0)) {
             Fire();
+        }
+
+        if (GS.InputS.GetKeyDown(KeyCode.G)) {
+            GS.BackpackS.GetEntity(characterData.BackpackInstanceId).DropMainWeapon(0);
         }
 
         if (isLerpCharacterCameraFOV) {
@@ -109,10 +113,10 @@ public class CharacterGameObj : GameObj {
 
             // 显示 WeaponCamera
             weapCamGO.Display();
-            weapCamGO.SetPos(curWeapData.WeaponCameraAimPoint);
+            weapCamGO.SetPos(curWeapData.WeapParamInfo.WeaponCameraAimPoint);
 
             // 调整 WeaponCamera 【开镜 FOV】 并至【开镜位置】
-            weaponCameraFOVTarget = curWeapData.WeaponCameraAimFOV;
+            weaponCameraFOVTarget = curWeapData.WeapParamInfo.WeaponCameraAimFOV;
             isLerpWeaponCameraFOV = true;
 
             // 设置武器开镜旋转
@@ -124,20 +128,9 @@ public class CharacterGameObj : GameObj {
     }
 
     private void SetCharacterMeshActive(bool isShow) {
-        characterComponent.CharacterSkinMeshRenderer.enabled = isShow;
-        foreach (var temp in characterComponent.CharacterMeshRenderers) {
+        charaComp.CharacterSkinMeshRenderer.enabled = isShow;
+        foreach (var temp in charaComp.CharacterMeshRenderers) {
             temp.enabled = isShow;
-        }
-    }
-
-    // 设置武器模型
-    public void SetHoldWeaponModel(string weaponSign) {
-        foreach (var curWeap in characterComponent.MyHoldWeapons) {
-            if (curWeap.name.Equals(weaponSign)) {
-                curWeap.SetActive(true);
-            } else {
-                curWeap.SetActive(false);
-            }
         }
     }
 
@@ -150,19 +143,19 @@ public class CharacterGameObj : GameObj {
         }
 
         var weapGameObj = GS.WeapS.GetGO(weapId);
-        var weapComp = GS.WeapS.GetGO(weapId).GetComp();
-        var weaponPlace = characterComponent.MyWeaponPlace;
-        weapGameObj.SetWeaponPlace(weaponPlace, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
+        var weapData = GS.WeapS.GetEntity(weapId).GetData();
+        var weapRoot = charaComp.MyWeaponPlace;
+        weapGameObj.SetChild(weapRoot, weapData.WeapParamInfo.CharaWeapPot, weapData.WeapParamInfo.CharaWeapRot, true, true);
     }
 
-    public void UnInstallCurWeapon(int weapId) {
+    public void UninstallCurWeapon(int weapId) {
         if (weapId == 0) {
             return;
         }
 
         var weapGameObj = GS.WeapS.GetGO(weapId);
-        var weapComp = GS.WeapS.GetGO(weapId).GetComp();
-        weapGameObj.SetWeaponPlace(GameData.WeaponRoot, weapComp.MyCharacterHandlePos, weapComp.MyCharacterHandleRot);
+        var weapData = GS.WeapS.GetEntity(weapId).GetData();
+        weapGameObj.SetChild(GameData.WeaponRoot, weapData.WeapParamInfo.CharaWeapPot, weapData.WeapParamInfo.CharaWeapRot, true, true);
     }
 
     private void CharacterAnimation() {
@@ -170,13 +163,13 @@ public class CharacterGameObj : GameObj {
         bool hasCurWeap = GS.BackpackS.GetEntity(characterData.BackpackInstanceId).GetCurWeaponType(out WeaponType type);
         if (hasCurWeap) {
             if (type == WeaponType.MainWeapon) {
-                characterComponent.AnimatorController.SetInteger("Weapon", 2);
+                charaComp.AnimatorController.SetInteger("Weapon", 2);
             } else if(type == WeaponType.SideWeapon) {
-                characterComponent.AnimatorController.SetInteger("Weapon", 1);
+                charaComp.AnimatorController.SetInteger("Weapon", 1);
             }
-            characterComponent.AnimatorController.SetBool("IsWeapon", true);
+            charaComp.AnimatorController.SetBool("IsWeapon", true);
         } else {
-            characterComponent.AnimatorController.SetBool("IsWeapon", false);
+            charaComp.AnimatorController.SetBool("IsWeapon", false);
         }
     }
 
@@ -186,73 +179,73 @@ public class CharacterGameObj : GameObj {
             var pressAltDown = inputSystem.GetKey(KeyCode.LeftAlt) || inputSystem.GetKey(KeyCode.RightAlt);
             yRotate += inputSystem.GetAxis("Mouse X");
             if (!pressAltDown) {
-                characterComponent.Body.transform.rotation = Quaternion.Euler(0, yRotate, 0);
+                charaComp.Body.transform.rotation = Quaternion.Euler(0, yRotate, 0);
             }
 
             Vector3 dir = Vector3.zero;
 
-            var h = characterComponent.AnimatorController.GetFloat("Horizontal");
-            var v = characterComponent.AnimatorController.GetFloat("Vertical");
+            var h = charaComp.AnimatorController.GetFloat("Horizontal");
+            var v = charaComp.AnimatorController.GetFloat("Vertical");
             var speed = 10;
             if (inputSystem.GetKey(KeyCode.W)) {
-                dir = characterComponent.Body.transform.forward;
+                dir = charaComp.Body.transform.forward;
                 if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
                     vec = dir * SOData.MySOCharacter.MyMoveInfo.RunSpeed;
                     h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
-                    characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                     v = Mathf.Lerp(v, 2, Time.deltaTime * speed);
-                    characterComponent.AnimatorController.SetFloat("Vertical", v);
+                    charaComp.AnimatorController.SetFloat("Vertical", v);
                 } else {
                     // 移动速度
                     vec = dir * SOData.MySOCharacter.MyMoveInfo.WalkSpeed;
                     h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
-                    characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                    charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                     v = Mathf.Lerp(v, 1, Time.deltaTime * speed);
-                    characterComponent.AnimatorController.SetFloat("Vertical", v);
+                    charaComp.AnimatorController.SetFloat("Vertical", v);
                 }
-                characterComponent.AnimatorController.SetBool("IsMove", true);
+                charaComp.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.S)) {
-                dir = -characterComponent.Body.transform.forward;
+                dir = -charaComp.Body.transform.forward;
                 vec = dir * SOData.MySOCharacter.MyMoveInfo.WalkSpeed;
                 h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                 v = Mathf.Lerp(v, -1, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Vertical", v);
-                characterComponent.AnimatorController.SetBool("IsMove", true);
+                charaComp.AnimatorController.SetFloat("Vertical", v);
+                charaComp.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.A)) {
-                dir = -characterComponent.Body.transform.right;
+                dir = -charaComp.Body.transform.right;
                 vec = dir * SOData.MySOCharacter.MyMoveInfo.WalkSpeed;
                 h = Mathf.Lerp(h, -1, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                 v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Vertical", v);
-                characterComponent.AnimatorController.SetBool("IsMove", true);
+                charaComp.AnimatorController.SetFloat("Vertical", v);
+                charaComp.AnimatorController.SetBool("IsMove", true);
             } else if (inputSystem.GetKey(KeyCode.D)) {
-                dir = characterComponent.Body.transform.right;
+                dir = charaComp.Body.transform.right;
                 vec = dir * SOData.MySOCharacter.MyMoveInfo.WalkSpeed;
                 h = Mathf.Lerp(h, 1, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                 v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Vertical", v);
-                characterComponent.AnimatorController.SetBool("IsMove", true);
+                charaComp.AnimatorController.SetFloat("Vertical", v);
+                charaComp.AnimatorController.SetBool("IsMove", true);
             } else {
                 h = Mathf.Lerp(h, 0, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Horizontal", h);
+                charaComp.AnimatorController.SetFloat("Horizontal", h);
                     
                 v = Mathf.Lerp(v, 0, Time.deltaTime * speed);
-                characterComponent.AnimatorController.SetFloat("Vertical", v);
-                characterComponent.AnimatorController.SetBool("IsMove", false);
+                charaComp.AnimatorController.SetFloat("Vertical", v);
+                charaComp.AnimatorController.SetBool("IsMove", false);
             }
         }
 
         // 重力
         if (isStartGravity) {
-            if (!characterComponent.CC.isGrounded) {
+            if (!charaComp.CC.isGrounded) {
                 vec.y = -SOData.MySOEnvironmentSetting.GravitySpeed;
             } else {
                 vec.y = 0;
@@ -261,7 +254,7 @@ public class CharacterGameObj : GameObj {
 
         // 控制器移动
         if (vec != Vector3.zero) {
-            characterComponent.CC.Move(vec * Time.deltaTime);
+            charaComp.CC.Move(vec * Time.deltaTime);
         }
 
         isStartGravity = true;
@@ -276,15 +269,15 @@ public class CharacterGameObj : GameObj {
         // 获取不同的移动方向
         Vector3 dir = Vector3.zero;
         if (inputSystem.GetKey(KeyCode.W)) {
-            dir = characterComponent.Body.transform.forward;
+            dir = charaComp.Body.transform.forward;
         } else if (inputSystem.GetKey(KeyCode.S)) {
-            dir = -characterComponent.Body.transform.forward;
+            dir = -charaComp.Body.transform.forward;
         } else if (inputSystem.GetKey(KeyCode.A)) {
-            dir = -characterComponent.Body.transform.right;
+            dir = -charaComp.Body.transform.right;
         } else if (inputSystem.GetKey(KeyCode.D)) {
-            dir = characterComponent.Body.transform.right;
+            dir = charaComp.Body.transform.right;
         } else {
-            characterComponent.AnimatorController.SetFloat("Move", 0);
+            charaComp.AnimatorController.SetFloat("Move", 0);
         }
 
         // 未按下移动键
@@ -299,10 +292,10 @@ public class CharacterGameObj : GameObj {
         } else {
             if (inputSystem.GetKey(KeyCode.LeftShift) || inputSystem.GetKey(KeyCode.RightShift)) {
                 moveSpeed = SOData.MySOCharacter.MyMoveInfo.RunSpeed;
-                characterComponent.AnimatorController.SetFloat("Move", 2);
+                charaComp.AnimatorController.SetFloat("Move", 2);
             } else {
                 moveSpeed = SOData.MySOCharacter.MyMoveInfo.WalkSpeed;
-                characterComponent.AnimatorController.SetFloat("Move", 1);
+                charaComp.AnimatorController.SetFloat("Move", 1);
             }
         }
 
@@ -322,13 +315,13 @@ public class CharacterGameObj : GameObj {
         if (characterData.IsLanding) {
             moveVector -= MyObj.transform.up * SOData.MySOEnvironmentSetting.GravitySpeed * Time.deltaTime;
             // 落地降落停止
-            if (characterComponent.CC.isGrounded) {
+            if (charaComp.CC.isGrounded) {
                 characterData.IsLanding = false;
                 jumpTimer = -1;
             }
 
             return moveVector;
-        } else if (characterData.IsJumping || (!characterData.IsJumping && !characterComponent.CC.isGrounded)) {
+        } else if (characterData.IsJumping || (!characterData.IsJumping && !charaComp.CC.isGrounded)) {
             jumpTimer = 0;
             characterData.IsJumping = false;
             characterData.IsLanding = true;

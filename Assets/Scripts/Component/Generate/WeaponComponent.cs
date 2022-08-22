@@ -6,6 +6,4 @@ public class WeaponComponent : GameComp {
     public TweenRotation MyWeaponRotation;
     public TweenPosition MyWeaponPosition;
     public Transform MyFirePos;
-    public Vector3 MyCharacterHandlePos;
-    public Quaternion MyCharacterHandleRot;
 }

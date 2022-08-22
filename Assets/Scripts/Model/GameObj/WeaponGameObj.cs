@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 
 public class WeaponGameObj : GameObj {
-    private WeaponComponent weaponComponent;
-    private WeaponData weaponData;
+    private WeaponComponent wepComp;
+    private WeaponData wepData;
     public override void Init(Game game, Data data) {
         base.Init(game, data);
-        weaponData = (WeaponData)data;
-        weaponComponent = (WeaponComponent) Comp;
-        weaponData.MyFirePos = weaponComponent.MyFirePos;
-        weaponData.MyWeaponSign = weaponComponent.MySign;
-        weaponData.MyWeaponType = weaponComponent.MyWeaponType;
+        wepData = (WeaponData)data;
+        wepComp = (WeaponComponent) Comp;
+        wepData.MyFirePos = wepComp.MyFirePos;
+        wepData.MyWeaponSign = wepComp.MySign;
+        wepData.MyWeaponType = wepComp.MyWeaponType;
     }
 
-    public void SetWeaponPlace(Transform weaponPlace, Vector3 point, Quaternion rot) {
-        weaponData.MyObj.gameObject.transform.SetParent(weaponPlace);
-        weaponData.MyObj.transform.localPosition = point;
-        weaponData.MyObj.transform.localRotation = rot;
+    public void SetWeaponPlace(Transform root, Vector3 point, Quaternion rot) {
+        wepData.MyObj.gameObject.transform.SetParent(root);
+        wepData.MyObj.transform.localPosition = point;
+        wepData.MyObj.transform.localRotation = rot;
     }
 
     public WeaponComponent GetComp() {

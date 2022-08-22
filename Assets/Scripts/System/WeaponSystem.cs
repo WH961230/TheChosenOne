@@ -29,8 +29,7 @@ public class WeaponSystem : GameSys {
                 MyPos = point,
                 MyRot = rot,
             },
-            WeaponCameraAimPoint = param.WeaponCameraAimPoint,
-            WeaponCameraAimFOV = param.WeaponCameraAimFOV,
+            WeapParamInfo = param,
             MyRootTran = GameData.WeaponRoot,
         };
         InstanceWeapon(weaponData);

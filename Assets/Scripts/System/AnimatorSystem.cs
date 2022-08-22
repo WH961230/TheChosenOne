@@ -1,28 +1,6 @@
 ﻿using UnityEngine;
 
 public class AnimatorSystem : GameSys {
-    public override void Init(GameSystem gameSystem) {
-        base.Init(gameSystem);
-    }
-
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void FixedUpdate() {
-        base.FixedUpdate();
-    }
-
-    public override void Clear() {
-        base.Clear();
-    }
-
-    public override void LateUpdate() {
-        base.LateUpdate();
-    }
-
-    #region 增
-
     public AnimatorData InstanceAnimator() {
         AnimatorData animatorData = new AnimatorData() {
             MyName = "Animator", 
@@ -39,13 +17,7 @@ public class AnimatorSystem : GameSys {
         MyGS.InstanceEntity<AnimatorEntity>(data);
     }
 
-    #endregion
-
-    #region 查
-
     public AnimatorEntity GetEntity() {
         return MyGS.EntityFeature.Get<AnimatorEntity>(GameData.AnimatorId);
     }
-
-    #endregion
 }
