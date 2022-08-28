@@ -1,0 +1,24 @@
+# ProBuilder 4.0.5
+# https://unity3d.com/unity/features/worldbuilding/probuilder
+# 30/10/2019 04:54:03
+
+mtllib ./prism-l-b.mtl
+o prism-l-b
+
+g prism-l-b
+v -4.500001 -1.25 4.291534E-06
+v 4.500007 -1.25 4.291534E-06
+v -4.500007 1.25 2.384186E-06
+v 4.500008 -0.75 -1.430511E-06
+
+vt 4.500001 -1.25
+vt -4.500007 -1.25
+vt 4.500007 1.25
+vt -4.500008 -0.75
+
+vn 0 -7.629395E-07 -1
+
+g prism-l-b
+usemtl Default-Material
+f 1/1/1 3/3/1 4/4/1 2/2/1
+

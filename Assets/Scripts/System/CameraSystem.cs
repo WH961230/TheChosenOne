@@ -53,5 +53,9 @@ public class CameraSystem : GameSys {
         return GetGameObj<CameraGameObj>(id);
     }
 
+    public CameraEntity GetEntity(int id) {
+        return GetEntity<CameraEntity>(id);
+    }
+
     #endregion
 }

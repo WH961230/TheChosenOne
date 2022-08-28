@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterGameObj : GameObj {
     private float moveSpeed = 0.0f; // 移动速度
@@ -26,13 +25,18 @@ public class CharacterGameObj : GameObj {
         charaComp = (CharacterComponent) Comp;
         charaComp.Body.transform.localPosition = data.MyTranInfo.MyPos;
         charaComp.Body.transform.localRotation = data.MyTranInfo.MyRot;
+
+        var camData = GS.CameraS.GetEntity(characterData.CameraInstanceId).GetData();
+        var camComp = GS.CameraS.GetGO(characterData.CameraInstanceId).GetComp();
+        camComp.ThirdPersonOrbitCam.SetPlayer(characterData.MyObj.transform, camComp.MyCamera.transform);
+        charaComp.BasicBehaviour.SetCam(camComp.MyCamera.transform, camData.MyObj.transform);
     }
 
     public override void Update() {
         base.Update();
-        CharacterMotion();
-        CharacterAnimation();
-        CharacterWeaponAction();
+        //CharacterMotion();
+        //CharacterAnimation();
+        //CharacterWeaponAction();
     }
 
     private float weaponCameraFOVTarget;

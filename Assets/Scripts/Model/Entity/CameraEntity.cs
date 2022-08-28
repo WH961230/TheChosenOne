@@ -5,11 +5,7 @@
         this.cameraData = (CameraData)data;
     }
 
-    public override void Update() {
-        base.Update();
-    }
-
-    public override void Clear() {
-        base.Clear();
+    public CameraData GetData() {
+        return base.GetData() as CameraData;
     }
 }

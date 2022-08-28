@@ -10,4 +10,5 @@ public class CharacterComponent : GameComp {
     public SkinnedMeshRenderer CharacterSkinMeshRenderer;
     [Header("武器槽位")] public Transform MyWeaponPlace;
     [Header("武器模型")] public List<GameObject> MyHoldWeapons;
+    public BasicBehaviour BasicBehaviour;
 }

@@ -26,9 +26,9 @@ public class CameraGameObj : GameObj {
     public override void LateUpdate() {
         base.LateUpdate();
         // 相机追踪行为
-        TraceBehaviour();
+        // TraceBehaviour();
         // 相机射线中心物体识别
-        OnCameraScreenCenterRayRecognize();
+        // OnCameraScreenCenterRayRecognize();
     }
 
     // 相机中心打出射线获取物体 低帧执行
