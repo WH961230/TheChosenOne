@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -103,8 +104,7 @@ public class InteractiveWeapon : MonoBehaviour
 		// Handle player pick weapon action.
 		if (this.pickable && Input.GetButtonDown(playerInventory.pickButton))
 		{
-			// Disable weapon physics.
-			rbody.isKinematic = true;
+			
 			this.col.enabled = false;
 			
 			// Setup weapon and add in player inventory.
@@ -115,6 +115,13 @@ public class InteractiveWeapon : MonoBehaviour
 
 			// Change active weapon HUD.
 			TooglePickupHUD(false);
+
+			Destroy(rbody);
+
+			// Disable weapon physics.
+			transform.localPosition = Vector3.zero;
+			transform.localRotation = Quaternion.identity;
+			transform.localScale = Vector3.one;
 		}
 	}
 
@@ -175,6 +182,8 @@ public class InteractiveWeapon : MonoBehaviour
 	{
 		this.gameObject.SetActive(true);
 		this.transform.position += Vector3.up;
+		this.rbody = this.gameObject.AddComponent<Rigidbody>();
+		rbody.useGravity = true;
 		rbody.isKinematic = false;
 		this.transform.parent = null;
 		CreateInteractiveRadius(col.center);
