@@ -1,0 +1,4 @@
+﻿int,string,int,int,int,int,string,string,string,string,string,string,float
+id,name,type,mode,mag,totalBullet,prefabPath,shotSoundPath,reloadSoundPath,pickSound,dropSoundPath,noBulletSoundPath,bulletDamage
+唯一标识,名字,类型,模式,弹夹携弹量,总弹药量,预制体路径,射击音效,换弹音效,拾取音效,丢弃音效,没有弹药音效,伤害
+1,AK479,2,2,30,120,Assets/TPS Bundle/Extras/Prefabs/AK 1.prefab,Assets/TPS Bundle/Cover+Shoot/Audio/ak.ogg,Assets/TPS Bundle/Cover+Shoot/Audio/reloadWeapon.ogg,Assets/TPS Bundle/Cover+Shoot/Audio/pickWeapon.ogg,Assets/TPS Bundle/Cover+Shoot/Audio/dropWeapon.ogg,Assets/TPS Bundle/Cover+Shoot/Audio/noBullet.ogg,9

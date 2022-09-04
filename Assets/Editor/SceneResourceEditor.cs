@@ -46,23 +46,23 @@ public class SceneResourceEditor : EditorWindow {
 
     [MenuItem("点这里/收集/收集【场景物资位置】到【配置】")]
     public static void GatherItemInfoToConfig() {
-        SOData.Init();
+        SoData.Init();
 
         var itemList = FindObjectsOfType<ItemComponent>();
-        SOData.MySOItemSetting.MyMapInfo.Clear();
+        SoData.MySOItemSetting.MyMapInfo.Clear();
 
         foreach (var item in itemList) {
             ItemType[] itemType = Enum.GetValues(typeof(ItemType)) as ItemType[];
             System.Random random = new System.Random();
 
-            SOData.MySOItemSetting.MyMapInfo.Add(new ItemMapInfo() {
+            SoData.MySOItemSetting.MyMapInfo.Add(new ItemMapInfo() {
                 Point = item.transform.position,
                 Quaternion = item.transform.rotation,
                 MyItemType = itemType[UnityEngine.Random.Range(0, itemType.Length)],
             });
         }
 
-        EditorUtility.SetDirty(SOData.MySOItemSetting);
+        EditorUtility.SetDirty(SoData.MySOItemSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -70,9 +70,9 @@ public class SceneResourceEditor : EditorWindow {
     [MenuItem("点这里/收集/收集【灯光位置】到【配置】")]
     public static void GatherLightInfoToConfig() {
         var component = FindObjectOfType<LightComponent>();
-        SOData.MySOLightSetting.MainLightInfo.position = component.transform.position;
-        SOData.MySOLightSetting.MainLightInfo.rotation = component.transform.rotation;
-        EditorUtility.SetDirty(SOData.MySOLightSetting);
+        SoData.MySOLightSetting.MainLightInfo.position = component.transform.position;
+        SoData.MySOLightSetting.MainLightInfo.rotation = component.transform.rotation;
+        EditorUtility.SetDirty(SoData.MySOLightSetting);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
