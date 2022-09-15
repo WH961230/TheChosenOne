@@ -12,6 +12,8 @@ public class GenerateScriptEditor : EditorWindow {
     private bool isHaveWindow; // 是否有窗口
     private bool isHaveComponent; // 是否有组件
     private bool isHaveSOSetting; // 是否有配置
+    private bool isHaveSOSystemSetting; // 是否有系统配置
+    private bool isCreateSOSystemSetting; // 是否有实体系统配置
     private static int currentProccess;
     private static int totalCount;
 
@@ -37,6 +39,21 @@ public class GenerateScriptEditor : EditorWindow {
         Rect _rect = new Rect(1000, 1000, 500, 200);
         GenerateScriptEditor window = (GenerateScriptEditor)GetWindowWithRect(typeof(GenerateScriptEditor), _rect, true, "万物皆可一键创建");
         window.Show();
+    }
+
+    private void OnGUI() {
+        className = EditorGUILayout.TextField("输入类文字 (注意大小写):", className, new []{GUILayout.Width(300)});
+        isHaveWindow = EditorGUILayout.Toggle("是否创建窗口类", isHaveWindow);
+        isHaveSOSetting = EditorGUILayout.Toggle("是否创建实体配置类", isHaveSOSetting);
+        isHaveData = EditorGUILayout.Toggle("是否创建数据类", isHaveData);
+        isHaveComponent = EditorGUILayout.Toggle("是否创建组件类", isHaveComponent);
+        isHaveGameObj = EditorGUILayout.Toggle("是否创建游戏物体类", isHaveGameObj);
+        isHaveEntity = EditorGUILayout.Toggle("是否创建实体类", isHaveEntity);
+        if (GUILayout.Button("开始执行", GUILayout.Width(100))) {
+            this.GenerateScript(className);
+        }
+        isHaveSOSystemSetting = EditorGUILayout.Toggle("是否创建系统配置类", isHaveSOSystemSetting);
+        isCreateSOSystemSetting = EditorGUILayout.Toggle("是否创建系统配置实例(配置类编译完成后)", isCreateSOSystemSetting);
     }
 
     private void GenerateScript(string className) {
@@ -76,6 +93,14 @@ public class GenerateScriptEditor : EditorWindow {
             CreateStript(PathData.SOSettingTemplatePath, PathData.SOSettingPath, className, "SO", "Setting");
         }
 
+        if (isHaveSOSystemSetting) {
+            CreateStript(PathData.SOSystemSettingTemplatePath, PathData.SOSettingPath, className, "SO", "SystemSetting");
+        }
+
+        if (isCreateSOSystemSetting) {
+            CreateSetting(PathData.SOSystemSettingPath, className, "SO", "SystemSetting");
+        }
+
         EditorUtility.ClearProgressBar();
         EditorUtility.DisplayDialog("创建成功", $"创建标志：【{className}】", "确定");
     }
@@ -99,18 +124,12 @@ public class GenerateScriptEditor : EditorWindow {
         }
     }
 
-    #endregion
-
-    private void OnGUI() {
-        className = EditorGUILayout.TextField("输入文字:", className, GUILayout.Width(300));
-        isHaveWindow = EditorGUILayout.Toggle("是否创建窗口类", isHaveWindow);
-        isHaveSOSetting = EditorGUILayout.Toggle("是否创建配置类", isHaveSOSetting);
-        isHaveData = EditorGUILayout.Toggle("是否创建数据类", isHaveData);
-        isHaveComponent = EditorGUILayout.Toggle("是否创建组件类", isHaveComponent);
-        isHaveGameObj = EditorGUILayout.Toggle("是否创建游戏物体类", isHaveGameObj);
-        isHaveEntity = EditorGUILayout.Toggle("是否创建实体类", isHaveEntity);
-        if (GUILayout.Button("生成脚本", GUILayout.Width(100))) {
-            this.GenerateScript(className);
-        }
+    private static void CreateSetting(string outputPath, string className, string front, string end) {
+        var fullName = $"{front}{className}{end}";
+        var type = System.Reflection.Assembly.Load("Assembly-CSharp").GetType(fullName);
+        var soFile = (UnityEngine.Object) System.Activator.CreateInstance(type);
+        AssetDatabase.CreateAsset(soFile, outputPath + fullName + ".asset");
     }
+
+    #endregion
 }

@@ -17,7 +17,7 @@ public class WeaponSystem : GameSys {
 
     public WeaponData InstanceWeapon(Vector3 point, Quaternion rot) {
         if (GameData.WeaponCameraId == 0) {
-            GameData.WeaponCameraId = MyGS.CameraS.InstanceCamera(CameraType.WeaponCamera);
+            GameData.WeaponCameraId = MyGS.Get<CameraSystem>().InstanceCamera(CameraType.WeaponCamera);
         }
 
         int index = Random.Range(0, WeaponConfig.GetAll().Count);

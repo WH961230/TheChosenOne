@@ -9,15 +9,15 @@ public class UICharacterWindow : Window {
 
         ChaComp = tempGO.GetComp();
 
-        var playerData = MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData();
+        var playerData = MyGS.Get<CharacterSystem>().GetEntity(GameData.MainCharacterId).GetData();
 
         ChaComp.UIWeaponLeft.onClick.AddListener(() => {
-            var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
+            var bpEntity = MyGS.Get<BackpackSystem>().GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(0);
         });
 
         ChaComp.UIWeaponRight.onClick.AddListener(() => {
-            var bpEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
+            var bpEntity = MyGS.Get<BackpackSystem>().GetEntity(playerData.BackpackInstanceId);
             bpEntity.SetCurMainWeapon(1);
         });
 
@@ -40,14 +40,14 @@ public class UICharacterWindow : Window {
     }
 
     private void RefreshWeapon() {
-        var playerData = MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData();
-        var backpackEntity = MyGS.BackpackS.GetEntity(playerData.BackpackInstanceId);
+        var playerData = MyGS.Get<CharacterSystem>().GetEntity(GameData.MainCharacterId).GetData();
+        var backpackEntity = MyGS.Get<BackpackSystem>().GetEntity(playerData.BackpackInstanceId);
         var mainWeaponIds = backpackEntity.GetMainWeaponIds();
         Sprite sprite = null;
         for (int i = 0; i < mainWeaponIds.Length; i++) {
             var tempId = mainWeaponIds[i];
             if (tempId != 0) {
-                sprite = MyGS.WeapS.GetEntity(tempId).GetData().MySprite;
+                sprite = MyGS.Get<WeaponSystem>().GetEntity(tempId).GetData().MySprite;
                 if (i == 0) {
                     ChaComp.UIWeaponLeft.image.sprite = sprite;
                 } else if (i == 1) {

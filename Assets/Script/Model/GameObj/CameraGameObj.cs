@@ -7,15 +7,16 @@ public class CameraGameObj : GameObj {
     private Transform cameraTran;
 
     private InputSystem inputSystem {
-        get { return GS.InputS; }
+        get { return GS.Get<InputSystem>(); }
     }
 
     private CameraData cameraData;
     private CameraComponent cameraComponent;
 
     private CharacterComponent MCC {
-        get { return GS.CharacterS.GetGO(GameData.MainCharacterId).GetComp(); }
+        get { return GS.Get<CharacterSystem>().GetGO(GameData.MainCharacterId).GetComp(); }
     }
+
     public override void Init(Game game, Data data) {
         base.Init(game, data);
         cameraData = (CameraData) data;
@@ -51,7 +52,7 @@ public class CameraGameObj : GameObj {
                 GMC.Dispather(GameMessageConstants.BACKPACKSYSTEM_ADD, layer, id);
             }
 
-            var tipSign = GS.ItemS.GetItemSign(layer, id);
+            var tipSign = GS.Get<ItemSystem>().GetItemSign(layer, id);
 
             // 提示 UI
             GMC.Dispather(GameMessageConstants.UITIPWINDOW_SETTIPDESCRIPTION, UITipType.ItemNameTip, tipSign);

@@ -24,7 +24,7 @@ public class GameObj : IGameObj {
 
         // 动画状态机
         if (comp && null != comp.RegisterAnimator) {
-            var entity = GS.AnimatorS.GetEntity();
+            var entity = GS.Get<AnimatorSystem>().GetEntity();
             entity.RegisterAnimator(data.InstanceID, comp.RegisterAnimator);
         }
 

@@ -12,8 +12,8 @@ public class CharacterSystem : GameSys {
                 MyPos = SoData.MySOCharacter.MyCharacterInfo.MyCharacterPoint, 
                 MyRot = SoData.MySOCharacter.MyCharacterInfo.MyCharacterQuaternion,
             },
-            CameraInstanceId = isMainCharacter ? MyGS.CameraS.InstanceCamera(CameraType.MainCharacterCamera) : 0,
-            BackpackInstanceId = MyGS.BackpackS.InstanceBackpack(),
+            CameraInstanceId = isMainCharacter ? MyGS.Get<CameraSystem>().InstanceCamera(CameraType.MainCharacterCamera) : 0,
+            BackpackInstanceId = MyGS.Get<BackpackSystem>().InstanceBackpack(),
             IsMainCharacter = isMainCharacter,
         };
         InstanceCharacter(characterData);

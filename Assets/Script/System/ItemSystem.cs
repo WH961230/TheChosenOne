@@ -21,13 +21,13 @@ public class ItemSystem : GameSys {
     private void InstanceItemByItemType(ItemType type, Vector3 point, Quaternion rot) {
         switch (type) {
             case ItemType.CONSUME:
-                MyGS.ConsumeS.InstanceConsume(point, rot);
+                MyGS.Get<ConsumeSystem>().InstanceConsume(point, rot);
                 return;
             case ItemType.EQUIPMENT:
-                MyGS.EquipmentS.InstanceEquipment(point, rot);
+                MyGS.Get<EquipmentSystem>().InstanceEquipment(point, rot);
                 return;
             case ItemType.WEAPON:
-                MyGS.WeapS.InstanceWeapon(point, rot);
+                MyGS.Get<WeaponSystem>().InstanceWeapon(point, rot);
                 return;
         }
     }
@@ -37,11 +37,11 @@ public class ItemSystem : GameSys {
     public string GetItemSign(int layer, int id) {
         switch (layer) {
             case LayerData.EquipmentLayer:
-                return MyGS.EquipmentS.GetGO(id).GetComp().MySign;
+                return MyGS.Get<EquipmentSystem>().GetGO(id).GetComp().MySign;
             case LayerData.ConsumeLayer:
-                return MyGS.ConsumeS.GetGO(id).GetComp().MySign;
+                return MyGS.Get<ConsumeSystem>().GetGO(id).GetComp().MySign;
             case LayerData.WeaponLayer:
-                return MyGS.WeapS.GetGO(id).GetComp().MySign;
+                return MyGS.Get<WeaponSystem>().GetGO(id).GetComp().MySign;
         }
 
         return "";

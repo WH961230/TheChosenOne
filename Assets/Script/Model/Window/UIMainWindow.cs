@@ -15,7 +15,7 @@ public class UIMainWindow : Window {
         mainComp = mainGO.GetComp();
 
         // 加载相机
-        MyGS.CameraS.InstanceCamera(CameraType.MainCamera);
+        MyGS.Get<CameraSystem>().InstanceCamera(CameraType.MainCamera);
 
         // 取消鼠标可视化
         Cursor.visible = false;
@@ -34,41 +34,41 @@ public class UIMainWindow : Window {
 
     private void MainBtnAction() {
         // 加载 DebugUI
-        MyGS.UIS.InstanceUIDebugToolWindow();
+        MyGS.Get<UISystem>().InstanceUIDebugToolWindow();
 
         // 动画状态机系统
         if (GameData.AnimatorId == 0) {
-            GameData.AnimatorId = MyGS.AnimatorS.InstanceAnimator().InstanceID;
+            GameData.AnimatorId = MyGS.Get<AnimatorSystem>().InstanceAnimator().InstanceID;
         }
 
         // 加载灯光
-        MyGS.EnvirS.InstanceLight();
+        MyGS.Get<EnvironmentSystem>().InstanceLight();
 
         // 加载建筑、地面bb
-        MyGS.EnvirS.InstanceMapBuilding();
+        MyGS.Get<EnvironmentSystem>().InstanceMapBuilding();
 
         // 加载场景可拾取物体
-        MyGS.ItemS.InstanceMapItem();
+        MyGS.Get<ItemSystem>().InstanceMapItem();
 
         // 读取玩家生成点 创建主玩家
         if (GameData.MainCharacterId == 0) {
-            GameData.MainCharacterId = MyGS.CharacterS.InstanceCharacter(true).InstanceID;
+            GameData.MainCharacterId = MyGS.Get<CharacterSystem>().InstanceCharacter(true).InstanceID;
         }
 
         // 加载角色 UI
-        MyGS.UIS.InstanceUICharacterWindow();
+        MyGS.Get<UISystem>().InstanceUICharacterWindow();
 
         // 加载地图 UI
-        MyGS.UIS.InstanceUIMapWindow();
+        MyGS.Get<UISystem>().InstanceUIMapWindow();
 
         // 加载背包 UI
-        MyGS.UIS.InstanceUIBackpackWindow();
+        MyGS.Get<UISystem>().InstanceUIBackpackWindow();
 
         // 加载贴士 UI
-        MyGS.UIS.InstanceUITipWindow();
+        MyGS.Get<UISystem>().InstanceUITipWindow();
 
         // 播放背景音效（替代资源）
-        MyGS.AudioS.InstanceAudioMain();
+        MyGS.Get<AudioSystem>().InstanceAudioMain();
 
         // 关闭界面
         CloseAll();

@@ -3,7 +3,7 @@
     private AudioMainData audiomainData;
 
     private AudioSystem MyAudioSystem {
-        get { return game.MyGameSystem.AudioS; }
+        get { return game.MyGameSystem.Get<AudioSystem>(); }
     }
 
     private Game game;

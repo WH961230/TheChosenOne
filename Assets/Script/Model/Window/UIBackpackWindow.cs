@@ -5,7 +5,7 @@ public class UIBackpackWindow : Window {
     private UIBackpackComponent bpComp;
 
     private CharacterData MyMainCharacterData {
-        get { return MyGS.CharacterS.GetEntity(GameData.MainCharacterId).GetData(); }
+        get { return MyGS.Get<CharacterSystem>().GetEntity(GameData.MainCharacterId).GetData(); }
     }
 
     private bool IsOpenBackpackWindow;
@@ -30,7 +30,7 @@ public class UIBackpackWindow : Window {
 
     public override void Update() {
         base.Update();
-        if (MyGS.InputS.GetKeyDown(KeyCode.Tab)) {
+        if (MyGS.Get<InputSystem>().GetKeyDown(KeyCode.Tab)) {
             var window = bpComp.MyUIBackpackWindow;
             if (IsOpenBackpackWindow) {
                 CloseBp();
@@ -107,7 +107,7 @@ public class UIBackpackWindow : Window {
 
     private BackpackEntity GetBackpackEntity() {
         var bpId = MyMainCharacterData.BackpackInstanceId;
-        return MyGS.BackpackS.GetEntity(bpId);
+        return MyGS.Get<BackpackSystem>().GetEntity(bpId);
     }
 
     #endregion
@@ -163,7 +163,7 @@ public class UIBackpackWindow : Window {
             sprite = null;
             var id = mainWeaponIds[i];
             if (id != 0) {
-                sprite = MyGS.WeapS.GetEntity(id).GetData().MySprite;
+                sprite = MyGS.Get<WeaponSystem>().GetEntity(id).GetData().MySprite;
             }
 
             bpComp.MyUIBackpackMainWeaponImages[i].MyButton.image.sprite = sprite;
@@ -172,7 +172,7 @@ public class UIBackpackWindow : Window {
         var sideWeaponid = backpackEntity.GetSideWeaponId();
         sprite = null;
         if (sideWeaponid != 0) {
-            sprite = MyGS.WeapS.GetEntity(sideWeaponid).GetData().MySprite;
+            sprite = MyGS.Get<WeaponSystem>().GetEntity(sideWeaponid).GetData().MySprite;
         }
 
         bpComp.MyUIBackpackSideWeaponImage.MyButton.image.sprite = sprite;
@@ -185,7 +185,7 @@ public class UIBackpackWindow : Window {
             var id = ids[i];
             Sprite sprite = null;
             if (id != 0) {
-                sprite = MyGS.EquipmentS.GetEtity(id).GetData().MySprite;
+                sprite = MyGS.Get<EquipmentSystem>().GetEtity(id).GetData().MySprite;
             }
 
             bpComp.MyUIBackpackEquipmentImages[i].MyButton.image.sprite = sprite;

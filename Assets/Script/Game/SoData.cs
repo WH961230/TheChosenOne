@@ -14,6 +14,7 @@ public static class SoData {
     public static SOConsumeSetting MyConsumeSetting;
     public static SOBulletSetting MyBulletSetting;
     public static SOEffectSetting MyEffectSetting;
+
     public static void Init() {
         //初始化配置
         MySOGameSetting = Resources.Load<SOGameSetting>(PathData.SOGameSettingPath);

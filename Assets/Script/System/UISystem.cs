@@ -3,10 +3,9 @@
 public class UISystem : GameSys {
     public override void Init(GameSystem gameSystem) {
         base.Init(gameSystem);
-        InstanceUIMainWindow();
     }
 
-    private void InstanceUIMainWindow() {
+    public void InstanceUIMainWindow() {
         MyGS.InstanceWindow<UIMainWindow, UIMainGameObj, UIMainEntity>(new UIMainData() {
             MyName = "MainWindow",
             MyObj = Object.Instantiate(SoData.MySOGameSetting.UIMainPrefab),
