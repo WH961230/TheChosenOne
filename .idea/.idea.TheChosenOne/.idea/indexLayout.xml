@@ -3,15 +3,21 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>Library/PackageCache/com.autodesk.fbx@4.2.1</Path>
+      <Path>Library/PackageCache/com.unity.cinemachine@2.6.17</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.14.13</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
+      <Path>Library/PackageCache/com.unity.formats.fbx@4.2.1</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@1.2.1</Path>
       <Path>Library/PackageCache/com.unity.ide.visualstudio@2.0.14</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.2.5</Path>
       <Path>Library/PackageCache/com.unity.postprocessing@2.1.7</Path>
+      <Path>Library/PackageCache/com.unity.render-pipelines.core@7.7.1</Path>
+      <Path>Library/PackageCache/com.unity.render-pipelines.universal@7.7.1</Path>
+      <Path>Library/PackageCache/com.unity.shadergraph@7.7.1</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.1.31</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@2.1.6</Path>
-      <Path>Library/PackageCache/com.unity.timeline@1.2.18</Path>
+      <Path>Library/PackageCache/com.unity.timeline@1.7.1</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
     </explicitIncludes>
@@ -20,7 +26,6 @@
       <Path>.idea</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
-      <Path>Temp</Path>
       <Path>UMotionData</Path>
       <Path>obj</Path>
     </explicitExcludes>
