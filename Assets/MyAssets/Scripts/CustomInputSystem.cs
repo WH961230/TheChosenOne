@@ -11,4 +11,5 @@ public class CustomInputSystem {
     public static bool GetKey_S => Input.GetKey(KeyCode.S);
     public static bool GetKey_A => Input.GetKey(KeyCode.A);
     public static bool GetKey_D => Input.GetKey(KeyCode.D);
+    public static bool GetKeyDown_Space => Input.GetKeyDown(KeyCode.Space);
 }

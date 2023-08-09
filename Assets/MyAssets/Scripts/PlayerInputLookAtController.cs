@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerInputLookAtController : MonoBehaviour {
     [Header("距离玩家节点的偏移高度")] public float OffHeightWithPlayer;
     [Header("玩家朝向物体")] public Transform LookAtTr;
-    [Header("玩家朝向速度")] public float LookAtLerpSpeed;
     [Header("MouseX 速度")] public float MouseXSpeed;
     [Header("MouseY 速度")] public float MouseYSpeed;
+    private Vector3 targetDirVec;
     private Transform playerTr;
     private float followTargetRotationY;
     private float followTargetRotationX;
@@ -29,11 +28,11 @@ public class PlayerInputLookAtController : MonoBehaviour {
         Vector3 VecA = CustomInputSystem.GetKey_A ? -transform.right : Vector3.zero;
         Vector3 VecD = CustomInputSystem.GetKey_D ? transform.right : Vector3.zero;
 
-        Vector3 tempVec = Vector3.ProjectOnPlane(VecW + VecS + VecA + VecD, Vector3.up);
+        targetDirVec = VecW + VecS + VecA + VecD != Vector3.zero ? Vector3.ProjectOnPlane(VecW + VecS + VecA + VecD, Vector3.up) : targetDirVec;
         LookAtTr.position = transform.position;
-        LookAtTr.forward = Vector3.Lerp(LookAtTr.forward, tempVec, Time.deltaTime * LookAtLerpSpeed);
+        LookAtTr.forward = targetDirVec;
     }
-    
+
 #if UNITY_EDITOR
     private void OnDrawGizmos() {
         Gizmos.color = Color.yellow;

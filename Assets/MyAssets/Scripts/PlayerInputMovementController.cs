@@ -1,9 +1,10 @@
 ﻿using System;
-using FIMSpace.FProceduralAnimation;
+using Cinemachine;
 using UnityEngine;
 
 public class PlayerInputMovementController : MonoBehaviour {
     [Header("玩家实体")] public Transform PlayerTr;
+    [Header("虚拟相机")] public CinemachineVirtualCamera VirtualCamera;
     [Header("控制器蹲下走路速度")] public float CrouchVerticalSpeed;
     [Header("控制器前后走路速度")] public float MoveVerticalSpeed;
     [Header("控制器前后跑步速度")] public float RunVerticalSpeed;
@@ -13,42 +14,70 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Header("角色动画控制器")] public Animator animator;
     [Header("角色控制器")] public CharacterController controller;
     [Header("角色旋转平滑速度")] public float TurnLerpSpeed;
+    [Header("跳跃高度")] public float JumpHeight;
+    [Header("走路 FOV")] public float MoveFOV;
+    [Header("蹲走 FOV")] public float CrouchFOV;
+    [Header("跑步 FOV")] public float RunFOV;
+    [Header("默认 FOV")] public float DefaultFOV;
+    [Header("FOV 修改速度")] public float FOVLerpSpeed;
+
     [SerializeField] private bool isMove;
     [SerializeField] private bool isGround;
+    [SerializeField] private bool isJump;
 
     [NonSerialized] public Transform FollowTargetTr;
     private Collider[] colliders;
-    private readonly Vector3 gravityDir = Vector3.down;
-    private float gravityPassTime = 0f;
+    private float startSpeed;
+    private float currentSpeed;
     private float horizontal;
     private float vertical;
     private float targetHorizontal;
     private float targetVertical;
+    private Vector3 playerVelocity;
 
     void Start() {
     }
 
     void Update() {
+        float delta = Time.deltaTime;
+
         // rotation
-        PlayerTr.rotation = isMove ? Quaternion.Lerp(PlayerTr.rotation, Quaternion.Euler(PlayerTr.eulerAngles.x, FollowTargetTr.eulerAngles.y, PlayerTr.eulerAngles.z), Time.deltaTime * TurnLerpSpeed) : PlayerTr.rotation;
+        PlayerTr.rotation = isMove ? Quaternion.Slerp(PlayerTr.rotation, Quaternion.Euler(PlayerTr.eulerAngles.x, FollowTargetTr.eulerAngles.y, PlayerTr.eulerAngles.z), delta * TurnLerpSpeed) : PlayerTr.rotation;
 
         // move
         bool motionDirKey = CustomInputSystem.GetKey_W || CustomInputSystem.GetKey_S || CustomInputSystem.GetKey_A || CustomInputSystem.GetKey_D;
         bool motionCrouchKey = CustomInputSystem.GetKey_LeftCtrl;
-        float motionSpeed = motionDirKey ? (motionCrouchKey ? /*下蹲*/ CrouchVerticalSpeed : /*直立*/ (CustomInputSystem.GetKey_LeftShift ? RunVerticalSpeed : MoveVerticalSpeed)) : 0;
-        Vector3 motionVector = motionDirKey ? (PlayerTr.forward * motionSpeed) : Vector3.zero;
-        isMove = motionVector != Vector3.zero;
+        float motionSpeed =  motionDirKey ? (motionCrouchKey ? CrouchVerticalSpeed : (CustomInputSystem.GetKey_LeftShift && !isJump ? RunVerticalSpeed : MoveVerticalSpeed)) : 0;
+        playerVelocity.x = motionDirKey ? Vector3.ProjectOnPlane(FollowTargetTr.forward, Vector3.up).x * motionSpeed : 0;
+        playerVelocity.z = motionDirKey ? Vector3.ProjectOnPlane(FollowTargetTr.forward, Vector3.up).z * motionSpeed : 0;
+        isMove = playerVelocity.x != 0 || playerVelocity.z != 0;
+        float fov = isMove ? (CustomInputSystem.GetKey_LeftShift ? RunFOV : motionCrouchKey ? CrouchFOV : MoveFOV) : DefaultFOV;
+        VirtualCamera.m_Lens.FieldOfView = Mathf.Abs(fov - VirtualCamera.m_Lens.FieldOfView) < 0.01f ? fov : Mathf.Lerp(VirtualCamera.m_Lens.FieldOfView, fov, Time.deltaTime * FOVLerpSpeed);
 
         // gravity
         Vector3 bottom = PlayerTr.position + PlayerTr.up * controller.radius + PlayerTr.up * BottomGravityCapsuleOff;
         Vector3 top = PlayerTr.position + PlayerTr.up * controller.height - PlayerTr.up * controller.radius;
         colliders = Physics.OverlapCapsule(bottom, top, controller.radius, GravityDetectMaskLayer);
         isGround = colliders.Length > 0;
-        gravityPassTime = !isGround ? gravityPassTime + Time.deltaTime : 0;
-        motionVector += isGround ? Vector3.zero : gravityDir * GravityAccelerate * gravityPassTime;
 
-        // controller move
-        controller.Move(motionVector * Time.deltaTime);
+        // 到达地面 速度置空
+        if (isGround && playerVelocity.y < 0) {
+            playerVelocity.y = 0f;
+            isJump = false;
+            animator.SetBool("IsJump", isJump);
+        }
+
+        // 按下跳跃键 且在地面 垂直速度赋值
+        if (isGround && CustomInputSystem.GetKeyDown_Space) {
+            playerVelocity.y += Mathf.Sqrt(JumpHeight * -2.0f * GravityAccelerate);
+            animator.SetTrigger("Jump");
+            isJump = true;
+            animator.SetBool("IsJump", isJump);
+        }
+
+        // 不在地面且有速度
+        playerVelocity.y += playerVelocity.y == 0 && isGround ? 0 : GravityAccelerate * delta;
+        controller.Move(playerVelocity * delta);
 
         // animator calculate param
         vertical = CustomInputSystem.GetAxis_Vertical;
