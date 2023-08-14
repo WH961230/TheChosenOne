@@ -12,4 +12,7 @@ public class CustomInputSystem {
     public static bool GetKey_A => Input.GetKey(KeyCode.A);
     public static bool GetKey_D => Input.GetKey(KeyCode.D);
     public static bool GetKeyDown_Space => Input.GetKeyDown(KeyCode.Space);
+    public static bool GetMouse_Left => Input.GetMouseButton(0);
+    public static bool GetMouse_Right => Input.GetMouseButton(1);
+    public static bool GetMouse_Middle => Input.GetMouseButton(2);
 }
