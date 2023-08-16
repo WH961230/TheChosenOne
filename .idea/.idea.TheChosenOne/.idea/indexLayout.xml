@@ -30,6 +30,7 @@
       <Path>.idea</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>Temp</Path>
       <Path>UMotionData</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>

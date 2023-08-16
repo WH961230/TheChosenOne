@@ -1,6 +1,7 @@
 ﻿using System;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerInputMovementController : MonoBehaviour {
     [Header("玩家实体")] public Transform PlayerTr;
@@ -13,6 +14,8 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Header("重力检测地面层级")] public LayerMask GravityDetectMaskLayer;
     [Header("角色动画控制器")] public Animator animator;
     [Header("角色控制器")] public CharacterController controller;
+    [Header("角色瞄准 IK")] public MultiRotationConstraint aimConstraint;
+    [Header("角色瞄准 IK修改速度")] [SerializeField] private float rigLerpSpeed;
     [Header("角色旋转平滑速度")] public float TurnLerpSpeed;
     [Header("瞄准角色旋转平滑速度")] public float AimTurnLerpSpeed;
     [Header("走路 FOV")] public float MoveFOV;
@@ -28,7 +31,13 @@ public class PlayerInputMovementController : MonoBehaviour {
     [SerializeField] private bool canJump;
     [SerializeField] private bool isJump;
     [SerializeField] private bool isAim;
+
+    [SerializeField] public bool isAimDebug;
     [Header("跳跃高度")] public float JumpHeight;
+
+    [Header("默认虚拟相机参数")] [SerializeField] private VirtualCameraData defaultVirtualCameraData;
+    [Header("瞄准虚拟相机参数")] [SerializeField] private VirtualCameraData aimVirtualCamData;
+    [Header("虚拟相机参数修改速度")] [SerializeField] private float virLerpSpeed;
 
     [NonSerialized] public Transform FollowTargetTr;
     private Collider[] colliders;
@@ -46,7 +55,14 @@ public class PlayerInputMovementController : MonoBehaviour {
     void Update() {
         float delta = Time.deltaTime;
 
-        isAim = CustomInputSystem.GetMouse_Right;
+        isAimDebug = CustomInputSystem.GetKey_H ? !isAimDebug : isAimDebug;
+        isAim = isAimDebug || CustomInputSystem.GetMouse_Right;
+
+        // virtual camera
+        SetVirtualCamData(isAim ? aimVirtualCamData : defaultVirtualCameraData);
+
+        // aimConstraint weight
+        aimConstraint.weight = Mathf.Lerp(aimConstraint.weight, isAim ? 1 : 0, Time.deltaTime * rigLerpSpeed);
 
         // rotation
         PlayerTr.rotation = isMove || isAim ? Quaternion.Slerp(PlayerTr.rotation, Quaternion.Euler(PlayerTr.eulerAngles.x, FollowTargetTr.eulerAngles.y, PlayerTr.eulerAngles.z), delta * (isAim ? AimTurnLerpSpeed : TurnLerpSpeed)) : PlayerTr.rotation;
@@ -62,6 +78,7 @@ public class PlayerInputMovementController : MonoBehaviour {
         
         // aim move
         Vector3 aimMoveDir = (CustomInputSystem.GetKey_W ? PlayerTr.forward : Vector3.zero) + (CustomInputSystem.GetKey_S ? -PlayerTr.forward : Vector3.zero) + (CustomInputSystem.GetKey_A ? -PlayerTr.right : Vector3.zero) + (CustomInputSystem.GetKey_D ? PlayerTr.right : Vector3.zero);
+
         // motionSpeed = isAim && motionDirKey ? motionSpeed / 2 : motionSpeed;
         playerVelocity.x = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).x * motionSpeed : playerVelocity.x;
         playerVelocity.z = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).z * motionSpeed : playerVelocity.z;
@@ -109,6 +126,13 @@ public class PlayerInputMovementController : MonoBehaviour {
         animator.SetFloat("MotionSpeed", motionSpeed);
     }
 
+    void SetVirtualCamData(VirtualCameraData data) {
+        Cinemachine3rdPersonFollow cine = VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        cine.CameraDistance = Mathf.Lerp(cine.CameraDistance, data.CameraDistance, Time.deltaTime * virLerpSpeed);
+        cine.ShoulderOffset = Vector3.Lerp(cine.ShoulderOffset, data.ShoulderOffSet, Time.deltaTime * virLerpSpeed);
+        cine.VerticalArmLength = Mathf.Lerp(cine.VerticalArmLength, data.VerticalArmLength, Time.deltaTime * virLerpSpeed);
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos() {
         Color buttom = isGround ? Color.green : Color.red;
@@ -123,4 +147,11 @@ public class PlayerInputMovementController : MonoBehaviour {
     }
 #endif
 
+}
+
+[Serializable]
+public struct VirtualCameraData {
+    public float CameraDistance;
+    public float VerticalArmLength;
+    public Vector3 ShoulderOffSet;
 }

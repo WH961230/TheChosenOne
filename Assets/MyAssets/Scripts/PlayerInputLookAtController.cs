@@ -10,10 +10,12 @@ public class PlayerInputLookAtController : MonoBehaviour {
     private Transform playerTr;
     private float followTargetRotationY;
     private float followTargetRotationX;
+    private PlayerInputMovementController inputController;
 
     private void Start() {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-        playerTr.root.GetComponent<PlayerInputMovementController>().FollowTargetTr = this.LookAtTr;
+        inputController = playerTr.root.GetComponent<PlayerInputMovementController>(); 
+        inputController.FollowTargetTr = this.LookAtTr;
         LookAtTr.rotation = transform.rotation;
     }
 
@@ -24,7 +26,7 @@ public class PlayerInputLookAtController : MonoBehaviour {
         followTargetRotationX -= CustomInputSystem.GetAxis_MouseY * (CustomInputSystem.GetMouse_Right ? MouseYSpeed / 5 : MouseYSpeed);
         followTargetRotationX = Mathf.Clamp(followTargetRotationX, -MouseYRotateLimit, MouseYRotateLimit);
 
-        transform.rotation = Quaternion.Euler(followTargetRotationX, followTargetRotationY, 0);
+        transform.rotation = inputController.isAimDebug ? transform.rotation : (Quaternion.Euler(followTargetRotationX, followTargetRotationY, 0));
 
         Vector3 VecW = CustomInputSystem.GetKey_W ? transform.forward : Vector3.zero;
         Vector3 VecS = CustomInputSystem.GetKey_S ? -transform.forward : Vector3.zero;
@@ -33,7 +35,7 @@ public class PlayerInputLookAtController : MonoBehaviour {
 
         targetDirVec = VecW + VecS + VecA + VecD != Vector3.zero ? Vector3.ProjectOnPlane(VecW + VecS + VecA + VecD, Vector3.up) : targetDirVec;
         LookAtTr.position = transform.position;
-        LookAtTr.forward = CustomInputSystem.GetMouse_Right ? transform.forward : targetDirVec;
+        LookAtTr.forward = inputController.isAimDebug ? LookAtTr.forward : (CustomInputSystem.GetMouse_Right ? transform.forward : targetDirVec);
     }
 
 #if UNITY_EDITOR
