@@ -9,6 +9,7 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Header("控制器蹲下走路速度")] public float CrouchVerticalSpeed;
     [Header("控制器前后走路速度")] public float MoveVerticalSpeed;
     [Header("控制器前后跑步速度")] public float RunVerticalSpeed;
+    [Header("瞄准状态移动速度系数")] public float AimMoveSpeedRatio;
     [Header("重力加速度")] public float GravityAccelerate;
     [Header("底部重力球偏移量")] public float BottomGravityCapsuleOff;
     [Header("重力检测地面层级")] public LayerMask GravityDetectMaskLayer;
@@ -95,19 +96,22 @@ public class PlayerInputMovementController : MonoBehaviour {
         colliders = Physics.OverlapCapsule(bottom, top, controller.radius, GravityDetectMaskLayer);
         isGround = colliders.Length > 0;
 
-        // 到达地面 速度置空
-        if (canJump && isGround && playerVelocity.y < 0) {
-            playerVelocity.y = 0f;
-            isJump = false;
-            animator.SetBool("IsJump", isJump);
-        }
+        // jump
+        if (canJump) {
+            // 到达地面 速度置空
+            if (isGround && playerVelocity.y < 0) {
+                playerVelocity.y = 0f;
+                isJump = false;
+                animator.SetBool("IsJump", isJump);
+            }
 
-        // 按下跳跃键 且在地面 垂直速度赋值
-        if (canJump && isGround && CustomInputSystem.GetKeyDown_Space) {
-            playerVelocity.y += Mathf.Sqrt(JumpHeight * -2.0f * GravityAccelerate);
-            animator.SetTrigger("Jump");
-            isJump = true;
-            animator.SetBool("IsJump", isJump);
+            // 按下跳跃键 且在地面 垂直速度赋值
+            if (isGround && CustomInputSystem.GetKeyDown_Space) {
+                playerVelocity.y += Mathf.Sqrt(JumpHeight * -2.0f * GravityAccelerate);
+                animator.SetTrigger("Jump");
+                isJump = true;
+                animator.SetBool("IsJump", isJump);
+            }
         }
 
         // 不在地面且有速度
@@ -119,10 +123,10 @@ public class PlayerInputMovementController : MonoBehaviour {
         horizontal = CustomInputSystem.GetAxis_Horizontal;
 
         // animator set param
-        animator.SetFloat("Horizontal", horizontal);
-        animator.SetFloat("Vertical", vertical);
+        animator.SetFloat("Horizontal", isAim ? horizontal * AimMoveSpeedRatio : horizontal);
+        animator.SetFloat("Vertical", isAim ? vertical * AimMoveSpeedRatio : vertical);
         animator.SetBool("IsAim", isAim);
-        animator.SetBool("Crouch", motionCrouchKey);
+        animator.SetBool("IsCrouch", motionCrouchKey);
         animator.SetFloat("MotionSpeed", motionSpeed);
     }
 
