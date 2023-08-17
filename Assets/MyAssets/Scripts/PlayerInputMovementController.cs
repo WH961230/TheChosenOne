@@ -81,8 +81,8 @@ public class PlayerInputMovementController : MonoBehaviour {
         Vector3 aimMoveDir = (CustomInputSystem.GetKey_W ? PlayerTr.forward : Vector3.zero) + (CustomInputSystem.GetKey_S ? -PlayerTr.forward : Vector3.zero) + (CustomInputSystem.GetKey_A ? -PlayerTr.right : Vector3.zero) + (CustomInputSystem.GetKey_D ? PlayerTr.right : Vector3.zero);
 
         // motionSpeed = isAim && motionDirKey ? motionSpeed / 2 : motionSpeed;
-        playerVelocity.x = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).x * motionSpeed : playerVelocity.x;
-        playerVelocity.z = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).z * motionSpeed : playerVelocity.z;
+        playerVelocity.x = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).x * motionSpeed * AimMoveSpeedRatio : playerVelocity.x;
+        playerVelocity.z = isAim && motionDirKey ? Vector3.ProjectOnPlane(aimMoveDir, Vector3.up).z * motionSpeed * AimMoveSpeedRatio : playerVelocity.z;
 
         // aim
         fov = isAim ? AimFOV : fov;
@@ -123,8 +123,8 @@ public class PlayerInputMovementController : MonoBehaviour {
         horizontal = CustomInputSystem.GetAxis_Horizontal;
 
         // animator set param
-        animator.SetFloat("Horizontal", isAim ? horizontal * AimMoveSpeedRatio : horizontal);
-        animator.SetFloat("Vertical", isAim ? vertical * AimMoveSpeedRatio : vertical);
+        animator.SetFloat("Horizontal", horizontal);
+        animator.SetFloat("Vertical", vertical);
         animator.SetBool("IsAim", isAim);
         animator.SetBool("IsCrouch", motionCrouchKey);
         animator.SetFloat("MotionSpeed", motionSpeed);
