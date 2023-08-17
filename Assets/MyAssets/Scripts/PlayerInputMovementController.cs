@@ -27,6 +27,8 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Header("FOV 修改速度")] public float FOVLerpSpeed;
     [Header("瞄准 FOV 修改速度")] public float AimFOVLerpSpeed;
 
+    public Transform WeaponMuzzleTr;
+
     [SerializeField] private bool isMove;
     [SerializeField] private bool isGround;
     [SerializeField] private bool canJump;
@@ -148,6 +150,9 @@ public class PlayerInputMovementController : MonoBehaviour {
         top.a = 0.2f;
         Gizmos.color = top;
         Gizmos.DrawSphere(PlayerTr.position + PlayerTr.up * controller.height - PlayerTr.up * controller.radius, controller.radius);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(WeaponMuzzleTr.position, WeaponMuzzleTr.position + WeaponMuzzleTr.forward * 5);
     }
 #endif
 
