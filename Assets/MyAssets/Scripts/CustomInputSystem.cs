@@ -14,6 +14,9 @@ public class CustomInputSystem {
     public static bool GetKey_H => Input.GetKeyDown(KeyCode.H);
     public static bool GetKeyDown_Space => Input.GetKeyDown(KeyCode.Space);
     public static bool GetMouse_Left => Input.GetMouseButton(0);
+    public static bool GetMouseDown_Left => Input.GetMouseButtonDown(0);
+    public static bool GetMouseUp_Left => Input.GetMouseButtonUp(0);
+
     public static bool GetMouse_Right => Input.GetMouseButton(1);
     public static bool GetMouse_Middle => Input.GetMouseButton(2);
 }
