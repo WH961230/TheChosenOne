@@ -5,30 +5,39 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
 public class PlayerInputMovementController : MonoBehaviour {
-    [Header("玩家实体")] public Transform PlayerTr;
-    [Header("虚拟相机")] public CinemachineVirtualCamera VirtualCamera;
-    [Header("控制器蹲下走路速度")] public float CrouchVerticalSpeed;
-    [Header("控制器前后走路速度")] public float MoveVerticalSpeed;
-    [Header("控制器前后跑步速度")] public float RunVerticalSpeed;
-    [Header("瞄准状态移动速度系数")] public float AimMoveSpeedRatio;
-    [Header("重力加速度")] public float GravityAccelerate;
-    [Header("底部重力球偏移量")] public float BottomGravityCapsuleOff;
-    [Header("重力检测地面层级")] public LayerMask GravityDetectMaskLayer;
-    [Header("角色动画控制器")] public Animator animator;
-    [Header("角色控制器")] public CharacterController controller;
-    [Header("角色旋转平滑速度")] public float TurnLerpSpeed;
-    [Header("瞄准角色旋转平滑速度")] public float AimTurnLerpSpeed;
-    [Header("走路 FOV")] public float MoveFOV;
-    [Header("蹲走 FOV")] public float CrouchFOV;
-    [Header("跑步 FOV")] public float RunFOV;
-    [Header("默认 FOV")] public float DefaultFOV;
-    [Header("瞄准 FOV")] public float AimFOV;
-    [Header("FOV 修改速度")] public float FOVLerpSpeed;
-    [Header("瞄准 FOV 修改速度")] public float AimFOVLerpSpeed;
-    [Header("瞄准 IK")] public AimIK AimIk;
+    [Header("组件")]
+    [Tooltip("玩家实体")] public Transform PlayerTr;
+    [Tooltip("虚拟相机")] public CinemachineVirtualCamera VirtualCamera;
+    [Tooltip("重力检测地面层级")] public LayerMask GravityDetectMaskLayer;
+    [Tooltip("角色动画控制器")] public Animator animator;
+    [Tooltip("角色控制器")] public CharacterController controller;
+    [Tooltip("弹药")] public GameObject BulletPrefab;
+    [Tooltip("枪口")] public Transform WeaponMuzzleTr;
 
-    public Transform WeaponMuzzleTr;
+    [Header("速度")]
+    [Tooltip("控制器蹲下走路速度")] public float CrouchVerticalSpeed;
+    [Tooltip("控制器前后走路速度")] public float MoveVerticalSpeed;
+    [Tooltip("控制器前后跑步速度")] public float RunVerticalSpeed;
+    [Tooltip("瞄准状态移动速度系数")] public float AimMoveSpeedRatio;
+    [Tooltip("重力加速度")] public float GravityAccelerate;
+    [Tooltip("底部重力球偏移量")] public float BottomGravityCapsuleOff;
+    [Tooltip("角色旋转平滑速度")] public float TurnLerpSpeed;
+    [Tooltip("瞄准角色旋转平滑速度")] public float AimTurnLerpSpeed;
+    [Tooltip("子弹射击间隔")] public float FireInterval;
+    [Tooltip("子弹射击速度")] public float BulletForce;
+    [Tooltip("子弹检测模式")] public CollisionDetectionMode CollisionDetectionMode;
     
+    [Header("FOV")]
+    [Tooltip("走路 FOV")] public float MoveFOV;
+    [Tooltip("蹲走 FOV")] public float CrouchFOV;
+    [Tooltip("跑步 FOV")] public float RunFOV;
+    [Tooltip("默认 FOV")] public float DefaultFOV;
+    [Tooltip("瞄准 FOV")] public float AimFOV;
+    [Tooltip("FOV 修改速度")] public float FOVLerpSpeed;
+    [Tooltip("瞄准 FOV 修改速度")] public float AimFOVLerpSpeed;
+
+    [Header("Aim IK")]
+    public AimIK AimIk;
     [SerializeField] private float aimIKWeight;
     [SerializeField] private float defaultAimIKWeight;
     [SerializeField] private float aimIKLerpSpeed;
@@ -44,9 +53,10 @@ public class PlayerInputMovementController : MonoBehaviour {
 
     [Header("跳跃高度")] public float JumpHeight;
 
-    [Header("默认虚拟相机参数")] [SerializeField] private VirtualCameraData defaultVirtualCameraData;
-    [Header("瞄准虚拟相机参数")] [SerializeField] private VirtualCameraData aimVirtualCamData;
-    [Header("虚拟相机参数修改速度")] [SerializeField] private float virLerpSpeed;
+    [Header("虚拟相机参数")]
+    [Tooltip("默认虚拟相机参数")] [SerializeField] private VirtualCameraData defaultVirtualCameraData;
+    [Tooltip("瞄准虚拟相机参数")] [SerializeField] private VirtualCameraData aimVirtualCamData;
+    [Tooltip("虚拟相机参数修改速度")] [SerializeField] private float virLerpSpeed;
 
     [NonSerialized] public Transform FollowTargetTr;
     private Collider[] colliders;
@@ -63,6 +73,8 @@ public class PlayerInputMovementController : MonoBehaviour {
 
     private float horizontal => CustomInputSystem.GetAxis_Horizontal;
     private float vertical => CustomInputSystem.GetAxis_Vertical;
+    
+    private float FireIntervalDeploy;
 
     void Start() {
     }
@@ -132,6 +144,17 @@ public class PlayerInputMovementController : MonoBehaviour {
             if (CustomInputSystem.GetMouse_Left) {
                 isFire = true;
                 animator.SetBool("IsFire", true);
+                if (FireIntervalDeploy > FireInterval) {
+                    GameObject bulletGO = Instantiate(BulletPrefab);
+                    Rigidbody rb = bulletGO.GetComponent<Rigidbody>();
+                    rb.AddForce(WeaponMuzzleTr.forward * BulletForce, ForceMode.Impulse);
+                    bulletGO.transform.position = WeaponMuzzleTr.position;
+                    bulletGO.transform.up = -WeaponMuzzleTr.forward;
+
+                    FireIntervalDeploy = 0;
+                } else {
+                    FireIntervalDeploy += Time.deltaTime;
+                }
             }
         }
 

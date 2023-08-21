@@ -35,7 +35,7 @@ public class PlayerInputLookAtController : MonoBehaviour {
 
         targetDirVec = VecW + VecS + VecA + VecD != Vector3.zero ? Vector3.ProjectOnPlane(VecW + VecS + VecA + VecD, Vector3.up) : targetDirVec;
         LookAtTr.position = transform.position;
-        LookAtTr.forward = inputController.isAimDebug ? LookAtTr.forward : (CustomInputSystem.GetMouse_Right ? transform.forward : targetDirVec);
+        LookAtTr.forward = inputController.isAimDebug ? LookAtTr.forward : (CustomInputSystem.GetMouse_Right ? transform.forward : (targetDirVec == Vector3.zero ? LookAtTr.forward : targetDirVec));
     }
 
 #if UNITY_EDITOR
