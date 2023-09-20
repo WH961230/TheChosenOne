@@ -1,8 +1,8 @@
 ﻿using System;
 using Cinemachine;
+using FIMSpace.FProceduralAnimation;
 using RootMotion.FinalIK;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 public class PlayerInputMovementController : MonoBehaviour {
     [Header("组件")]
@@ -10,9 +10,11 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Tooltip("虚拟相机")] public CinemachineVirtualCamera VirtualCamera;
     [Tooltip("重力检测地面层级")] public LayerMask GravityDetectMaskLayer;
     [Tooltip("角色动画控制器")] public Animator animator;
+    [Tooltip("腿动画状态机")] public LegsAnimator legs;
     [Tooltip("角色控制器")] public CharacterController controller;
     [Tooltip("弹药")] public GameObject BulletPrefab;
     [Tooltip("枪口")] public Transform WeaponMuzzleTr;
+    private Recoil recoil;
 
     [Header("速度")]
     [Tooltip("控制器蹲下走路速度")] public float CrouchVerticalSpeed;
@@ -24,9 +26,9 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Tooltip("角色旋转平滑速度")] public float TurnLerpSpeed;
     [Tooltip("瞄准角色旋转平滑速度")] public float AimTurnLerpSpeed;
     [Tooltip("子弹射击间隔")] public float FireInterval;
-    [Tooltip("子弹射击速度")] public float BulletForce;
+    [Tooltip("子弹开始射击延迟")] [SerializeField] public float FireDelay;
     [Tooltip("子弹检测模式")] public CollisionDetectionMode CollisionDetectionMode;
-    
+
     [Header("FOV")]
     [Tooltip("走路 FOV")] public float MoveFOV;
     [Tooltip("蹲走 FOV")] public float CrouchFOV;
@@ -38,10 +40,12 @@ public class PlayerInputMovementController : MonoBehaviour {
 
     [Header("Aim IK")]
     public AimIK AimIk;
+    public AimController AimController;
     [SerializeField] private float aimIKWeight;
     [SerializeField] private float defaultAimIKWeight;
     [SerializeField] private float aimIKLerpSpeed;
-    
+    [SerializeField] private float magnitude;
+
     [Header("Debug 查看 不可修改")]
     [SerializeField] private bool isMove;
     [SerializeField] private bool isGround;
@@ -62,7 +66,7 @@ public class PlayerInputMovementController : MonoBehaviour {
     private Collider[] colliders;
     private bool motionDirKey => CustomInputSystem.GetKey_W || CustomInputSystem.GetKey_S || CustomInputSystem.GetKey_A || CustomInputSystem.GetKey_D;
     private bool motionCrouchKey => CustomInputSystem.GetKey_LeftCtrl;
-
+    
     private float startSpeed;
     private float currentSpeed;
 
@@ -75,21 +79,47 @@ public class PlayerInputMovementController : MonoBehaviour {
     private float vertical => CustomInputSystem.GetAxis_Vertical;
     
     private float FireIntervalDeploy;
+    private float FireDelayDeploy;
 
     void Start() {
+        recoil = GetComponentInChildren<Recoil>();
+        legs = GetComponentInChildren<LegsAnimator>();
+        AimController = GetComponentInChildren<AimController>();
+    }
+
+    void FixedUpdate() {
+        FirePlay();
     }
 
     void Update() {
-        float delta = Time.deltaTime;
+        float deltaTime = Time.deltaTime;
         GetInput();
         SetVirtualCamData();
-        MoveAndRotate(delta);
+        MoveAndRotate(deltaTime);
+        legs.LegsAnimatorBlend = isMove ? 0 : 1;
         Aim();
         Fire();
-        Gravity(delta);
+        Gravity(deltaTime);
         Jump();
-        controller.Move(playerVelocity * delta);
+        controller.Move(playerVelocity * deltaTime);
         AnimSet();
+    }
+
+    void FirePlay() {
+        if (isFire) {
+            if (FireDelayDeploy > 0) {
+                FireDelayDeploy -= Time.fixedDeltaTime;
+            } else {
+                FireDelayDeploy = 0;
+                if (FireIntervalDeploy > FireInterval) {
+                    Instantiate(BulletPrefab, WeaponMuzzleTr.position, WeaponMuzzleTr.rotation);
+                    FireIntervalDeploy = 0;
+                    recoil.Fire(magnitude);
+                } else {
+                    FireIntervalDeploy += Time.fixedDeltaTime;
+                }
+            }
+        }
     }
 
     void GetInput() {
@@ -135,32 +165,20 @@ public class PlayerInputMovementController : MonoBehaviour {
         Cursor.visible = !isAim;
         Cursor.lockState = CursorLockMode.Locked;
         float targetWeight = isAim ? aimIKWeight : defaultAimIKWeight;
-        AimIk.solver.SetIKPositionWeight(Mathf.Lerp(AimIk.solver.IKPositionWeight, targetWeight, Time.deltaTime * aimIKLerpSpeed));
+        AimController.weight = Mathf.Lerp(AimController.weight, targetWeight, Time.deltaTime * aimIKLerpSpeed);
         VirtualCamera.m_Lens.FieldOfView = Mathf.Abs(fov - VirtualCamera.m_Lens.FieldOfView) < 0.01f ? fov : Mathf.Lerp(VirtualCamera.m_Lens.FieldOfView, fov, Time.deltaTime * lerpSpeed);
     }
 
     void Fire() {
         if (isAim) {
-            if (CustomInputSystem.GetMouse_Left) {
+            if (CustomInputSystem.GetMouse_Left && !isFire) {
                 isFire = true;
-                animator.SetBool("IsFire", true);
-                if (FireIntervalDeploy > FireInterval) {
-                    GameObject bulletGO = Instantiate(BulletPrefab);
-                    Rigidbody rb = bulletGO.GetComponent<Rigidbody>();
-                    rb.AddForce(WeaponMuzzleTr.forward * BulletForce, ForceMode.Impulse);
-                    bulletGO.transform.position = WeaponMuzzleTr.position;
-                    bulletGO.transform.up = -WeaponMuzzleTr.forward;
-
-                    FireIntervalDeploy = 0;
-                } else {
-                    FireIntervalDeploy += Time.deltaTime;
-                }
+                FireDelayDeploy = FireDelay;
             }
-        }
 
-        if (CustomInputSystem.GetMouseUp_Left) {
-            isFire = false;
-            animator.SetBool("IsFire", false);
+            if (CustomInputSystem.GetMouseUp_Left && isFire) {
+                isFire = false;
+            }
         }
     }
 
