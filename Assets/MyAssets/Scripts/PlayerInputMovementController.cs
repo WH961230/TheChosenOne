@@ -38,12 +38,8 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Tooltip("FOV 修改速度")] public float FOVLerpSpeed;
     [Tooltip("瞄准 FOV 修改速度")] public float AimFOVLerpSpeed;
 
-    [Header("Aim IK")]
-    public AimIK AimIk;
     public AimController AimController;
-    [SerializeField] private float aimIKWeight;
-    [SerializeField] private float defaultAimIKWeight;
-    [SerializeField] private float aimIKLerpSpeed;
+    [SerializeField] private Transform aimTarget;
     [SerializeField] private float magnitude;
 
     [Header("Debug 查看 不可修改")]
@@ -164,8 +160,7 @@ public class PlayerInputMovementController : MonoBehaviour {
         float lerpSpeed = isAim ? AimFOVLerpSpeed : FOVLerpSpeed;
         Cursor.visible = !isAim;
         Cursor.lockState = CursorLockMode.Locked;
-        float targetWeight = isAim ? aimIKWeight : defaultAimIKWeight;
-        AimController.weight = Mathf.Lerp(AimController.weight, targetWeight, Time.deltaTime * aimIKLerpSpeed);
+        AimController.target = isAim ? aimTarget : null;
         VirtualCamera.m_Lens.FieldOfView = Mathf.Abs(fov - VirtualCamera.m_Lens.FieldOfView) < 0.01f ? fov : Mathf.Lerp(VirtualCamera.m_Lens.FieldOfView, fov, Time.deltaTime * lerpSpeed);
     }
 
@@ -179,6 +174,8 @@ public class PlayerInputMovementController : MonoBehaviour {
             if (CustomInputSystem.GetMouseUp_Left && isFire) {
                 isFire = false;
             }
+        } else {
+            isFire = false;
         }
     }
 
