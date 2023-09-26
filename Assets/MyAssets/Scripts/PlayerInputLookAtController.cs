@@ -1,17 +1,24 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class PlayerInputLookAtController : MonoBehaviour {
+    [Header("相机朝向物体")] public Transform cameraFollowTr;
     [Header("距离玩家节点的偏移高度")] public float OffHeightWithPlayer;
     [Header("玩家朝向物体")] public Transform LookAtTr;
     [Header("MouseX 速度")] public float MouseXSpeed;
     [Header("MouseY 速度")] public float MouseYSpeed;
     [Header("MouseY 旋转钳值")] public float MouseYRotateLimit;
+
+    [Header("相机开火震动")]
+    public float Duration;
+    public float Strenth;
+    public int Vibrato;
+
     private Vector3 targetDirVec;
     private Transform playerTr;
     private float followTargetRotationY;
     private float followTargetRotationX;
     private PlayerInputMovementController inputController;
-
     private void Start() {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
         inputController = playerTr.root.GetComponent<PlayerInputMovementController>(); 
@@ -36,6 +43,10 @@ public class PlayerInputLookAtController : MonoBehaviour {
         targetDirVec = VecW + VecS + VecA + VecD != Vector3.zero ? Vector3.ProjectOnPlane(VecW + VecS + VecA + VecD, Vector3.up) : targetDirVec;
         LookAtTr.position = transform.position;
         LookAtTr.forward = inputController.isAimDebug ? LookAtTr.forward : (CustomInputSystem.GetMouse_Right ? transform.forward : (targetDirVec == Vector3.zero ? LookAtTr.forward : targetDirVec));
+    }
+
+    public void CameraShake() {
+        cameraFollowTr.DOShakeRotation(Duration, Strenth, Vibrato);
     }
 
 #if UNITY_EDITOR

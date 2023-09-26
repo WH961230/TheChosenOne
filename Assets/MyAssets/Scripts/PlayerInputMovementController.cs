@@ -14,6 +14,7 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Tooltip("角色控制器")] public CharacterController controller;
     [Tooltip("弹药")] public GameObject BulletPrefab;
     [Tooltip("枪口")] public Transform WeaponMuzzleTr;
+    [Tooltip("角色朝向物体")] public PlayerInputLookAtController PlayerInputLookAtController;
     private Recoil recoil;
 
     [Header("速度")]
@@ -111,6 +112,7 @@ public class PlayerInputMovementController : MonoBehaviour {
                     Instantiate(BulletPrefab, WeaponMuzzleTr.position, WeaponMuzzleTr.rotation);
                     FireIntervalDeploy = 0;
                     recoil.Fire(magnitude);
+                    PlayerInputLookAtController.CameraShake();
                 } else {
                     FireIntervalDeploy += Time.fixedDeltaTime;
                 }
