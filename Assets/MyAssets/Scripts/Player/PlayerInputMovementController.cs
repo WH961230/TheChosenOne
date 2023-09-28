@@ -27,8 +27,6 @@ public class PlayerInputMovementController : MonoBehaviour {
     [Tooltip("角色旋转平滑速度")] public float TurnLerpSpeed;
     [Tooltip("瞄准角色旋转平滑速度")] public float AimTurnLerpSpeed;
     [Tooltip("子弹射击间隔")] public float FireInterval;
-    [Tooltip("子弹开始射击延迟")] [SerializeField] public float FireDelay;
-    [Tooltip("子弹检测模式")] public CollisionDetectionMode CollisionDetectionMode;
 
     [Header("FOV")]
     [Tooltip("走路 FOV")] public float MoveFOV;
@@ -49,7 +47,9 @@ public class PlayerInputMovementController : MonoBehaviour {
     [SerializeField] private bool canJump;
     [SerializeField] private bool isJump;
     [SerializeField] private bool isAim;
+    [SerializeField] private bool isContinuousFire;
     [SerializeField] private bool isFire;
+    [SerializeField] private float fireTime;
     [SerializeField] public bool isAimDebug;
 
     [Header("跳跃高度")] public float JumpHeight;
@@ -104,20 +104,25 @@ public class PlayerInputMovementController : MonoBehaviour {
 
     void FirePlay() {
         if (isFire) {
-            if (FireDelayDeploy > 0) {
-                FireDelayDeploy -= Time.fixedDeltaTime;
+            FireOnce();
+            isFire = false;
+        }
+
+        if (isContinuousFire) {
+            if (FireIntervalDeploy >= FireInterval) {
+                FireOnce();
             } else {
-                FireDelayDeploy = 0;
-                if (FireIntervalDeploy > FireInterval) {
-                    Instantiate(BulletPrefab, WeaponMuzzleTr.position, WeaponMuzzleTr.rotation);
-                    FireIntervalDeploy = 0;
-                    recoil.Fire(magnitude);
-                    PlayerInputLookAtController.CameraShake();
-                } else {
-                    FireIntervalDeploy += Time.fixedDeltaTime;
-                }
+                FireIntervalDeploy += Time.fixedDeltaTime;
             }
         }
+    }
+
+    void FireOnce() {
+        Instantiate(BulletPrefab, WeaponMuzzleTr.position, WeaponMuzzleTr.rotation);
+        FireIntervalDeploy = 0;
+        recoil.Fire(magnitude);
+        PlayerInputLookAtController.CameraShake();
+        FireCursorController.Ins.FireCursor(true);
     }
 
     void GetInput() {
@@ -168,16 +173,25 @@ public class PlayerInputMovementController : MonoBehaviour {
 
     void Fire() {
         if (isAim) {
-            if (CustomInputSystem.GetMouse_Left && !isFire) {
+            if (CustomInputSystem.GetMouseDown_Left && !isFire) {
                 isFire = true;
-                FireDelayDeploy = FireDelay;
+                fireTime = Time.realtimeSinceStartup;
             }
 
-            if (CustomInputSystem.GetMouseUp_Left && isFire) {
-                isFire = false;
+            if (CustomInputSystem.GetMouse_Left && !isContinuousFire) {
+                if (Time.realtimeSinceStartup - fireTime > FireInterval) {
+                    isContinuousFire = true;
+                    FireIntervalDeploy = FireInterval;
+                }
+            }
+
+            if (CustomInputSystem.GetMouseUp_Left) {
+                isContinuousFire = false;
+                fireTime = 0;
+                FireCursorController.Ins.FireCursor(false);
             }
         } else {
-            isFire = false;
+            isContinuousFire = false;
         }
     }
 
